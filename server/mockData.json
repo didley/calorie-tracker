@@ -1,0 +1,82 @@
+{
+  "nutritionFacts": [
+    {
+      "id": "1",
+      "name": "Raman noodles - Noodles",
+      "weightOptions": [
+        {
+          "id": "11",
+          "name": "1 container (2 pack)"
+        },
+        {
+          "id": "12",
+          "name": "1 pack"
+        }
+      ],
+      "Energy-kj": 794.96,
+      "Protein-G": 4,
+      "gluten-g": 0,
+      "FatTotal-g": 7,
+      "saturated-g": 4,
+      "trans-g": 0,
+      "polyunsaturated-g": 0,
+      "monounsaturated-g": 0,
+      "Carbohydrate-g": 26,
+      "sugars-g": 1,
+      "DietaryFibreTotal": 1,
+      "Sodium-mg": 830
+    },
+    {
+      "id": "2",
+      "name": "Fish noodles - Noodles",
+      "weightOptions": [
+        {
+          "id": "11",
+          "name": "1 container (2 pack)"
+        },
+        {
+          "id": "12",
+          "name": "1 pack"
+        }
+      ],
+      "Energy-kj": 794.96,
+      "Protein-G": 4,
+      "gluten-g": 0,
+      "FatTotal-g": 7,
+      "saturated-g": 4,
+      "trans-g": 0,
+      "polyunsaturated-g": 0,
+      "monounsaturated-g": 0,
+      "Carbohydrate-g": 26,
+      "sugars-g": 1,
+      "DietaryFibreTotal": 1,
+      "Sodium-mg": 830
+    },
+    {
+      "id": "3",
+      "name": "Cat stroodles",
+      "weightOptions": [
+        {
+          "id": "11",
+          "name": "1 container (2 pack)"
+        },
+        {
+          "id": "12",
+          "name": "1 pack"
+        }
+      ],
+      "Energy-kj": 794.96,
+      "Protein-G": 4,
+      "gluten-g": 0,
+      "FatTotal-g": 7,
+      "saturated-g": 4,
+      "trans-g": 0,
+      "polyunsaturated-g": 0,
+      "monounsaturated-g": 0,
+      "Carbohydrate-g": 26,
+      "sugars-g": 1,
+      "DietaryFibreTotal": 1,
+      "Sodium-mg": 830
+    }
+  ]
+}
