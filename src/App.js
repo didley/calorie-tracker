@@ -5,13 +5,14 @@ import NutritionFacts from "./components/NutritionFacts";
 
 function App() {
   return (
-    <div className="min-h-screen p-20 bg-orange-100">
-      <div className="bg-white p-4 rounded-lg shadow-lg">
-        <h1>
+    <div className="bg-orange-100 min-h-screen">
+      <div className="px-3 py-8 mx-auto max-w-5xl">
+        <h1 className="bg-white p-2 rounded-lg shadow-lg ">
           <b>Calorie Tracker</b>
         </h1>
+
+        <NutritionFacts />
       </div>
-      <NutritionFacts />
     </div>
   );
 }

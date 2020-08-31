@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ItemDetail() {
   return (
-    <div className="bg-white p-4 m-4 rounded-lg shadow-lg">
+    <div className="bg-white p-3 m-2 rounded-lg shadow-lg md:max-w-xl">
       ItemDetail
       <h3>Nutrition Facts</h3>
     </div>

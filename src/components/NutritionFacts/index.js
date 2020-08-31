@@ -7,9 +7,11 @@ export default function NutritionFacts() {
   return (
     <div>
       NutritionFacts page
-      <SearchBar />
-      <ResultsList />
-      <ItemDetail />
+      <div className="grid sm:grid-flow-row md:grid-flow-col md:grid-rows-2 md:grid-cols-2">
+        <SearchBar />
+        <ResultsList />
+        <ItemDetail />
+      </div>
     </div>
   );
 }
