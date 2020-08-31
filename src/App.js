@@ -6,7 +6,7 @@ import NutritionFacts from "./components/NutritionFacts";
 function App() {
   return (
     <div className="bg-orange-100 min-h-screen">
-      <div className="px-3 py-8 mx-auto max-w-5xl">
+      <div className="px-3 py-8 mx-auto max-w-4xl">
         <h1 className="bg-white p-2 rounded-lg shadow-lg ">
           <b>Calorie Tracker</b>
         </h1>
