@@ -1,5 +1,5 @@
 {
-  "name": "client-2-mock-data",
+  "name": "calorie-tracker",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -19,7 +19,7 @@
     "prebuild": "npm run build:tailwind",
     "start": "run-p start:*",
     "start:server": "json-server --watch server/mockData.json --port 5000",
-    "start:client": "run-p prestart start:react",
+    "start:client": "run-p \"prestart\" start:react",
     "start:react": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
