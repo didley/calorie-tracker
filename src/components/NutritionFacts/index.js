@@ -8,28 +8,36 @@ export default function NutritionFacts() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selected, setSelected] = useState({});
 
-  // useEffect(() => {
-  //   getFoods();
-  //   // eslint-disable-next-line
-  // }, []);
+  useEffect(() => {
+    getFoods();
+    // eslint-disable-next-line
+  }, []);
 
-  // // function getFoods() {
-  // //   axios.get("/nutritionFacts/").then((res) => {
-  // //     setData(res.data);
-  // //     console.log(res.data);
-  // //   });
-  // // }
+  async function getFoods() {
+    try {
+      setLoading(true);
+      const res = await axios.get("/nutritionFacts/");
+      setData(res.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+    }
+  }
 
-  // getFoods();
+  const onSelect = (food) => {
+    setSelected(food);
+  };
 
   return (
     <div>
       NutritionFacts page
       <div className="grid sm:grid-flow-row md:grid-flow-col md:grid-rows-2 md:grid-cols-2">
         <SearchBar />
-        <ResultsList />
-        <ItemDetail />
+        <ResultsList data={data} onSelect={onSelect} />
+        <ItemDetail selected={selected} />
       </div>
     </div>
   );

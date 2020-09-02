@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function ItemDetail() {
+export default function ItemDetail({ selected }) {
   return (
     <div className="bg-white p-3 m-2 rounded-lg shadow-lg md:max-w-xl">
       ItemDetail

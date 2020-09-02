@@ -13,18 +13,18 @@
           "name": "1 pack"
         }
       ],
-      "Energy-kj": 794.96,
-      "Protein-G": 4,
-      "gluten-g": 0,
-      "FatTotal-g": 7,
-      "saturated-g": 4,
-      "trans-g": 0,
-      "polyunsaturated-g": 0,
-      "monounsaturated-g": 0,
-      "Carbohydrate-g": 26,
-      "sugars-g": 1,
+      "EnergyKj": 794.96,
+      "ProteinG": 4,
+      "glutenG": 0,
+      "FatTotalG": 7,
+      "saturatedG": 4,
+      "transG": 0,
+      "polyunsaturatedG": 0,
+      "monounsaturatedG": 0,
+      "CarbohydrateG": 26,
+      "sugarsG": 1,
       "DietaryFibreTotal": 1,
-      "Sodium-mg": 830
+      "SodiumMg": 830
     },
     {
       "id": "2",
@@ -39,18 +39,18 @@
           "name": "1 pack"
         }
       ],
-      "Energy-kj": 794.96,
-      "Protein-G": 4,
-      "gluten-g": 0,
-      "FatTotal-g": 7,
-      "saturated-g": 4,
-      "trans-g": 0,
-      "polyunsaturated-g": 0,
-      "monounsaturated-g": 0,
-      "Carbohydrate-g": 26,
-      "sugars-g": 1,
+      "EnergyKj": 794.96,
+      "ProteinG": 4,
+      "glutenG": 0,
+      "FatTotalG": 7,
+      "saturatedG": 4,
+      "transG": 0,
+      "polyunsaturatedG": 0,
+      "monounsaturatedG": 0,
+      "CarbohydrateG": 26,
+      "sugarsG": 1,
       "DietaryFibreTotal": 1,
-      "Sodium-mg": 830
+      "SodiumMg": 830
     },
     {
       "id": "3",
@@ -65,18 +65,18 @@
           "name": "1 pack"
         }
       ],
-      "Energy-kj": 794.96,
-      "Protein-G": 4,
-      "gluten-g": 0,
-      "FatTotal-g": 7,
-      "saturated-g": 4,
-      "trans-g": 0,
-      "polyunsaturated-g": 0,
-      "monounsaturated-g": 0,
-      "Carbohydrate-g": 26,
-      "sugars-g": 1,
+      "EnergyKj": 794.96,
+      "ProteinG": 4,
+      "glutenG": 0,
+      "FatTotalG": 7,
+      "saturatedG": 4,
+      "transG": 0,
+      "polyunsaturatedG": 0,
+      "monounsaturatedG": 0,
+      "CarbohydrateG": 26,
+      "sugarsG": 1,
       "DietaryFibreTotal": 1,
-      "Sodium-mg": 830
+      "SodiumMg": 830
     }
   ]
 }
