@@ -5,7 +5,7 @@
 ## TODO
 ---
 ### 🐛 Bugs
-    - [ ] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
+    - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
 
 
 ### 🚀 Features
@@ -17,7 +17,6 @@
 ## SETUP
 ---
 ### Installing
-/server and /client directories have their own separate package.json files
 ```shell
 $ cd calorie-tracker
 $ npm i
@@ -25,11 +24,7 @@ $ npm i
 ### Running
 ```shell
 $ cd calorie-tracker
-$ npm run start:server
-(next lines in separate terminal)
-$ npm run prebuild
-$ npm run start:client
-(TODO ^ To be refactored to single command)
+$ npm start
 ``` 
 <br />
 
