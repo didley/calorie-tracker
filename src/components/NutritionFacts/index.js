@@ -12,6 +12,7 @@ export default function NutritionFacts() {
 
   useEffect(() => {
     getFoods();
+
     // eslint-disable-next-line
   }, []);
 
@@ -21,6 +22,7 @@ export default function NutritionFacts() {
       const res = await axios.get("/nutritionFacts/");
       setData(res.data);
       setLoading(false);
+      setSelected(res.data[0]);
     } catch (err) {
       setError(err);
       setLoading(false);

@@ -3,6 +3,7 @@
     {
       "id": "1",
       "name": "Raman noodles - Noodles",
+      "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
           "id": "11",
@@ -13,8 +14,8 @@
           "name": "1 pack"
         }
       ],
-      "EnergyKj": 794.96,
-      "ProteinG": 4,
+      "EnergyKj": 694.96,
+      "ProteinG": 7,
       "glutenG": 0,
       "FatTotalG": 7,
       "saturatedG": 4,
@@ -29,6 +30,7 @@
     {
       "id": "2",
       "name": "Fish noodles - Noodles",
+      "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
           "id": "11",
@@ -55,6 +57,7 @@
     {
       "id": "3",
       "name": "Cat stroodles",
+      "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
           "id": "11",
@@ -77,6 +80,33 @@
       "sugarsG": 1,
       "DietaryFibreTotal": 1,
       "SodiumMg": 830
+    },
+    {
+      "name": "Choy Poodles",
+      "brand": "McDonDon Melbourne",
+      "weightOptions": [
+        {
+          "id": "11",
+          "name": "1 container (2 pack)"
+        },
+        {
+          "id": "12",
+          "name": "1 pack"
+        }
+      ],
+      "EnergyKj": 1794.96,
+      "ProteinG": 4,
+      "glutenG": 0,
+      "FatTotalG": 7,
+      "saturatedG": 4,
+      "transG": 0,
+      "polyunsaturatedG": 0,
+      "monounsaturatedG": 0,
+      "CarbohydrateG": 26,
+      "sugarsG": 1,
+      "DietaryFibreTotal": 1,
+      "SodiumMg": 830,
+      "id": "r_s6oov"
     }
   ]
 }
