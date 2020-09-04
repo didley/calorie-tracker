@@ -1,15 +1,10 @@
 # calorie-tracker
 
-<br />
 
-## TODO
+## ABOUT
 ---
-### 🐛 Bugs
-    - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
-
-
-### 🚀 Features
-    - [ ]   
+### Styling
+Styling is provided by TailwindCSS, init document is found under /src/tailwind.css
 
 
 <br />
@@ -26,9 +21,31 @@ $ npm i
 $ cd calorie-tracker
 $ npm start
 ``` 
+
 <br />
 
-## ABOUT
+
+## TODO
 ---
-### Styling
-Styling is provided by TailwindCSS, init document is found under /src/tailwind.css
+### 🐛 Bugs
+    - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
+
+
+### 🚀 Features
+    - [ ]   
+
+
+<br/>
+
+
+## NOTES
+---
+### routes
+- /diary
+  - /diary/add/foods
+  - /diary/add/recent
+  - /diary/add/myFoods
+- /weight
+- /profile
+- /help
+- /about
