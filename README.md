@@ -42,9 +42,10 @@ $ npm start
 ---
 ### routes
 - /diary
-  - /diary/add/foods
-  - /diary/add/recent
-  - /diary/add/myFoods
+- /diary?date=2020-09-04
+  - /diary/add?q=foods
+  - /diary/add?q=recent
+  - /diary/add?q=myFoods
 - /weight
 - /profile
 - /help
