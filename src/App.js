@@ -1,20 +1,29 @@
 import React from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import AddFoods from "./components/AddFoods";
+import Diary from "./components/Diary";
+import NavBar from "./components/layout/NavBar";
 
 // style={{ background: "#faf7f4", height: "100vh" }}
 
 function App() {
   return (
-    <div className="bg-orange-100 min-h-screen">
-      <div className="px-3 py-8 mx-auto max-w-4xl">
-        <h1 className="bg-white p-2 rounded-lg shadow-lg ">
-          <b>Calorie Tracker</b>
-        </h1>
-
-        <AddFoods />
+    <Router>
+      <div className="bg-orange-100 min-h-screen">
+        <NavBar />
+        <div>
+          <Switch>
+            <Route path="/diary">
+              <Diary />
+            </Route>
+            <Route path="/addFoods">
+              <AddFoods />
+            </Route>
+          </Switch>
+        </div>
       </div>
-    </div>
+    </Router>
   );
 }
 

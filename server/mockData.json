@@ -33,6 +33,40 @@
           "SodiumMg": 830
         }
       ]
+    },
+    {
+      "date": "2020-09-04",
+      "notes": "Eat too much nood noods today",
+      "eaten": [],
+      "toEat": [
+        {
+          "id": "1",
+          "name": "Raman noodles - Noodles",
+          "brand": "Sushi Katooshie Melbourne",
+          "weightOptions": [
+            {
+              "id": "11",
+              "name": "1 container (2 pack)"
+            },
+            {
+              "id": "12",
+              "name": "1 pack"
+            }
+          ],
+          "EnergyKj": 694.96,
+          "ProteinG": 7,
+          "glutenG": 0,
+          "FatTotalG": 7,
+          "saturatedG": 4,
+          "transG": 0,
+          "polyunsaturatedG": 0,
+          "monounsaturatedG": 0,
+          "CarbohydrateG": 26,
+          "sugarsG": 1,
+          "DietaryFibreTotal": 1,
+          "SodiumMg": 830
+        }
+      ]
     }
   ],
   "recent": [

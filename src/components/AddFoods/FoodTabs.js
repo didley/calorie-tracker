@@ -46,7 +46,7 @@ export default function FoodTabs({ onSelect }) {
   }
 
   return (
-    <div className="bg-white p-3 m-2 rounded-lg shadow-lg md:max-w-lg">
+    <div className="bg-white p-3 m-2 rounded-lg shadow-lg max-w-md">
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex justify-between">
           <Tab
