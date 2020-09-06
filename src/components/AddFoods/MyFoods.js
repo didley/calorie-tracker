@@ -1,9 +1,9 @@
 import React from "react";
 
-export default function ResultsList({ data, onSelect }) {
+export default function MyFoods({ data, onSelect }) {
   return (
-    <div className="bg-white p-3 m-2 rounded-lg shadow-lg md:max-w-md">
-      <h3>Results</h3>
+    <div>
+      <h3>My Foods</h3>
       <hr />
       {data && (
         <div>

@@ -1,6 +1,6 @@
 import React from "react";
 
-import NutritionFacts from "./components/NutritionFacts";
+import AddFoods from "./components/AddFoods";
 
 // style={{ background: "#faf7f4", height: "100vh" }}
 
@@ -12,7 +12,7 @@ function App() {
           <b>Calorie Tracker</b>
         </h1>
 
-        <NutritionFacts />
+        <AddFoods />
       </div>
     </div>
   );
