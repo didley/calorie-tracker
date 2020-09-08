@@ -3,7 +3,12 @@ import React from "react";
 export default function MyFoods({ data, onSelect }) {
   return (
     <div>
-      <h3>My Foods</h3>
+      <div className="flex justify-between">
+        <h3 className="my-auto">My Foods</h3>
+        <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1">
+          Add
+        </button>
+      </div>
       <hr />
       {data && (
         <div>

@@ -11,14 +11,25 @@
           "brand": "Sushi Katooshie Melbourne",
           "weightOptions": [
             {
+              "id": "13",
+              "name": "serving",
+              "servings": 1
+            },
+            {
               "id": "11",
-              "name": "1 container (2 pack)"
+              "name": "2 pack",
+              "servings": 2
             },
             {
               "id": "12",
-              "name": "1 pack"
+              "name": "1 pack",
+              "servings": 1
             }
           ],
+          "ServingSizeG": {
+            "unit": "g",
+            "value": 113
+          },
           "EnergyKj": 694.96,
           "ProteinG": 7,
           "glutenG": 0,
@@ -45,14 +56,25 @@
           "brand": "Sushi Katooshie Melbourne",
           "weightOptions": [
             {
+              "id": "13",
+              "name": "serving",
+              "servings": 1
+            },
+            {
               "id": "11",
-              "name": "1 container (2 pack)"
+              "name": "2 pack",
+              "servings": 2
             },
             {
               "id": "12",
-              "name": "1 pack"
+              "name": "1 pack",
+              "servings": 1
             }
           ],
+          "ServingSizeG": {
+            "unit": "g",
+            "value": 113
+          },
           "EnergyKj": 694.96,
           "ProteinG": 7,
           "glutenG": 0,
@@ -76,14 +98,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 694.96,
       "ProteinG": 7,
       "glutenG": 0,
@@ -103,14 +136,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 694.96,
       "ProteinG": 7,
       "glutenG": 0,
@@ -132,14 +176,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 694.96,
       "ProteinG": 7,
       "glutenG": 0,
@@ -159,14 +214,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 694.96,
       "ProteinG": 7,
       "glutenG": 0,
@@ -188,14 +254,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 694.96,
       "ProteinG": 7,
       "glutenG": 0,
@@ -215,14 +292,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 794.96,
       "ProteinG": 4,
       "glutenG": 0,
@@ -242,14 +330,25 @@
       "brand": "Sushi Katooshie Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 794.96,
       "ProteinG": 4,
       "glutenG": 0,
@@ -268,14 +367,25 @@
       "brand": "McDonDon Melbourne",
       "weightOptions": [
         {
+          "id": "13",
+          "name": "serving",
+          "servings": 1
+        },
+        {
           "id": "11",
-          "name": "1 container (2 pack)"
+          "name": "2 pack",
+          "servings": 2
         },
         {
           "id": "12",
-          "name": "1 pack"
+          "name": "1 pack",
+          "servings": 1
         }
       ],
+      "ServingSizeG": {
+        "unit": "g",
+        "value": 113
+      },
       "EnergyKj": 1794.96,
       "ProteinG": 4,
       "glutenG": 0,
