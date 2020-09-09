@@ -6,10 +6,28 @@ export default function SelectedFood({ selected }) {
   console.log({ selected });
   const { weightOptions, brand = "Select a food", name = "-" } = selected;
 
-  const [servingAmmount, setServingAmmount] = useState(1);
+  const [servingAmount, setServingAmount] = useState(1);
   const [servingSize, setServingSize] = useState("");
 
-  return (
+  const handleServingAmountChange = (e) => {
+    setServingAmount(e.target.value);
+  };
+  const handleServingSizeChange = (e) => {
+    setServingSize(e.target.value);
+  };
+
+  const handleSubmit = () => {};
+
+  console.log({ selected });
+  if (selected === {}) {
+    return (
+      <div className="flex flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
+        hi
+      </div>
+    );
+  }
+
+  selected && return (
     <div className="flex flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
       <div className="flex justify-between">
         <h3 className="my-auto">Selected Food</h3>
@@ -21,7 +39,13 @@ export default function SelectedFood({ selected }) {
       <p>{brand}</p>
       <h4>{name}</h4>
       <hr />
-      <AmountInput weightOptions={weightOptions} />
+      <AmountInput
+        weightOptions={weightOptions}
+        servingAmount={servingAmount}
+        handleServingAmountChange={handleServingAmountChange}
+        servingSize={servingSize}
+        handleServingSizeChange={handleServingSizeChange}
+      />
       <Table selected={selected} />
     </div>
   );
