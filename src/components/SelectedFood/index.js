@@ -18,17 +18,16 @@ export default function SelectedFood({ selected }) {
 
   const handleSubmit = () => {};
 
-  console.log({ selected });
-  if (selected === {}) {
+  if (Object.keys(selected).length === 0) {
     return (
-      <div className="flex flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
-        hi
+      <div className="border-4 border-gray-600 py-24 h-64 w-1/3 bg-white m-2 rounded-lg shadow-lg bg-gray-200">
+        <h3 className="margin-auto text-center text-gray-800">Select a Food</h3>
       </div>
     );
   }
 
-  selected && return (
-    <div className="flex flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
+  return (
+    <div className="flex border-2 border-gray-600 flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
       <div className="flex justify-between">
         <h3 className="my-auto">Selected Food</h3>
         <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1">
