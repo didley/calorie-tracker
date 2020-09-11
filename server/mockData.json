@@ -6,42 +6,48 @@
       "eaten": [],
       "toEat": [
         {
+          "chosenServing": {
+            "servingName": "2 pack",
+            "servingUnit": "serving",
+            "servingValue": 1,
+            "chosenAmount": 3
+          },
           "id": "1",
           "name": "Raman noodles - Noodles",
           "brand": "Sushi Katooshie Melbourne",
-          "weightOptions": [
+          "servingOptions": [
             {
-              "id": "13",
-              "name": "serving",
-              "servings": 1
+              "servingName": "serving",
+              "servingUnit": "serving",
+              "servingValue": 1
             },
             {
-              "id": "11",
-              "name": "2 pack",
-              "servings": 2
+              "servingName": "2 pack",
+              "servingUnit": "serving",
+              "servingValue": 2
             },
             {
-              "id": "12",
-              "name": "1 pack",
-              "servings": 1
+              "servingName": "Bowl full",
+              "servingUnit": "g",
+              "servingValue": 350
             }
           ],
-          "ServingSizeG": {
+          "servingSize": {
             "unit": "g",
             "value": 113
           },
-          "EnergyKj": 694.96,
-          "ProteinG": 7,
-          "glutenG": 0,
-          "FatTotalG": 7,
-          "saturatedG": 4,
-          "transG": 0,
-          "polyunsaturatedG": 0,
-          "monounsaturatedG": 0,
-          "CarbohydrateG": 26,
-          "sugarsG": 1,
-          "DietaryFibreTotal": 1,
-          "SodiumMg": 830
+          "macros": {
+            "EnergyKJ": 694.96,
+            "ProteinG": 7,
+            "FatTotalG": 7,
+            "saturatedG": 4,
+            "CarbohydrateG": 26,
+            "sugarsG": 1,
+            "fibreG": 0,
+            "SodiumMg": 830,
+            "calciumMg": 0,
+            "glutenG": 0
+          }
         }
       ]
     },

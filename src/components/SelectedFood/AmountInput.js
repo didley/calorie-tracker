@@ -23,10 +23,7 @@ export default function AmountInput({
         </label>
       </div>
       <div className="w-3/4">
-        <label
-          className="block tracking-wide text-gray-700 text-xs font-bold my-1"
-          for="grid-state"
-        >
+        <label className="block tracking-wide text-gray-700 text-xs font-bold my-1">
           Size
           <div className="relative">
             <select
@@ -35,8 +32,10 @@ export default function AmountInput({
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               {weightOptions &&
-                weightOptions.map((option) => (
-                  <option value={option.servings}>{option.name}</option>
+                weightOptions.map((option, index) => (
+                  <option key={index} value={option.servings}>
+                    {option.name}
+                  </option>
                 ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-centre px-2 text-gray-700">

@@ -7,7 +7,39 @@ export default function SelectedFood({ selected }) {
   const { weightOptions, brand = "Select a food", name = "-" } = selected;
 
   const [servingAmount, setServingAmount] = useState(1);
-  const [servingSize, setServingSize] = useState("");
+  const [servingSize, setServingSize] = useState(1);
+
+  const {
+    CarbohydrateG,
+    EnergyKj,
+    FatTotalG,
+    ProteinG,
+    SodiumMg,
+    saturatedG,
+  } = selected;
+
+  let macros = {
+    CarbohydrateG,
+    EnergyKj,
+    FatTotalG,
+    ProteinG,
+    SodiumMg,
+    saturatedG,
+  };
+
+  // todo
+
+  // const selectedServing = Object.keys(macros).forEach(
+  //   (macro) => macros[macro] * servingAmount * servingSize
+  // );
+
+  for (let key in macros) {
+    macros[key] = macros[key] * servingAmount * servingSize;
+  }
+
+  console.log({ macros });
+
+  // console.log({ selectedServing });
 
   const handleServingAmountChange = (e) => {
     setServingAmount(e.target.value);
@@ -16,7 +48,9 @@ export default function SelectedFood({ selected }) {
     setServingSize(e.target.value);
   };
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    console.log({ servingAmount, servingSize });
+  };
 
   if (Object.keys(selected).length === 0) {
     return (
@@ -30,7 +64,10 @@ export default function SelectedFood({ selected }) {
     <div className="flex border-2 border-gray-600 flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
       <div className="flex justify-between">
         <h3 className="my-auto">Selected Food</h3>
-        <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1">
+        <button
+          onClick={handleSubmit}
+          className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
+        >
           Add
         </button>
       </div>
@@ -45,7 +82,7 @@ export default function SelectedFood({ selected }) {
         servingSize={servingSize}
         handleServingSizeChange={handleServingSizeChange}
       />
-      <Table selected={selected} />
+      <Table macros={macros} />
     </div>
   );
 }

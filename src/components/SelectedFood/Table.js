@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Table({ selected }) {
+export default function Table({ macros }) {
   const {
     CarbohydrateG = 0,
     EnergyKj = 0,
@@ -8,7 +8,7 @@ export default function Table({ selected }) {
     ProteinG = 0,
     SodiumMg = 0,
     saturatedG = 0,
-  } = selected;
+  } = macros;
 
   return (
     <table className="mt-3">
