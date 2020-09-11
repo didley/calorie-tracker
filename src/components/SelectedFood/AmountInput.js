@@ -1,20 +1,30 @@
 import React from "react";
 
 export default function AmountInput({
-  weightOptions,
-  servingAmount,
-  handleServingAmountChange,
   servingSize,
-  handleServingSizeChange,
+  servingOptions,
+  chosenAmount,
+  onChosenAmountChange,
+  servingChoice,
+  onServingChoiceChange,
 }) {
+  console.log({ servingOptions, servingSize });
+
+  //todo
+
+  const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
+    // "g" or "mL"
+    // "g" or "serving"
+  };
+
   return (
     <div className="flex">
       <div className="w-1/4 mr-2">
         <label className="block tracking-wide text-gray-700 text-xs font-bold my-1">
           Amount
           <input
-            value={servingAmount}
-            onChange={handleServingAmountChange}
+            value={chosenAmount}
+            onChange={onChosenAmountChange}
             className="w-full text-center appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="number"
             min="0"
@@ -27,14 +37,14 @@ export default function AmountInput({
           Size
           <div className="relative">
             <select
-              value={servingSize}
-              onChange={handleServingSizeChange}
+              value={servingChoice}
+              onChange={onServingChoiceChange}
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
-              {weightOptions &&
-                weightOptions.map((option, index) => (
+              {servingOptions &&
+                servingOptions.map((option, index) => (
                   <option key={index} value={option.servings}>
-                    {option.name}
+                    {option.servingName}
                   </option>
                 ))}
             </select>

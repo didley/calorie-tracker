@@ -4,28 +4,10 @@ import AmountInput from "./AmountInput";
 
 export default function SelectedFood({ selected }) {
   console.log({ selected });
-  const { weightOptions, brand = "Select a food", name = "-" } = selected;
+  const { servingOptions, macros, brand, name, servingSize } = selected;
 
-  const [servingAmount, setServingAmount] = useState(1);
-  const [servingSize, setServingSize] = useState(1);
-
-  const {
-    CarbohydrateG,
-    EnergyKj,
-    FatTotalG,
-    ProteinG,
-    SodiumMg,
-    saturatedG,
-  } = selected;
-
-  let macros = {
-    CarbohydrateG,
-    EnergyKj,
-    FatTotalG,
-    ProteinG,
-    SodiumMg,
-    saturatedG,
-  };
+  const [chosenAmount, setChosenAmount] = useState(1);
+  const [servingChoice, setServingChoice] = useState({});
 
   // todo
 
@@ -34,22 +16,22 @@ export default function SelectedFood({ selected }) {
   // );
 
   for (let key in macros) {
-    macros[key] = macros[key] * servingAmount * servingSize;
+    macros[key] = macros[key] * servingChoice.servingValue * chosenAmount;
   }
 
   console.log({ macros });
 
   // console.log({ selectedServing });
 
-  const handleServingAmountChange = (e) => {
-    setServingAmount(e.target.value);
+  const onChosenAmountChange = (e) => {
+    setChosenAmount(e.target.value);
   };
-  const handleServingSizeChange = (e) => {
-    setServingSize(e.target.value);
+  const onServingChoiceChange = (e) => {
+    setServingChoice(e.target.value);
   };
 
   const handleSubmit = () => {
-    console.log({ servingAmount, servingSize });
+    console.log({ chosenAmount, servingChoice });
   };
 
   if (Object.keys(selected).length === 0) {
@@ -76,11 +58,12 @@ export default function SelectedFood({ selected }) {
       <h4>{name}</h4>
       <hr />
       <AmountInput
-        weightOptions={weightOptions}
-        servingAmount={servingAmount}
-        handleServingAmountChange={handleServingAmountChange}
         servingSize={servingSize}
-        handleServingSizeChange={handleServingSizeChange}
+        servingOptions={servingOptions}
+        chosenAmount={chosenAmount}
+        onChosenAmountChange={onChosenAmountChange}
+        servingChoice={servingChoice}
+        onServingChoiceChange={onServingChoiceChange}
       />
       <Table macros={macros} />
     </div>

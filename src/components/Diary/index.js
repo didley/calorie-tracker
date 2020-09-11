@@ -5,7 +5,7 @@ import DiaryItem from "./DiaryItem";
 
 export default function Diary() {
   const [data, setData] = useState({});
-  const [date, setDate] = useState("2020-09-04");
+  const [date, setDate] = useState("2020-09-05");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -40,7 +40,7 @@ export default function Diary() {
   return (
     <div className="bg-white p-3 m-2 rounded-lg shadow-lg max-w-md">
       <h2>Diary</h2>
-      <div>
+      <div className="space-y-12">
         <div>
           <div className="flex justify-between">
             <h3 className="my-auto">Eaten</h3>
@@ -70,9 +70,9 @@ export default function Diary() {
               toEat.map((food) => <DiaryItem key={food.id} food={food} />)}
           </ul>
         </div>
-        <h3 className="my-auto">Notes</h3>
-        <hr />
         <div>
+          <h3 className="my-auto">Notes</h3>
+          <hr />
           <textarea
             class="resize-none border-2 rounded focus:outline-none focus:shadow-outline h-40 mt-2 p-2 w-full"
             type="text"
