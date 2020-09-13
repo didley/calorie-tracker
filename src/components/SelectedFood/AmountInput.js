@@ -8,13 +8,20 @@ export default function AmountInput({
   servingChoice,
   onServingChoiceChange,
 }) {
-  console.log({ servingOptions, servingSize });
-
   //todo
 
   const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
     // "g" or "mL"
     // "g" or "serving"
+    if (servingOptionObj.servingUnit === "serving") {
+      return `(${servingSizeObj.value * servingOptionObj.servingValue}${
+        servingSize.unit
+      })`;
+    }
+
+    return `(${servingOptionObj.value * servingSizeObj.value}${
+      servingSize.unit
+    })`;
   };
 
   return (
@@ -45,6 +52,7 @@ export default function AmountInput({
                 servingOptions.map((option, index) => (
                   <option key={index} value={option.servings}>
                     {option.servingName}
+                    {calculateServingOptionSize(option, servingSize)}
                   </option>
                 ))}
             </select>

@@ -1,30 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
 export default function SelectedFood({ selected }) {
   console.log({ selected });
-  const { servingOptions, macros, brand, name, servingSize } = selected;
+  const {
+    servingOptions,
+    macros = {},
+    brand,
+    name,
+    servingSize = { value: 0 },
+  } = selected;
 
   const [chosenAmount, setChosenAmount] = useState(1);
-  const [servingChoice, setServingChoice] = useState({});
+  const [servingChoice, setServingChoice] = useState({
+    grams: servingSize.value,
+  });
 
-  // todo
+  // todo: getting macros adjusted to size option
+  let adjustedMacros = { ...macros };
 
-  // const selectedServing = Object.keys(macros).forEach(
-  //   (macro) => macros[macro] * servingAmount * servingSize
-  // );
-
-  for (let key in macros) {
-    macros[key] = macros[key] * servingChoice.servingValue * chosenAmount;
+  for (let macro in adjustedMacros) {
+    adjustedMacros[macro] =
+      (adjustedMacros[macro] / servingSize.value) *
+      servingChoice.grams *
+      chosenAmount;
   }
 
-  console.log({ macros });
-
-  // console.log({ selectedServing });
+  console.log({ adjustedMacros, servingSize, chosenAmount });
 
   const onChosenAmountChange = (e) => {
-    setChosenAmount(e.target.value);
+    setChosenAmount(parseInt(e.target.value));
   };
   const onServingChoiceChange = (e) => {
     setServingChoice(e.target.value);
@@ -65,7 +71,7 @@ export default function SelectedFood({ selected }) {
         servingChoice={servingChoice}
         onServingChoiceChange={onServingChoiceChange}
       />
-      <Table macros={macros} />
+      {/* <Table macros={adjustedMacros} /> */}
     </div>
   );
 }
