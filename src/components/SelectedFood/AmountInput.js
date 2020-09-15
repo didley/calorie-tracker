@@ -1,28 +1,29 @@
 import React from "react";
 
 export default function AmountInput({
-  servingSize,
-  servingOptions,
+  selected,
+  servingOptionsArr,
   chosenAmount,
   onChosenAmountChange,
   servingChoice,
   onServingChoiceChange,
 }) {
+  const { perServeSize, isLiquid } = selected;
   //todo
 
-  const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
-    // "g" or "mL"
-    // "g" or "serving"
-    if (servingOptionObj.servingUnit === "serving") {
-      return `(${servingSizeObj.value * servingOptionObj.servingValue}${
-        servingSize.unit
-      })`;
-    }
+  // const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
+  //   // "g" or "mL"
+  //   // "g" or "serving"
+  //   if (servingOptionObj.servingUnit === "serving") {
+  //     return `(${servingSizeObj.value * servingOptionObj.servingValue}${
+  //       perServeSize.unit
+  //     })`;
+  //   }
 
-    return `(${servingOptionObj.value * servingSizeObj.value}${
-      servingSize.unit
-    })`;
-  };
+  //   return `(${servingOptionObj.value * servingSizeObj.value}${
+  //     perServeSize.unit
+  //   })`;
+  // };
 
   return (
     <div className="flex">
@@ -44,15 +45,16 @@ export default function AmountInput({
           Size
           <div className="relative">
             <select
-              value={servingChoice}
-              onChange={onServingChoiceChange}
+              value={servingChoice.servingName}
+              onChange={(e) => onServingChoiceChange(e)}
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
-              {servingOptions &&
-                servingOptions.map((option, index) => (
-                  <option key={index} value={option.servings}>
-                    {option.servingName}
-                    {calculateServingOptionSize(option, servingSize)}
+              {servingOptionsArr &&
+                servingOptionsArr.map((option, index) => (
+                  <option key={option.id} value={index}>
+                    {`${option.servingName} (${option.servingSize}${
+                      isLiquid ? "mL" : "g"
+                    })`}
                   </option>
                 ))}
             </select>

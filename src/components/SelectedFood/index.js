@@ -1,39 +1,56 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
 export default function SelectedFood({ selected }) {
   console.log({ selected });
   const {
-    servingOptions,
+    servingOptions = [],
     macros = {},
     brand,
     name,
-    servingSize = { value: 0 },
+    perServeSize,
+    isLiquid,
   } = selected;
 
   const [chosenAmount, setChosenAmount] = useState(1);
-  const [servingChoice, setServingChoice] = useState({
-    grams: servingSize.value,
-  });
+  const [servingChoice, setServingChoice] = useState({});
 
+  const defaultServingOptions = [
+    {
+      id: "serve",
+      servingName: "1 Serving",
+      servingSize: perServeSize,
+    },
+    {
+      id: "g",
+      servingName: "g",
+      servingSize: 1,
+    },
+  ];
+
+  const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
+
+  console.log({ servingOptionsArr });
   // todo: getting macros adjusted to size option
   let adjustedMacros = { ...macros };
 
-  for (let macro in adjustedMacros) {
-    adjustedMacros[macro] =
-      (adjustedMacros[macro] / servingSize.value) *
-      servingChoice.grams *
-      chosenAmount;
-  }
+  // for (let macro in adjustedMacros) {
+  //   adjustedMacros[macro] =
+  //     (adjustedMacros[macro] / servingSize.value) *
+  //     servingChoice.grams *
+  //     chosenAmount;
+  // }
 
-  console.log({ adjustedMacros, servingSize, chosenAmount });
+  // console.log({ adjustedMacros, servingSize, chosenAmount });
 
   const onChosenAmountChange = (e) => {
     setChosenAmount(parseInt(e.target.value));
   };
+
+  // todo: on option change not adjusting on render
   const onServingChoiceChange = (e) => {
-    setServingChoice(e.target.value);
+    setServingChoice(servingOptionsArr[e.target.value]);
   };
 
   const handleSubmit = () => {
@@ -64,14 +81,14 @@ export default function SelectedFood({ selected }) {
       <h4>{name}</h4>
       <hr />
       <AmountInput
-        servingSize={servingSize}
-        servingOptions={servingOptions}
+        selected={selected}
+        servingOptionsArr={servingOptionsArr}
         chosenAmount={chosenAmount}
         onChosenAmountChange={onChosenAmountChange}
         servingChoice={servingChoice}
         onServingChoiceChange={onServingChoiceChange}
       />
-      {/* <Table macros={adjustedMacros} /> */}
+      <Table macros={adjustedMacros} />
     </div>
   );
 }

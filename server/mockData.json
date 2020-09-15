@@ -46,7 +46,7 @@
               "servingSize": 350
             }
           ],
-          "isLiquid": false,
+          "isLiquid": true,
           "perServeSize": 113,
           "macros": {
             "EnergyKJ": 694.96,
@@ -485,7 +485,7 @@
           "servingSize": 350
         }
       ],
-      "isLiquid": false,
+      "isLiquid": true,
       "perServeSize": 113,
       "macros": {
         "EnergyKJ": 694.96,
