@@ -1,17 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
 export default function SelectedFood({ selected }) {
-  console.log({ selected });
   const {
     servingOptions = [],
     macros = {},
     brand,
     name,
-    perServeSize,
+    perServeSize = 0,
     isLiquid,
   } = selected;
+
+  // TODO: amount input not allowing decimal
+
+  const [amountInput, setAmountInput] = useState({});
+
+  useEffect(() => {
+    setAmountInput({
+      chosenAmount: 1,
+      servingChoice: defaultServingOptions[0],
+      index: 0,
+    });
+    // eslint-disable-next-line
+  }, [selected]);
 
   const defaultServingOptions = [
     {
@@ -25,28 +37,22 @@ export default function SelectedFood({ selected }) {
       servingSize: 1,
     },
   ];
-
   const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
 
-  // const [chosenAmount, setChosenAmount] = useState(1);
-  const [amountInput, setAmountInput] = useState({
-    chosenAmount: 1,
-    servingChoice: defaultServingOptions[0],
-    index: 0,
-  });
-
+  console.log({ selected });
   console.log({ servingOptionsArr });
-  // todo: getting macros adjusted to size option
+
   let adjustedMacros = { ...macros };
 
-  // for (let macro in adjustedMacros) {
-  //   adjustedMacros[macro] =
-  //     (adjustedMacros[macro] / servingSize.value) *
-  //     servingChoice.grams *
-  //     chosenAmount;
-  // }
+  for (let macro in adjustedMacros) {
+    adjustedMacros[macro] =
+      (adjustedMacros[macro] / perServeSize) *
+      amountInput.servingChoice.servingSize *
+      amountInput.chosenAmount;
+    adjustedMacros[macro] = parseFloat(adjustedMacros[macro].toFixed(1)); // rounds to one decimal
+  }
 
-  // console.log({ adjustedMacros, servingSize, chosenAmount });
+  console.log({ adjustedMacros });
 
   const onChosenAmountChange = (e) => {
     setAmountInput({
@@ -93,8 +99,8 @@ export default function SelectedFood({ selected }) {
       <AmountInput
         selected={selected}
         servingOptionsArr={servingOptionsArr}
-        onChosenAmountChange={onChosenAmountChange}
         amountInput={amountInput}
+        onChosenAmountChange={onChosenAmountChange}
         onAmountInputChange={onAmountInputChange}
       />
       <Table macros={adjustedMacros} />

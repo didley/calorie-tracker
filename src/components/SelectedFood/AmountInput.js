@@ -3,12 +3,11 @@ import React from "react";
 export default function AmountInput({
   selected,
   servingOptionsArr,
-  onChosenAmountChange,
   amountInput,
+  onChosenAmountChange,
   onAmountInputChange,
 }) {
   const { perServeSize, isLiquid } = selected;
-  //todo
 
   // const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
   //   // "g" or "mL"
@@ -45,7 +44,7 @@ export default function AmountInput({
           <div className="relative">
             <select
               value={amountInput.index}
-              onChange={(e) => onAmountInputChange(e)}
+              onChange={onAmountInputChange}
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               {servingOptionsArr &&

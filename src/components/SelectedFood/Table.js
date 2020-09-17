@@ -3,7 +3,7 @@ import React from "react";
 export default function Table({ macros }) {
   const {
     CarbohydrateG = 0,
-    EnergyKj = 0,
+    EnergyKJ = 0,
     FatTotalG = 0,
     ProteinG = 0,
     SodiumMg = 0,
@@ -14,7 +14,7 @@ export default function Table({ macros }) {
     <table className="mt-3">
       <thead className="font-thin">
         <tr>
-          <td>{EnergyKj}kJ</td>
+          <td>{EnergyKJ}kJ</td>
           <td>Protein</td>
           <td>Fat</td>
           <td>saturated</td>
@@ -26,7 +26,7 @@ export default function Table({ macros }) {
         <tr>
           <td>
             <hr />
-            {EnergyKj}Cal
+            {Math.floor(EnergyKJ / 4.184)}Cal
           </td>
           <td>
             <hr />
