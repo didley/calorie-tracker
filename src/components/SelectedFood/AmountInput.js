@@ -3,10 +3,9 @@ import React from "react";
 export default function AmountInput({
   selected,
   servingOptionsArr,
-  chosenAmount,
   onChosenAmountChange,
-  servingChoice,
-  onServingChoiceChange,
+  amountInput,
+  onAmountInputChange,
 }) {
   const { perServeSize, isLiquid } = selected;
   //todo
@@ -31,7 +30,7 @@ export default function AmountInput({
         <label className="block tracking-wide text-gray-700 text-xs font-bold my-1">
           Amount
           <input
-            value={chosenAmount}
+            value={amountInput.chosenAmount}
             onChange={onChosenAmountChange}
             className="w-full text-center appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="number"
@@ -45,8 +44,8 @@ export default function AmountInput({
           Size
           <div className="relative">
             <select
-              value={servingChoice.servingName}
-              onChange={(e) => onServingChoiceChange(e)}
+              value={amountInput.index}
+              onChange={(e) => onAmountInputChange(e)}
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
               {servingOptionsArr &&

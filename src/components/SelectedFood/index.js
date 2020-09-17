@@ -13,9 +13,6 @@ export default function SelectedFood({ selected }) {
     isLiquid,
   } = selected;
 
-  const [chosenAmount, setChosenAmount] = useState(1);
-  const [servingChoice, setServingChoice] = useState({});
-
   const defaultServingOptions = [
     {
       id: "serve",
@@ -31,6 +28,13 @@ export default function SelectedFood({ selected }) {
 
   const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
 
+  // const [chosenAmount, setChosenAmount] = useState(1);
+  const [amountInput, setAmountInput] = useState({
+    chosenAmount: 1,
+    servingChoice: defaultServingOptions[0],
+    index: 0,
+  });
+
   console.log({ servingOptionsArr });
   // todo: getting macros adjusted to size option
   let adjustedMacros = { ...macros };
@@ -45,16 +49,22 @@ export default function SelectedFood({ selected }) {
   // console.log({ adjustedMacros, servingSize, chosenAmount });
 
   const onChosenAmountChange = (e) => {
-    setChosenAmount(parseInt(e.target.value));
+    setAmountInput({
+      ...amountInput,
+      chosenAmount: parseInt(e.target.value),
+    });
   };
 
-  // todo: on option change not adjusting on render
-  const onServingChoiceChange = (e) => {
-    setServingChoice(servingOptionsArr[e.target.value]);
+  const onAmountInputChange = (e) => {
+    setAmountInput({
+      ...amountInput,
+      servingChoice: servingOptionsArr[e.target.value],
+      index: e.target.value,
+    });
   };
 
   const handleSubmit = () => {
-    console.log({ chosenAmount, servingChoice });
+    console.log({ amountInput });
   };
 
   if (Object.keys(selected).length === 0) {
@@ -83,10 +93,9 @@ export default function SelectedFood({ selected }) {
       <AmountInput
         selected={selected}
         servingOptionsArr={servingOptionsArr}
-        chosenAmount={chosenAmount}
         onChosenAmountChange={onChosenAmountChange}
-        servingChoice={servingChoice}
-        onServingChoiceChange={onServingChoiceChange}
+        amountInput={amountInput}
+        onAmountInputChange={onAmountInputChange}
       />
       <Table macros={adjustedMacros} />
     </div>
