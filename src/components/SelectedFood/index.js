@@ -9,7 +9,6 @@ export default function SelectedFood({ selected }) {
     brand,
     name,
     perServeSize = 0,
-    isLiquid,
   } = selected;
 
   // TODO: amount input not allowing decimal
@@ -68,9 +67,16 @@ export default function SelectedFood({ selected }) {
       index: e.target.value,
     });
   };
-
+  // TODO: implement POST
   const handleSubmit = () => {
-    console.log({ amountInput });
+    console.log({
+      ...selected,
+      chosen: {
+        serving: amountInput.servingChoice,
+        chosenAmount: amountInput.chosenAmount,
+        chosenMacros: adjustedMacros,
+      },
+    });
   };
 
   if (Object.keys(selected).length === 0) {
