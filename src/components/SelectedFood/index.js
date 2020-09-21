@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
@@ -14,6 +16,9 @@ export default function SelectedFood({ selected }) {
   // TODO: amount input not allowing decimal
 
   const [amountInput, setAmountInput] = useState({});
+  const [diaryRedirect, setDiaryRedirect] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     setAmountInput({
@@ -69,15 +74,34 @@ export default function SelectedFood({ selected }) {
   };
   // TODO: implement POST
   const handleSubmit = () => {
-    console.log({
+    const addFoodObject = {
       ...selected,
       chosen: {
         serving: amountInput.servingChoice,
         chosenAmount: amountInput.chosenAmount,
         chosenMacros: adjustedMacros,
       },
-    });
+    };
+
+    // TODO: get params query params with post request
+    async function addFood(routName, data) {
+      // eg. GET to /users is getFoods("users")
+      try {
+        setLoading(true);
+        await axios.post(`/${routName}`, data);
+        setLoading(false);
+        setDiaryRedirect(true);
+      } catch (err) {
+        setError(err);
+        setLoading(false);
+      }
+    }
+    addFood(addFoodObject);
   };
+
+  if (diaryRedirect) {
+    return <Redirect to={`/diary`} />;
+  }
 
   if (Object.keys(selected).length === 0) {
     return (
@@ -95,7 +119,7 @@ export default function SelectedFood({ selected }) {
           onClick={handleSubmit}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >
-          Add
+          {loading ? <i className="animate-spin fas fa-circle-notch" /> : "Add"}
         </button>
       </div>
       <hr />

@@ -45,6 +45,10 @@ export default function FoodTabs({ onSelect }) {
     return <div>Loading...</div>;
   }
 
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
+
   return (
     <div className="bg-white p-3 m-2 rounded-lg shadow-lg max-w-md">
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>

@@ -7,7 +7,7 @@ export default function AmountInput({
   onChosenAmountChange,
   onAmountInputChange,
 }) {
-  const { perServeSize, isLiquid } = selected;
+  const { isLiquid } = selected;
 
   // const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
   //   // "g" or "mL"
