@@ -44,7 +44,10 @@ export default function Diary() {
         <div>
           <div className="flex justify-between">
             <h3 className="my-auto">Eaten</h3>
-            <Link to={`/addFoods?date=${date}`} className={addBtnStyle}>
+            <Link
+              to={`/addFoods?date=${date}&list=eaten`}
+              className={addBtnStyle}
+            >
               +
             </Link>
           </div>
