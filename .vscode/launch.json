@@ -10,7 +10,7 @@
       "request": "attach",
       "type": "pwa-msedge",
       "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "beta"
+      "runtimeExecutable": "dev"
     },
     {
       "name": "Launch Edge",
@@ -18,7 +18,7 @@
       "type": "pwa-msedge",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "beta"
+      "runtimeExecutable": "dev"
     }
   ]
 }

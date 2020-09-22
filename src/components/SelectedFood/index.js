@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
@@ -84,19 +85,22 @@ export default function SelectedFood({ selected }) {
     };
 
     // TODO: get params query params with post request
-    async function addFood(routName, data) {
-      // eg. GET to /users is getFoods("users")
-      try {
-        setLoading(true);
-        await axios.post(`/${routName}`, data);
-        setLoading(false);
-        setDiaryRedirect(true);
-      } catch (err) {
-        setError(err);
-        setLoading(false);
-      }
-    }
-    addFood(addFoodObject);
+
+    const parsedQS = queryString.parsed("addFoods");
+    console.log({ "QS Output": parsedQS });
+    // async function addFood(routName, data) {
+    //   // eg. GET to /users is getFoods("users")
+    //   try {
+    //     setLoading(true);
+    //     await axios.post(`/${routName}`, data);
+    //     setLoading(false);
+    //     setDiaryRedirect(true);
+    //   } catch (err) {
+    //     setError(err);
+    //     setLoading(false);
+    //   }
+    // }
+    // addFood(addFoodObject);
   };
 
   if (diaryRedirect) {
