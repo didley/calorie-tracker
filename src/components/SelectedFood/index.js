@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import queryString from "query-string";
 import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
@@ -75,7 +74,7 @@ export default function SelectedFood({ selected }) {
   };
   // TODO: implement POST
   const handleSubmit = () => {
-    const addFoodObject = {
+    const addFoodObj = {
       ...selected,
       chosen: {
         serving: amountInput.servingChoice,
@@ -84,10 +83,16 @@ export default function SelectedFood({ selected }) {
       },
     };
 
+    // console.log({ addFoodObj });
     // TODO: get params query params with post request
 
-    const parsedQS = queryString.parsed("addFoods");
-    console.log({ "QS Output": parsedQS });
+    const URLParamString = window.location.search;
+    // const URLParams = new URLSearchParams(window.location.search);
+    // const diaryURLDate = URLParams.get("date");
+    // const diaryURLList = URLParams.get("list");
+    // console.log({ diaryURLDate, diaryURLList });
+    // console.log({ URLParams });
+
     // async function addFood(routName, data) {
     //   // eg. GET to /users is getFoods("users")
     //   try {
@@ -95,12 +100,15 @@ export default function SelectedFood({ selected }) {
     //     await axios.post(`/${routName}`, data);
     //     setLoading(false);
     //     setDiaryRedirect(true);
+    //     console.log(`Food added`);
     //   } catch (err) {
     //     setError(err);
     //     setLoading(false);
+    //     console.log(`Food Error`);
     //   }
     // }
-    // addFood(addFoodObject);
+    console.log({ addFoodObj });
+    // addFood(`diary${URLParamString}`, addFoodObj);
   };
 
   if (diaryRedirect) {

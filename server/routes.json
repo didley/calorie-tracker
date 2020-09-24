@@ -1,0 +1,3 @@
+{
+  "/diary/:date": "/diary?date=:date"
+}
