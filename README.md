@@ -27,12 +27,19 @@ $ npm start
 
 ## TODO
 ---
+### 👨‍💻 Working On
+  - [x] center diary
+  - [ ] date selector in diary
+  - [ ] start backend
+
+
 ### 🐛 Bugs
-    - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
+  - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
 
 
 ### 🚀 Features
-    - [ ]   
+  - [ ]   yesterday/tomorrow on sides of today, onClick to change to that day
+  - [ ]   
 
 
 <br/>
