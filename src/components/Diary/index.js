@@ -32,7 +32,8 @@ export default function Diary() {
   }
 
   function handleDateChange(date) {
-    setSelectedDate(date);
+    const ISODate = new Date(date).toISOString().substr(0, 10);
+    setSelectedDate(ISODate);
   }
 
   function handleNoteChange(e) {
@@ -43,13 +44,13 @@ export default function Diary() {
     "bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1";
 
   return (
-    <div>
-      <DatePickerContainer
-        selectedDate={selectedDate}
-        handleDateChange={handleDateChange}
-      />
-      <div className="flex justify-center">
-        <div className="w-3/4 md:w-1/2 bg-white p-3 m-2 rounded-lg shadow-lg">
+    <div className="flex justify-center">
+      <div className="flex flex-col w-3/4 md:w-1/2">
+        <DatePickerContainer
+          selectedDate={selectedDate}
+          handleDateChange={handleDateChange}
+        />
+        <div className="bg-white p-3 m-2 rounded-lg shadow-lg">
           <h2>Diary</h2>
           <div className="space-y-12">
             <div>
