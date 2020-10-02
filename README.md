@@ -27,19 +27,18 @@ $ npm start
 
 ## TODO
 ---
-### 👨‍💻 Working On
-  - [x] center diary
-  - [ ] date selector in diary
+
+### 🐛  Bugs
+  - [ ] diary date errors on change if no diary info
+### 🚀  Features
+  - [ ] google api for food verification
+### 👨‍💻  Working On
   - [ ] start backend
-
-
-### 🐛 Bugs
+### 🌚  Done
   - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
-
-
-### 🚀 Features
-  - [ ]   yesterday/tomorrow on sides of today, onClick to change to that day
-  - [ ]   
+  - [x]   yesterday/tomorrow on sides of today, onClick to change to that day
+  - [x] center diary
+  - [x] date selector in diary
 
 
 <br/>

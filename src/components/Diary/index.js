@@ -15,7 +15,7 @@ export default function Diary() {
   useEffect(() => {
     getDiaryData(selectedDate);
     // eslint-disable-next-line
-  }, []);
+  }, [selectedDate]);
 
   async function getDiaryData(date) {
     // eg. GET to /users is getFoods("users")
