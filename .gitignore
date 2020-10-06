@@ -3,7 +3,7 @@
 # dependencies
 /node_modules
 /server/node_modules
-/client/node_modules
+/client_web/node_modules
 /client-2-mock-data/node_modules
 /src/tailwind.output.css
 

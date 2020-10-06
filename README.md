@@ -34,6 +34,7 @@ $ npm start
   - [ ] google api for food verification
 ### 👨‍💻  Working On
   - [ ] start backend
+  - [ ] notes cancel/save buttons
 ### 🌚  Done
   - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
   - [x]   yesterday/tomorrow on sides of today, onClick to change to that day
