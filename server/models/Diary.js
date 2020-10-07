@@ -1,0 +1,22 @@
+import { Schema, model } from "mongoose";
+
+const DiarySchema = new Schema({
+  date: {
+    type: Date,
+    required: true,
+  },
+  notes: String,
+  eaten: Array,
+  toEat: [
+    {
+      chosenOptions: { serving: { servingName: String, servingSize: Number } },
+      food: {
+        type: mongo.Schema.Types.ObjectId,
+        required: true,
+        ref: "Food",
+      },
+    },
+  ],
+});
+
+export default Diary = model("diary", DiarySchema);
