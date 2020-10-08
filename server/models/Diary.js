@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+const { Schema, model } = require("mongoose");
 
 const DiarySchema = new Schema({
   date: {
@@ -19,4 +19,4 @@ const DiarySchema = new Schema({
   ],
 });
 
-export default Diary = model("diary", DiarySchema);
+module.exports = Diary = model("diary", DiarySchema);

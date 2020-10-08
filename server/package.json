@@ -1,5 +1,4 @@
 {
-  "type": "module",
   "name": "server",
   "main": "index.js",
   "scripts": {

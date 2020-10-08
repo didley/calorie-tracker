@@ -1,18 +1,20 @@
-import express from "express";
+const express = require("express");
 const router = express.Router();
 
-import DiaryModel from "../../models/Diary";
-import FoodModel from "../../models/Food";
+const DiaryModel = require("../../models/Diary");
+const FoodModel = require("../../models/Food");
 
 /** @Route GET api/diary @access private @desc get diary entry form today */
 router.get("/", async (req, res) => {
-  try {
-    const diaryEntry = await DiaryModel.findOne({ date: new Date() }); // TODO: working on
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server Error");
-  }
-  res.send("Diary route");
+  //   try {
+  //     const today = new Date();
+  //     console.log(today);
+  //     // const diaryEntry = await DiaryModel.findOne({ date: new Date() }); // TODO: working on
+  //     res.send("Diary route");
+  //   } catch (err) {
+  //     console.log(err.message);
+  //     res.status(500).send("Server Error");
+  //   }
 });
 
 /** @Route GET api/diary/:date @access private @desc get diary entry form param date */
