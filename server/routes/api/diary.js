@@ -29,4 +29,4 @@ router.get("/", async (req, res) => {
 /** @Route @access @desc */
 /** @Route @access @desc */
 
-export default router;
+module.exports = router;

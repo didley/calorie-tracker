@@ -1,4 +1,4 @@
-const { Schema, model, mongo } = require("mongoose");
+const { Schema, model } = require("mongoose");
 
 const FoodSchema = new Schema({
   name: { type: String, required: true },

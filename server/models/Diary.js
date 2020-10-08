@@ -11,7 +11,7 @@ const DiarySchema = new Schema({
     {
       chosenOptions: { serving: { servingName: String, servingSize: Number } },
       food: {
-        type: mongo.Schema.Types.ObjectId,
+        type: Schema.Types.ObjectId,
         required: true,
         ref: "Food",
       },
