@@ -1,14 +1,14 @@
 const express = require("express");
+const Food = require("../../models/Food");
 const router = express.Router();
 
-const DiaryModel = require("../../models/Diary");
-const Food = require("../../models/Food");
 const FoodModel = require("../../models/Food");
 
 /** @Route GET api/foods @access public @desc get foods DB */
 router.get("/", async (req, res) => {
   try {
-    res.send("foods route");
+    const allFoods = await FoodModel.find({});
+    res.json(allFoods);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");

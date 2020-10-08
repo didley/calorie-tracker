@@ -6,10 +6,23 @@ const DiarySchema = new Schema({
     required: true,
   },
   notes: String,
-  eaten: Array,
-  toEat: [
+  eaten: [
     {
       chosenOptions: { serving: { servingName: String, servingSize: Number } },
+      food: {
+        type: Schema.Types.ObjectId,
+        required: true,
+        ref: "Food",
+      },
+    },
+  ],
+  toEat: [
+    {
+      chosenOptions: {
+        serving: { servingName: String, servingSize: Number },
+        chosenAmount: Number,
+        chosenMacros: Object,
+      },
       food: {
         type: Schema.Types.ObjectId,
         required: true,

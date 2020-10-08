@@ -8,7 +8,7 @@ const FoodModel = require("../../models/Food");
 router.get("/", async (req, res) => {
   try {
     const today = new Date();
-    const diaryEntry = await DiaryModel.findOne({ date: today }); // TODO: working on
+    const diaryEntry = await DiaryModel.findOne({ date: today });
     res.send("Diary route");
   } catch (err) {
     console.log(err.message);
@@ -17,9 +17,28 @@ router.get("/", async (req, res) => {
 });
 
 /** @Route GET api/diary/:date @access private @desc get diary entry form param date */
-/** @Route GET api/diary/add @access private @desc get food DB list */
-/** @Route GET api/diary/add?q=my-foods @access private @desc get users food list */
-/** @Route GET api/diary/add?q=recent @access private @desc get users recent food list */
+router.get("/:date", async (req, res) => {
+  try {
+    const diaryEntry = await DiaryModel.findOne({ date: req.query.date });
+    res.send("Diary route");
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+/** @Route POST api/diary/:date/add-food @access private @desc add food to diary list */
+router.post("/:date", async (req, res) => {
+  //TODO: working on
+  try {
+    const list = req.query.list;
+    const diaryEntry = await DiaryModel.findOne({ date: req.query.date });
+    res.send("Diary route");
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
 
 /** @Route @access @desc */
 /** @Route @access @desc */
