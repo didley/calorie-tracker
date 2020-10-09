@@ -6,6 +6,7 @@ module.exports = async function connectDB() {
     await connect(process.env.DB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
+      useFindAndModify: false,
     });
     console.log("🚀   Connected to DB successfully!");
   } catch (err) {

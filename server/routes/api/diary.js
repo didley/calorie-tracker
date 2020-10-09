@@ -28,12 +28,22 @@ router.get("/:date", async (req, res) => {
 });
 
 /** @Route POST api/diary/:date/add-food @access private @desc add food to diary list */
-router.post("/:date", async (req, res) => {
+router.post("/:date/add-food", async (req, res) => {
   //TODO: working on
   try {
-    const list = req.query.list;
-    const diaryEntry = await DiaryModel.findOne({ date: req.query.date });
-    res.send("Diary route");
+    const { date } = req.params;
+    const { list } = req.query;
+    const options = { upsert: true };
+
+    await DiaryModel.findOneAndUpdate(
+      { date },
+      { $push: { [list]: req.body } },
+      options
+    );
+
+    res.json({
+      msg: `Food added to ${list === "eaten" ? "eaten" : "to eat"} list`,
+    });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
