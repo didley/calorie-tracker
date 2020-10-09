@@ -1,8 +1,8 @@
 const { Schema, model } = require("mongoose");
 
 const DiarySchema = new Schema({
-  date: {
-    type: Date,
+  entryDate: {
+    type: String,
     required: true,
   },
   notes: String,

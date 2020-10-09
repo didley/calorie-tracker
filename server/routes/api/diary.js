@@ -1,26 +1,32 @@
 const express = require("express");
 const router = express.Router();
+const { format } = require("date-fns");
+
+// const dateOnlyToday = format(new Date(), "yyyy-MM-dd");
+// console.log(new Date(dateOnlyToday));
 
 const DiaryModel = require("../../models/Diary");
 const FoodModel = require("../../models/Food");
 
-/** @Route GET api/diary @access private @desc get diary entry form today */
-router.get("/", async (req, res) => {
-  try {
-    const today = new Date();
-    const diaryEntry = await DiaryModel.findOne({ date: today });
-    res.send("Diary route");
-  } catch (err) {
-    console.log(err.message);
-    res.status(500).send("Server Error");
-  }
-});
-
 /** @Route GET api/diary/:date @access private @desc get diary entry form param date */
-router.get("/:date", async (req, res) => {
+router.get(["/", "/:date"], async (req, res) => {
+  let { date } = req.params;
+  // returns today if no date provided
+  if (!date) {
+    date = format(new Date(), "yyyy-MM-dd");
+  }
+
   try {
-    const diaryEntry = await DiaryModel.findOne({ date: req.query.date });
-    res.send("Diary route");
+    // TODO: working on, diaryEntry is always returning null
+    const diaryEntry = await DiaryModel.findOne({ entryDate: date });
+
+    console.log(diaryEntry);
+    // if (!diaryEntry) {
+    //   res.json(`no diary entry found for ${date}`);
+    // }
+    res.json("searched to log");
+
+    // res.json(diaryEntry);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
@@ -29,14 +35,13 @@ router.get("/:date", async (req, res) => {
 
 /** @Route POST api/diary/:date/add-food @access private @desc add food to diary list */
 router.post("/:date/add-food", async (req, res) => {
-  //TODO: working on
+  const { date } = req.params;
+  const { list } = req.query;
   try {
-    const { date } = req.params;
-    const { list } = req.query;
     const options = { upsert: true };
 
     await DiaryModel.findOneAndUpdate(
-      { date },
+      { entryDate: date },
       { $push: { [list]: req.body } },
       options
     );
