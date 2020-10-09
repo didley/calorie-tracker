@@ -17,16 +17,14 @@ router.get(["/", "/:date"], async (req, res) => {
   }
 
   try {
-    // TODO: working on, diaryEntry is always returning null
-    const diaryEntry = await DiaryModel.findOne({ entryDate: date });
+    const diaryEntry = await await DiaryModel.findOne({ entryDate: date });
 
-    console.log(diaryEntry);
-    // if (!diaryEntry) {
-    //   res.json(`no diary entry found for ${date}`);
-    // }
-    res.json("searched to log");
+    console.log(diaryEntry); // TODO: append food object with findById
+    if (!diaryEntry) {
+      res.json(`no diary entry found for ${date}`);
+    }
 
-    // res.json(diaryEntry);
+    res.json(diaryEntry);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");

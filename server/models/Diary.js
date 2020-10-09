@@ -36,4 +36,4 @@ const DiarySchema = new Schema({
   ],
 });
 
-module.exports = Diary = model("diary", DiarySchema);
+module.exports = DiaryModel = model("diary", DiarySchema);
