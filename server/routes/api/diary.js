@@ -54,17 +54,17 @@ router.post("/:date/add-food", async (req, res) => {
 });
 
 /** @Route DELETE api/diary/:date/delete-food/:list/:id @access private @desc delete a food from eaten or toEat arrays */
-router.delete("/:date/delete-food/:list/:id", async (req, res) => {
-  const { date, list, id } = req.params;
+router.delete("/:date/delete-food/:id", async (req, res) => {
+  const { date, id } = req.params;
 
   try {
     const deleteFoodReq = await DiaryModel.updateOne(
       { entryDate: date },
-      { $pull: { [list]: { _id: id } } }
+      { $pull: { toEat: { _id: id }, eaten: { _id: id } } }
     );
 
     deleteFoodReq.nModified > 0
-      ? res.json({ msg: `Food removed from ${list} list on ${date}` })
+      ? res.json({ msg: `Food removed from ${date}` })
       : res.status(404).json({ msg: "Food not found" });
   } catch (err) {
     console.log(err.message);
