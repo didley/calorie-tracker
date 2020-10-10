@@ -13,7 +13,7 @@ const DiarySchema = new Schema({
         chosenAmount: Number,
         chosenMacros: Object,
       },
-      food: {
+      food_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Food",
@@ -27,7 +27,7 @@ const DiarySchema = new Schema({
         chosenAmount: Number,
         chosenMacros: Object,
       },
-      food: {
+      food_id: {
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Food",

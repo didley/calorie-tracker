@@ -17,9 +17,10 @@ router.get(["/", "/:date"], async (req, res) => {
   }
 
   try {
-    const diaryEntry = await await DiaryModel.findOne({ entryDate: date });
+    const diaryEntry = await DiaryModel.findOne({
+      entryDate: date,
+    }).populate(["toEat.food_id", "eaten.food_id"]);
 
-    console.log(diaryEntry); // TODO: append food object with findById
     if (!diaryEntry) {
       res.json(`no diary entry found for ${date}`);
     }
