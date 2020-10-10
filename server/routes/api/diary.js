@@ -6,7 +6,6 @@ const { format } = require("date-fns");
 // console.log(new Date(dateOnlyToday));
 
 const DiaryModel = require("../../models/Diary");
-const FoodModel = require("../../models/Food");
 
 /** @Route GET api/diary/:date @access private @desc get diary entry form param date */
 router.get(["/", "/:date"], async (req, res) => {
@@ -48,6 +47,25 @@ router.post("/:date/add-food", async (req, res) => {
     res.json({
       msg: `Food added to ${list === "eaten" ? "eaten" : "to eat"} list`,
     });
+  } catch (err) {
+    console.log(err.message);
+    res.status(500).send("Server Error");
+  }
+});
+
+/** @Route DELETE api/diary/:date/delete-food/:list/:id @access private @desc delete a food from eaten or toEat arrays */
+router.delete("/:date/delete-food/:list/:id", async (req, res) => {
+  const { date, list, id } = req.params;
+
+  try {
+    const deleteFoodReq = await DiaryModel.updateOne(
+      { entryDate: date },
+      { $pull: { [list]: { _id: id } } }
+    );
+
+    deleteFoodReq.nModified > 0
+      ? res.json({ msg: `Food removed from ${list} list on ${date}` })
+      : res.status(404).json({ msg: "Food not found" });
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");
