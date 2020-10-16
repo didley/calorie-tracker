@@ -1,4 +1,3 @@
-// const mongoose = require("mongoose");
 const { connect } = require("mongoose");
 
 module.exports = async function connectDB() {
