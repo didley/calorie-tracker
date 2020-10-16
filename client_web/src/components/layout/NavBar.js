@@ -1,14 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function NavBar() {
+export default function NavBar({ OKTA_CALLBACK_PATH }) {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <span className="font-semibold text-xl tracking-tight">
+        <Link to="/diary" className="font-semibold text-xl tracking-tight">
           Calorie Tracker
-        </span>
+        </Link>
       </div>
+      {/* mobile menu button show/hide, delete this comm when functioning */}
       <div className="block md:hidden">
         <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
           <svg
@@ -25,9 +26,15 @@ export default function NavBar() {
         <nav className="text-sm md:flex-grow">
           <Link
             to="/diary"
-            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white"
+            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
           >
             Diary
+          </Link>
+          <Link
+            to={OKTA_CALLBACK_PATH}
+            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
+          >
+            Login
           </Link>
         </nav>
       </div>
