@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function NavBar({ OKTA_CALLBACK_PATH }) {
+export default function NavBar() {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -31,7 +31,7 @@ export default function NavBar({ OKTA_CALLBACK_PATH }) {
             Diary
           </Link>
           <Link
-            to={OKTA_CALLBACK_PATH}
+            to="/login"
             className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
           >
             Login
