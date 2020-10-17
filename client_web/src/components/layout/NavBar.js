@@ -36,6 +36,12 @@ export default function NavBar() {
           >
             Login
           </Link>
+          <Link
+            to="/"
+            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
+          >
+            Home
+          </Link>
         </nav>
       </div>
     </nav>

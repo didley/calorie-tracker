@@ -6,6 +6,7 @@ module.exports = async function connectDB() {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
+      autoIndex: false,
     });
     console.log("🚀   Connected to DB successfully!");
   } catch (err) {

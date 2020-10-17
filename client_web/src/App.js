@@ -13,9 +13,6 @@ export default function App() {
       <NavBar />
       <div>
         <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
           <Route path="/login">
             <Login />
           </Route>
@@ -24,6 +21,9 @@ export default function App() {
           </Route>
           <Route path="/addFoods">
             <AddFoods />
+          </Route>
+          <Route path="/">
+            <Home />
           </Route>
         </Switch>
       </div>
