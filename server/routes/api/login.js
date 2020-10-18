@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
+const bcrypt = require("bcryptjs");
 
-var passport = require("passport"),
+const passport = require("passport"),
   LocalStrategy = require("passport-local").Strategy;
+
+const User = require("../../models/User");
 
 passport.use(
   new LocalStrategy(function (username, password, done) {
@@ -28,12 +31,31 @@ router.get("/", async (req, res) => {
 
 /** @Route POST api/login @access public @desc authenticate user */
 router.post("/", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(400).json({ msg: "Invalid Credentials" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(400).json({ msg: "Invalid Credentials" });
+    }
+
+    res.json({ msg: "Successful login!" });
+    // TODO: implement JWT here
+  } catch (err) {}
+
   //TODO: WORKING ON
-  passport.authenticate("local", {
-    successRedirect: "/diary",
-    failureRedirect: "/login",
-    failureFlash: true,
-  });
+  // passport.authenticate("local", {
+  //   successRedirect: "/diary",
+  //   failureRedirect: "/login",
+  //   failureFlash: true,
+  // });
 });
 
 module.exports = router;
