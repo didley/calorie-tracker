@@ -5,6 +5,13 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "server - Launch Program",
+      "program": "${workspaceFolder}/server/index.js",
+      "request": "launch",
+      "skipFiles": ["<node_internals>/**"],
+      "type": "pwa-node"
+    },
+    {
       "name": "Attach to Edge",
       "port": 3000,
       "request": "attach",

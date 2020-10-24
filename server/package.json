@@ -1,14 +1,16 @@
 {
   "name": "server",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon -r dotenv/config index.js"
+    "start": "nodemon server.js",
+    "trace-warnings": "nodemon --trace-warnings server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
+    "express-session": "^1.17.1",
     "mongoose": "^5.10.8",
     "nodemon": "^2.0.4",
     "passport": "^0.4.1",
