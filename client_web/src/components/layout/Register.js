@@ -1,22 +1,33 @@
 import React, { useState } from "react";
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await fetch("/api/login", {
       method: "POST",
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
     });
     console.log(res);
   };
 
   return (
     <div>
-      <h1>Login</h1>
+      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
+        <label>
+          Name:
+          <input
+            type="text"
+            value={name}
+            required
+            onChange={(e) => setName(e.target.value)}
+          />
+        </label>
+        <br />
         <label>
           Email:
           <input
@@ -37,7 +48,7 @@ export default function Login() {
           />
         </label>
         <br />
-        <input type="submit" value="Login" />
+        <input type="submit" value="Register" />
       </form>
     </div>
   );

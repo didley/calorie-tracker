@@ -6,6 +6,7 @@ import Diary from "./components/diary";
 import NavBar from "./components/layout/NavBar";
 import Home from "./components/layout/Home";
 import Login from "./components/layout/Login";
+import Register from "./components/layout/Register";
 
 export default function App() {
   return (
@@ -15,6 +16,9 @@ export default function App() {
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
           </Route>
           <Route path="/diary">
             <Diary />
