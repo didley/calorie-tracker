@@ -15,13 +15,12 @@ module.exports = {
       }).populate(["toEat.food_id", "eaten.food_id"]);
 
       if (!diaryEntry) {
-        res.json(`no diary entry found for ${date}`);
+        return res.json({ msg: `no diary entry found for ${date}` });
       }
 
       res.json(diaryEntry);
     } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server Error");
+      res.status(400).json({ err });
     }
   },
   addFoodToEntryList: async (req, res) => {
@@ -40,8 +39,7 @@ module.exports = {
         msg: `Food added to ${list === "eaten" ? "eaten" : "to eat"} list`,
       });
     } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server Error");
+      res.status(400).json({ err });
     }
   },
   removeFoodFromEntry: async (req, res) => {
@@ -57,8 +55,7 @@ module.exports = {
         ? res.json({ msg: `Food removed from ${date}` })
         : res.status(404).json({ msg: "Food not found" });
     } catch (err) {
-      console.log(err.message);
-      res.status(500).send("Server Error");
+      res.status(400).json({ err });
     }
   },
 };
