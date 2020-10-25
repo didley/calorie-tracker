@@ -24,28 +24,16 @@ export default function NavBar() {
       </div>
       <div className="w-full block flex-grow md:flex md:items-center md:w-auto">
         <nav className="text-sm md:flex-grow">
-          <Link
-            to="/diary"
-            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
-          >
+          <Link to="/diary" className={linkStyle}>
             Diary
           </Link>
-          <Link
-            to="/login"
-            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
-          >
+          <Link to="/login" className={linkStyle}>
             Login
           </Link>
-          <Link
-            to="/register"
-            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
-          >
+          <Link to="/register" className={linkStyle}>
             Register
           </Link>
-          <Link
-            to="/"
-            className="block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1"
-          >
+          <Link to="/" className={linkStyle}>
             Home
           </Link>
         </nav>
@@ -53,3 +41,6 @@ export default function NavBar() {
     </nav>
   );
 }
+
+const linkStyle =
+  "block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1";

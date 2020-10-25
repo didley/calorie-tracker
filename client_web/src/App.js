@@ -12,25 +12,13 @@ export default function App() {
   return (
     <div className="bg-orange-100 min-h-screen">
       <NavBar />
-      <div>
-        <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/register">
-            <Register />
-          </Route>
-          <Route path="/diary">
-            <Diary />
-          </Route>
-          <Route path="/addFoods">
-            <AddFoods />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route path="/login" component={Login} />
+        <Route path="/register" component={Register} />
+        <Route path="/diary" component={Diary} />
+        <Route path="/addFoods" component={AddFoods} />
+        <Route path="/" component={Home} />
+      </Switch>
     </div>
   );
 }
