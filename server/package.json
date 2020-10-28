@@ -2,8 +2,7 @@
   "name": "server",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js",
-    "trace-warnings": "nodemon --trace-warnings server.js"
+    "start": "nodemon server.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -11,10 +10,11 @@
     "cookie-parser": "^1.4.5",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
+    "express-openid-connect": "^2.0.0",
     "express-session": "^1.17.1",
-    "mongoose": "^5.10.8",
-    "nodemon": "^2.0.4",
-    "passport": "^0.4.1",
-    "passport-local": "^1.0.0"
+    "mongoose": "^5.10.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
