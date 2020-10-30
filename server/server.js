@@ -3,43 +3,37 @@ require("./db").connectDB();
 const express = require("express");
 const cookieParser = require("cookie-parser");
 const bodyParser = require("body-parser");
-const { auth, requiresAuth } = require("express-openid-connect");
+const path = require("path");
 const session = require("express-session");
+const { v4: uuidv4 } = require("uuid");
 
 const PORT = process.env.PORT || 5000;
 const app = express();
 app.use(cookieParser());
-
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: {
-//       secure: process.env.NODE_ENV === "production",
-//       httpOnly: true,
-//     },
-//   })
-// );
-
-const config = {
-  authRequired: false,
-  auth0Logout: true,
-  secret: process.env.APP_SECRET,
-  baseURL: "http://localhost:5000",
-  clientID: process.env.CLIENT_ID,
-  issuerBaseURL: process.env.ISSUER_BASE_URL,
-};
-
-app.use(auth(config));
 app.use(bodyParser.json());
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user));
+app.use(
+  session({
+    genid: (req) => {
+      console.log("in the session middleware");
+      console.log(req.sessionID);
+      return uuidv4();
+    },
+    secret: process.env.APP_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  })
+);
+
+app.use(express.static(path.join(__dirname, "/client/build")));
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "/client/build/index.html"));
 });
 
-app.get("/", (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+app.get("/test", (req, res) => {
+  console.log("inside the test callback fn");
+  console.log(req.sessionID);
+  res.send("You hit /test route");
 });
 
 app.use("/api", require("./router"));
