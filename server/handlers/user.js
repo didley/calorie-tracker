@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const bcrypt = require("bcryptjs");
+const passport = require("passport");
 
 module.exports = {
   registerUser: async (req, res) => {
@@ -18,25 +19,41 @@ module.exports = {
       res.status(400).json(err);
     }
   },
-  loginUser: async (req, res) => {
-    // Without passport
-    const { email, password } = req.body;
-    try {
-      const user = await User.findOne({ email });
+  getUser: async (req, res) => {
+    console.log("inside GET /login callback fn");
+    console.log(req.sessionID);
+    res.send("YOU got the login page");
+  },
+  loginUser: (req, res) => {
+    res.send("login worked implement redirect here");
 
-      if (!user) {
-        return res.json({ msg: "Account not found" });
-      }
+    // // Without passport
+    // const { email, password } = req.body;
+    // try {
+    //   const user = await User.findOne({ email });
 
-      const correctPassword = await bcrypt.compare(password, user.password);
+    //   if (!user) {
+    //     return res.json({ msg: "Account not found" });
+    //   }
 
-      if (!correctPassword) {
-        return res.json({ msg: "Incorrect credentials" });
-      }
+    //   const correctPassword = await bcrypt.compare(password, user.password);
 
-      res.json({ userId: user.id, msg: "Successful login, welcome!" });
-    } catch (err) {
-      res.status(400).json(err);
+    //   if (!correctPassword) {
+    //     return res.json({ msg: "Incorrect credentials" });
+    //   }
+
+    //   res.json({ userId: user.id, msg: "Successful login, welcome!" });
+    // } catch (err) {
+    //   res.status(400).json(err);
+    // }
+  },
+  authRequired: (req, res) => {
+    console.log("Inside GET /authrequired callback");
+    console.log(`User authenticated? ${req.isAuthenticated()}`);
+    if (req.isAuthenticated()) {
+      res.send("you hit the authentication endpoint\n");
+    } else {
+      res.redirect("/");
     }
   },
   logoutUser: "TODO",
