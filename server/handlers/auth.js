@@ -1,3 +1,6 @@
+const bcrypt = require("bcryptjs");
+const User = require("../models/User");
+
 module.exports = {
   getUserDetails: (req, res) => {
     console.log(req.user);
@@ -12,29 +15,34 @@ module.exports = {
     const { password, ...cleanUser } = req.user._doc;
     return res.json({ user: cleanUser });
   },
-  logoutUser: (req, res) => {},
-  registerUser: (req, res) => {},
-  // authenticate: (req, res) => {
-  //   const cookieOptions = {
-  //     httpOnly: true,
-  //   };
+  logoutUser: (req, res) => {
+    if (req.user) {
+      req.session.destroy();
+      res.clearCookie("connect.sid");
+      return res.json({ msg: "logging you out" });
+    } else {
+      return res.json({ msg: "no user to log out!" });
+    }
+  },
+  registerUser: async (req, res) => {
+    //TODO - Add validation
+    try {
+      const { name, email, password } = req.body;
+      const alreadyUser = await User.findOne({ email });
+      if (alreadyUser) {
+        return res.status(400).json({ msg: "Email already in use" });
+      }
 
-  //   if (req.auth.user === "admin") {
-  //     res.cookie("name", "admin", cookieOptions).send({ screen: "admin" });
-  //   } else if (req.auth.user === "user") {
-  //     res.cookie("name", "user", cookieOptions).send({ screen: "user" });
-  //   }
-  // },
-  // readCookie: (req, res) => {
-  //   if (req.cookies.name === "admin") {
-  //     res.send({ screen: "admin" });
-  //   } else if (req.cookies.name === "user") {
-  //     res.send({ screen: "user" });
-  //   } else {
-  //     res.send({ screen: "auth" });
-  //   }
-  // },
-  // clearCookie: (req, res) => {
-  //   res.clearCookie("name").end();
-  // },
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      await User.create({ name, email, password: hashedPassword }).then(
+        (user) => {
+          const { password, ...cleanUser } = user._doc;
+          res.json({ user: cleanUser, msg: "Account created" });
+        }
+      );
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
 };
