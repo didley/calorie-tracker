@@ -1,6 +1,7 @@
 const { Schema, model } = require("mongoose");
+const bcrypt = require("bcryptjs");
 
-const UserSchema = new Schema({
+const userSchema = new Schema({
   name: { type: String, required: true },
   dateOfBirth: String,
   email: {
@@ -14,6 +15,12 @@ const UserSchema = new Schema({
   goalWeightKg: Number,
 });
 
-const User = model("User", UserSchema);
+userSchema.methods = {
+  checkPassword: function (inputPassword) {
+    return bcrypt.compare(inputPassword, this.password);
+  },
+};
+
+const User = model("User", userSchema);
 
 module.exports = User;

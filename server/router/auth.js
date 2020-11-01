@@ -1,9 +1,10 @@
 const router = require("express").Router();
 const authHandlers = require("../handlers/auth");
-const auth = require("../middleware/auth");
+const passport = require("../passport");
 
-router.get("/authenticate", auth, authHandlers.authenticate);
-router.get("/read-cookie", authHandlers.readCookie);
-router.get("/clear-cookie", authHandlers.clearCookie);
+router.get("/user", authHandlers.getUserDetails);
+router.post("/login", passport.authenticate("local"), authHandlers.loginUser);
+router.post("/logout", authHandlers.logoutUser);
+router.post("/register", authHandlers.registerUser);
 
 module.exports = router;
