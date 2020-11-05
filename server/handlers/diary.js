@@ -11,6 +11,7 @@ module.exports = {
 
     try {
       const diaryEntry = await Diary.findOne({
+        userId: req.user._id,
         entryDate: date,
       }).populate(["toEat.food_id", "eaten.food_id"]);
 
@@ -24,19 +25,29 @@ module.exports = {
     }
   },
   addFoodToEntryList: async (req, res) => {
+    // eg. /api/diary/2020-10-03/add-food?list=to-eat || /api/diary/2020-10-03/add-food || /api/diary/2020-10-03/add-food?list=eaten
     const { date } = req.params;
     const { list } = req.query;
+    let adjustedList;
+    if (list === "to-eat") {
+      adjustedList = "toEat";
+    } else {
+      adjustedList = "eaten";
+    }
+
     try {
       const options = { upsert: true };
 
       await Diary.findOneAndUpdate(
-        { entryDate: date },
-        { $push: { [list]: req.body } },
+        { entryDate: date, userId: req.user._id },
+        { $push: { [adjustedList]: req.body } },
         options
       );
 
       res.json({
-        msg: `Food added to ${list === "eaten" ? "eaten" : "to eat"} list`,
+        msg: `Food added to ${
+          adjustedList === "eaten" ? "eaten" : "to eat"
+        } list`,
       });
     } catch (err) {
       res.status(400).json({ err });
@@ -47,7 +58,7 @@ module.exports = {
 
     try {
       const deleteFoodReq = await Diary.updateOne(
-        { entryDate: date },
+        { entryDate: date, userId: req.user._id },
         { $pull: { toEat: { _id: id }, eaten: { _id: id } } }
       );
 
