@@ -16,7 +16,9 @@ module.exports = {
       }).populate(["toEat.food_id", "eaten.food_id"]);
 
       if (!diaryEntry) {
-        return res.json({ msg: `no diary entry found for ${date}` });
+        return res
+          .status(404)
+          .json({ msg: `no diary entry found for ${date}` });
       }
 
       res.json(diaryEntry);
