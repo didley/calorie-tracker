@@ -1,24 +1,41 @@
 import React, { useState } from "react";
+import { Redirect } from "react-router-dom";
+import axios from "axios";
 
-export default function Login({ setIsLoading, setError }) {
+export default function Login({
+  setIsLoading,
+  setError,
+  setUser,
+  setLoggedIn,
+  setTimedAlert,
+}) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirectTo, setRedirectTO] = useState(null);
 
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setIsLoading(true);
     try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password }),
-      });
+      const res = await axios.post("/api/auth/login", { email, password });
+      setUser(res.data.user);
+      setLoggedIn(true);
+      setIsLoading(false);
+      setTimedAlert("Login Success!");
       setRedirectTO("/diary");
     } catch (err) {
-      setError(err);
+      if (err.response.status === 401) {
+        setError("Incorrect credentials");
+      } else {
+        setError(`Login request error ${err}`);
+      }
+      setIsLoading(false);
     }
-  };
+  }
 
-  return (
+  return redirectTo ? (
+    <Redirect to={{ pathname: redirectTo }} />
+  ) : (
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>

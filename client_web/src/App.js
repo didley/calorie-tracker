@@ -10,7 +10,24 @@ import Register from "./components/layout/Register";
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(false);
+  const [alert, setAlert] = useState("");
   const [errors, setErrors] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [user, setUser] = useState(null);
+
+  const loadingSpinner = (
+    <div className="bg-white">
+      <h1 className="text-center">Loading...</h1>
+    </div>
+  );
+
+  const alertDisplay = (
+    <div className="flex flex-row bg-blue-500 pl-5">
+      <div className="py-1">
+        <p className="text-white text-sm pl-2">{alert}</p>
+      </div>
+    </div>
+  );
 
   const errorsDisplay = (
     <div className="flex flex-row bg-red-600 pl-5">
@@ -26,12 +43,6 @@ export default function App() {
     </div>
   );
 
-  const loadingSpinner = (
-    <div className="bg-white">
-      <h1 className="text-center">Loading...</h1>
-    </div>
-  );
-
   function setError(error) {
     const newState = [error, ...errors];
     setErrors(newState);
@@ -41,14 +52,29 @@ export default function App() {
     }, 5000);
   }
 
+  function setTimedAlert(alert) {
+    setAlert(alert);
+
+    setTimeout(() => {
+      setAlert("");
+    }, 3000);
+  }
+
   return (
     <div className="bg-orange-100 min-h-screen">
       <NavBar setIsLoading={setIsLoading} setError={setError} />
       {isLoading && loadingSpinner}
+      {alert && alertDisplay}
       {errors.length > 0 && errorsDisplay}
       <Switch>
         <Route path="/login">
-          <Login setIsLoading={setIsLoading} setError={setError} />
+          <Login
+            setIsLoading={setIsLoading}
+            setError={setError}
+            setUser={setUser}
+            setLoggedIn={setLoggedIn}
+            setTimedAlert={setTimedAlert}
+          />
         </Route>
         <Route path="/register">
           <Register setIsLoading={setIsLoading} setError={setError} />
