@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 
-export default function Login() {
+export default function Login({ setIsLoading, setError }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [redirectTo, setRedirectTO] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-    });
-    console.log(res);
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({ email, password }),
+      });
+      setRedirectTO("/diary");
+    } catch (err) {
+      setError(err);
+    }
   };
 
   return (

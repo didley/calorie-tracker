@@ -4,11 +4,9 @@ import axios from "axios";
 import DiaryItem from "./DiaryItem";
 import DatePickerContainer from "./DatePickerContainer";
 
-export default function Diary() {
+export default function Diary({ setIsLoading, setError }) {
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-09-05"); // TODO: Replace initial state with (new Date())
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   const { eaten, toEat, notes } = data;
 
@@ -20,14 +18,14 @@ export default function Diary() {
   async function getDiaryData(date) {
     // eg. GET to /users is getFoods("users")
     try {
-      setLoading(true);
+      setIsLoading(true);
       const res = await axios.get(`/diary?date=${date}`);
       setData(res.data[0]);
 
-      setLoading(false);
+      setIsLoading(false);
     } catch (err) {
       setError(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 

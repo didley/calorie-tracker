@@ -29,16 +29,15 @@ $ npm start
 ---
 
 ### 👨‍💻  Working On
-  - [ ] finish food routes
   - [ ] note routes
-  - [ ] user creation
-  - [ ] auth
-  - [ ] password hashing
   - [ ] implement admin management 
   - [ ] add propTypes to components
-  - [ ] 
 
 ### 🌚  Done
+  - [x] user creation
+  - [x] auth
+  - [x] password hashing
+  - [x] finish food routes
   - [x] start backend
   - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
   - [x] yesterday/tomorrow on sides of today, onClick to change to that day

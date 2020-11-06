@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import SelectedFood from "../selectedFood";
 import FoodTabs from "./FoodTabs";
 
-export default function AddFoods() {
+export default function AddFoods({ setIsLoading, setError }) {
   const [selected, setSelected] = useState({});
 
   const onSelect = (food) => {
