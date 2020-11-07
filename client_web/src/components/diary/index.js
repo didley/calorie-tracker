@@ -43,16 +43,16 @@ export default function Diary({ setIsLoading, setError }) {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col w-3/4 md:w-1/2">
+      <div className="flex flex-col w-full max-w-2xl">
         <DatePickerContainer
           selectedDate={selectedDate}
           handleDateChange={handleDateChange}
         />
         <div className="bg-white p-3 m-2 rounded-lg shadow-lg">
           <h2>Diary</h2>
-          <div className="space-y-2">
+          <div className="space-y-6">
             <div>
-              <div className="flex justify-between">
+              <div className="border-b flex justify-between">
                 <h3 className="my-auto">Eaten</h3>
                 <Link
                   to={`/addFoods?date=${selectedDate}&list=eaten`}
@@ -61,14 +61,13 @@ export default function Diary({ setIsLoading, setError }) {
                   +
                 </Link>
               </div>
-              <hr />
-              <ul className="inline-block h-32 pb-5">
+              <ul className="inline-block w-full h-32">
                 {eaten &&
                   eaten.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
             </div>
             <div>
-              <div className="flex justify-between">
+              <div className="border-b flex justify-between">
                 <h3 className="my-auto">To Eat</h3>
                 <Link
                   to={`/addFoods?date=${selectedDate}&list=eaten`}
@@ -77,15 +76,13 @@ export default function Diary({ setIsLoading, setError }) {
                   +
                 </Link>
               </div>
-              <hr />
-              <ul className="inline-block h-32 pb-5">
+              <ul className="inline-block w-full h-32">
                 {toEat &&
                   toEat.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
             </div>
             <div>
-              <h3 className="my-auto">Notes</h3>
-              <hr />
+              <h3 className="border-b my-auto">Notes</h3>
               <textarea
                 className="resize-none border-2 rounded focus:outline-none focus:shadow-outline h-40 mt-2 p-2 w-full"
                 type="text"

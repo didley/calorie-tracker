@@ -3,13 +3,12 @@ import React from "react";
 export default function DiaryItem({ food }) {
   const { chosenOptions, food_id } = food;
   return (
-    <li style={{ width: "100%" }} className="p-1 text-left hover:bg-gray-300">
+    <li className="border-b p-1 text-left hover:bg-gray-300">
       {food_id.name} <br />
       <span className="text-gray-500">
         {food_id.brand && food_id.brand}, {chosenOptions.chosenMacros.EnergyKJ}
         kj
       </span>
-      <hr />
     </li>
   );
 }
