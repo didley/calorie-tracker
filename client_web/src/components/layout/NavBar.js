@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function NavBar({ isLoading }) {
+  const [hidden, setHidden] = useState(true);
   return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -11,7 +12,12 @@ export default function NavBar({ isLoading }) {
       </div>
       {/* mobile menu button show/hide, delete this comm when functioning */}
       <div className="block md:hidden">
-        <button className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white">
+        <button
+          onClick={() => {
+            setHidden(!hidden);
+          }}
+          className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
+        >
           <svg
             className="fill-current h-3 w-3"
             viewBox="0 0 20 20"
@@ -22,7 +28,11 @@ export default function NavBar({ isLoading }) {
           </svg>
         </button>
       </div>
-      <div className="w-full block flex-grow md:flex md:items-center md:w-auto">
+      <div
+        className={`${
+          hidden ? "hidden" : ""
+        } md:visible w-full block flex-grow md:flex md:items-center md:w-auto`}
+      >
         <nav className="text-sm md:flex-grow">
           <Link to="/diary" className={linkStyle}>
             Diary
