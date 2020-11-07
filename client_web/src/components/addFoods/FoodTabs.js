@@ -4,33 +4,31 @@ import axios from "axios";
 import Foods from "./Foods";
 import RecentFoods from "./RecentFoods";
 import MyFoods from "./MyFoods";
+import ListItem from "../ListItem";
 
 import PropTypes from "prop-types";
 
-export default function FoodTabs({ onSelect }) {
+export default function FoodTabs({ onSelect, setIsLoading, setError }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [data, setData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
-  const { foodDatabase, recent, myFoods } = data;
+  const { dbFoods, recent, myFoods } = data;
 
   useEffect(() => {
-    getFoods("foodDatabase");
+    getFoods("foods", "dbFoods");
     // eslint-disable-next-line
   }, []);
 
-  async function getFoods(routName) {
-    // eg. GET to /users is getFoods("users")
+  async function getFoods(route, objName) {
     try {
-      setLoading(true);
-      const res = await axios.get(`/${routName}`);
-      setData({ ...data, [routName]: res.data });
-
-      setLoading(false);
+      setIsLoading(true);
+      const res = await axios.get(`/api/${route}`);
+      setData({ ...data, [objName]: res.data });
+      console.log("res.data OUTPUT", res.data);
+      setIsLoading(false);
     } catch (err) {
       setError(err);
-      setLoading(false);
+      setIsLoading(false);
     }
   }
 
@@ -41,14 +39,6 @@ export default function FoodTabs({ onSelect }) {
   const btnStyle =
     "inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
-
   return (
     <div className="bg-white p-3 m-2 rounded-lg shadow-lg max-w-md">
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
@@ -56,7 +46,7 @@ export default function FoodTabs({ onSelect }) {
           <Tab
             className={tabIndex === 0 ? btnStyleSelected : btnStyle}
             onClick={() => {
-              getFoods("foodDatabase");
+              getFoods("dbFoods");
             }}
           >
             Foods
@@ -80,7 +70,8 @@ export default function FoodTabs({ onSelect }) {
         </TabList>
         <hr className="my-2" />
         <TabPanel>
-          <Foods data={foodDatabase} onSelect={onSelect} />
+          {dbFoods && dbFoods.map((food) => <ListItem food={food} />)}
+          {/* <Foods data={dbFoods} onSelect={onSelect} /> */}
         </TabPanel>
         <TabPanel>
           <RecentFoods data={recent} onSelect={onSelect} />

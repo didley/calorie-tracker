@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import DiaryItem from "./DiaryItem";
+import ListItem from "../ListItem";
 import DatePickerContainer from "./DatePickerContainer";
 
 export default function Diary({ setIsLoading, setError }) {
@@ -67,7 +67,13 @@ export default function Diary({ setIsLoading, setError }) {
               </div>
               <ul className="inline-block w-full h-32">
                 {eaten &&
-                  eaten.map((food) => <DiaryItem key={food._id} food={food} />)}
+                  eaten.map((food) => (
+                    <ListItem
+                      key={food._id}
+                      food={food.food_id}
+                      chosenOptions={food.chosenOptions}
+                    />
+                  ))}
               </ul>
             </div>
             <div>
@@ -82,7 +88,13 @@ export default function Diary({ setIsLoading, setError }) {
               </div>
               <ul className="inline-block w-full h-32">
                 {toEat &&
-                  toEat.map((food) => <DiaryItem key={food._id} food={food} />)}
+                  toEat.map((food) => (
+                    <ListItem
+                      key={food._id}
+                      food={food.food_id}
+                      chosenOptions={food.chosenOptions}
+                    />
+                  ))}
               </ul>
             </div>
             <div>

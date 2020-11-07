@@ -16,7 +16,11 @@ export default function AddFoods({ setIsLoading, setError }) {
       <Link to="/diary">{"< Back"}</Link>
       <div className="flex justify-center flex-wrap md:items-start">
         <SelectedFood selected={selected} />
-        <FoodTabs onSelect={onSelect} />
+        <FoodTabs
+          onSelect={onSelect}
+          setIsLoading={setIsLoading}
+          setError={setError}
+        />
       </div>
     </div>
   );

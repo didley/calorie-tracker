@@ -3,7 +3,7 @@ const Food = require("../models/Food");
 module.exports = {
   getDBFoods: async (req, res) => {
     try {
-      const DBFoods = await Food.find({ createdBy: "admin" });
+      const DBFoods = await Food.find({}); // TODO: replace with { createdBy: "admin" } after implementing admins
       res.json(DBFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
