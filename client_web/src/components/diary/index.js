@@ -24,7 +24,9 @@ export default function Diary({ setIsLoading, setError }) {
       setData(res.data);
       setIsLoading(false);
     } catch (err) {
-      setError(err);
+      if (err.response.status !== 404) {
+        setError(err);
+      }
       setIsLoading(false);
     }
   }
@@ -44,12 +46,14 @@ export default function Diary({ setIsLoading, setError }) {
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full max-w-2xl">
-        <DatePickerContainer
-          selectedDate={selectedDate}
-          handleDateChange={handleDateChange}
-        />
-        <div className="bg-white p-3 m-2 rounded-lg shadow-lg">
-          <h2>Diary</h2>
+        <div className="flex justify-center">
+          <DatePickerContainer
+            selectedDate={selectedDate}
+            handleDateChange={handleDateChange}
+          />
+        </div>
+        <div className="bg-white p-3 mx-2 mb-3 rounded-lg shadow-lg">
+          <h2 className="font-bold text-3xl">Diary</h2>
           <div className="space-y-6">
             <div>
               <div className="border-b flex justify-between">
