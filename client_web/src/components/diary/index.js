@@ -20,9 +20,7 @@ export default function Diary({ setIsLoading, setError }) {
     try {
       setIsLoading(true);
       const res = await axios.get(`/api/diary/${date}`);
-      console.log(res.data);
       setData(res.data);
-
       setIsLoading(false);
     } catch (err) {
       setError(err);
@@ -81,12 +79,7 @@ export default function Diary({ setIsLoading, setError }) {
               <hr />
               <ul className="min-h-20 pb-5">
                 {toEat &&
-                  toEat.map(
-                    (food) => (
-                      console.log("within toEat map", food),
-                      (<DiaryItem key={food._id} food={food} />)
-                    )
-                  )}
+                  toEat.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
             </div>
             <div>
