@@ -44,9 +44,13 @@ export default function App() {
   );
 
   function setError(error) {
-    const newState = [error, ...errors];
+    console.log(error);
+    if (error.message) {
+      error = error.message;
+    }
+    const errString = JSON.stringify(error);
+    const newState = [errString, ...errors];
     setErrors(newState);
-
     setTimeout(() => {
       setErrors([]);
     }, 5000);

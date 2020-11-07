@@ -6,7 +6,7 @@ import DatePickerContainer from "./DatePickerContainer";
 
 export default function Diary({ setIsLoading, setError }) {
   const [data, setData] = useState({});
-  const [selectedDate, setSelectedDate] = useState("2020-09-05"); // TODO: Replace initial state with (new Date())
+  const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
 
   const { eaten, toEat, notes } = data;
 
@@ -19,8 +19,9 @@ export default function Diary({ setIsLoading, setError }) {
     // eg. GET to /users is getFoods("users")
     try {
       setIsLoading(true);
-      const res = await axios.get(`/diary?date=${date}`);
-      setData(res.data[0]);
+      const res = await axios.get(`/api/diary/${date}`);
+      console.log(res.data);
+      setData(res.data);
 
       setIsLoading(false);
     } catch (err) {
@@ -62,9 +63,9 @@ export default function Diary({ setIsLoading, setError }) {
                 </Link>
               </div>
               <hr />
-              <ul className="h-20 pb-5">
+              <ul className="min-h-20 pb-5">
                 {eaten &&
-                  eaten.map((food) => <DiaryItem key={food.id} food={food} />)}
+                  eaten.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
             </div>
             <div>
@@ -78,16 +79,22 @@ export default function Diary({ setIsLoading, setError }) {
                 </Link>
               </div>
               <hr />
-              <ul className="h-20 pb-5">
+
+              <ul className="min-h-20 pb-5">
                 {toEat &&
-                  toEat.map((food) => <DiaryItem key={food.id} food={food} />)}
+                  toEat.map(
+                    (food) => (
+                      console.log("within toEat map", food),
+                      (<DiaryItem key={food._id} food={food} />)
+                    )
+                  )}
               </ul>
             </div>
             <div>
               <h3 className="my-auto">Notes</h3>
               <hr />
               <textarea
-                class="resize-none border-2 rounded focus:outline-none focus:shadow-outline h-40 mt-2 p-2 w-full"
+                className="resize-none border-2 rounded focus:outline-none focus:shadow-outline h-40 mt-2 p-2 w-full"
                 type="text"
                 placeholder="Click here to add a note..."
                 value={notes}
