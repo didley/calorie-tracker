@@ -41,7 +41,7 @@ export default function DatePickerContainer({
       {today !== selectedDate && (
         <button
           onClick={() => handleDateChange(today)}
-          className="text-center text-sm appearance-none text-gray-500 py-1 mx-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500"
+          className="text-center text-xs appearance-none text-gray-500 py-1 mx-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500"
         >
           Today
         </button>

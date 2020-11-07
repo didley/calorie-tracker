@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 export default function NavBar({ isLoading }) {
   const [hidden, setHidden] = useState(true);
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-red-500 p-6">
+    <nav className="flex items-center justify-between flex-wrap bg-red-500 p-5">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link to="/diary" className="font-semibold text-xl tracking-tight">
           Calorie Tracker
@@ -16,10 +16,10 @@ export default function NavBar({ isLoading }) {
           onClick={() => {
             setHidden(!hidden);
           }}
-          className="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-white hover:border-white"
+          className="flex items-center px-3 py-2 rounded text-white hover:bg-red-400"
         >
           <svg
-            className="fill-current h-3 w-3"
+            className="fill-current h-5 w-5"
             viewBox="0 0 20 20"
             xmlns="http://www.w3.org/2000/svg"
           >
@@ -53,4 +53,4 @@ export default function NavBar({ isLoading }) {
 }
 
 const linkStyle =
-  "block mt-4 md:inline-block md:mt-0 text-teal-200 hover:text-white mx-1";
+  "block md:inline-block md:mt-0 md:my-0 md:py-2 text-white hover:bg-red-400 mx-1 my-2 py-3 px-3 rounded";
