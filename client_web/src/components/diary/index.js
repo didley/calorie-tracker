@@ -11,6 +11,7 @@ export default function Diary({ setIsLoading, setError }) {
   const { eaten, toEat, notes } = data;
 
   useEffect(() => {
+    setData({});
     getDiaryData(selectedDate);
     // eslint-disable-next-line
   }, [selectedDate]);
@@ -61,7 +62,7 @@ export default function Diary({ setIsLoading, setError }) {
                 </Link>
               </div>
               <hr />
-              <ul className="min-h-20 pb-5">
+              <ul className="inline-block h-32 pb-5">
                 {eaten &&
                   eaten.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
@@ -77,7 +78,7 @@ export default function Diary({ setIsLoading, setError }) {
                 </Link>
               </div>
               <hr />
-              <ul className="min-h-20 pb-5">
+              <ul className="inline-block h-32 pb-5">
                 {toEat &&
                   toEat.map((food) => <DiaryItem key={food._id} food={food} />)}
               </ul>
