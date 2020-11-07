@@ -51,7 +51,7 @@ export default function Diary({ setIsLoading, setError }) {
         />
         <div className="bg-white p-3 m-2 rounded-lg shadow-lg">
           <h2>Diary</h2>
-          <div className="space-y-12">
+          <div className="space-y-2">
             <div>
               <div className="flex justify-between">
                 <h3 className="my-auto">Eaten</h3>
@@ -79,7 +79,6 @@ export default function Diary({ setIsLoading, setError }) {
                 </Link>
               </div>
               <hr />
-
               <ul className="min-h-20 pb-5">
                 {toEat &&
                   toEat.map(
