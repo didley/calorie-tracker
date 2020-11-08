@@ -111,7 +111,7 @@ export default function SelectedFood({
   }
 
   const containerStyle =
-    "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-md w-full sm:mx-2";
+    "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2";
 
   if (Object.keys(selectedFood).length === 0) {
     return (

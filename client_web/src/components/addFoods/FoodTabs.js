@@ -36,7 +36,7 @@ export default function FoodTabs({ setSelectedFood, setIsLoading, setError }) {
     "inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
 
   return (
-    <div className="bg-white p-2 rounded-lg shadow-lg max-w-md w-full">
+    <div className="bg-white p-2 rounded-lg shadow-lg max-w-sm mb-4 w-full">
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex justify-between">
           <Tab
