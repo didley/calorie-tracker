@@ -2,18 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 
 export default function ListItem({ food, chosenOptions, onClickFn }) {
-  console.log({ food, chosenOptions });
+  let chosenOptionsSting;
+  if (chosenOptions) {
+    const { chosenAmount, serving } = chosenOptions;
+    chosenOptionsSting = `
+    ${chosenAmount} 
+    ${serving.servingName}
+    ${chosenAmount > 1 ? "s" : ""} 
+    ${serving.servingSize * chosenAmount}
+    ${food.isLiquid ? "mL" : "g"}`;
+  }
+
   return (
-    <li className="border-b p-1 text-sm hover:bg-gray-300" onClick={onClickFn}>
+    <li
+      className="border-b appearance-none p-1 text-sm hover:bg-gray-300"
+      onClick={onClickFn}
+    >
       <div className="flex justify-between">
         <span>{food.name}</span>
         <span className="text-gray-600 text-xs">
-          {chosenOptions &&
-            `${chosenOptions.chosenAmount} ${
-              chosenOptions.serving.servingName
-            }${chosenOptions.chosenAmount > 1 && "s"} ${
-              chosenOptions.serving.servingSize
-            }${food.isLiquid ? "mL" : "g"}`}
+          {chosenOptions && chosenOptionsSting}
         </span>
       </div>
       <div className="flex justify-between">
