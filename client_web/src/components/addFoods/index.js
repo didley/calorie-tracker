@@ -14,7 +14,7 @@ export default function AddFoods({ setIsLoading, setError }) {
     <div>
       <h2>Add Food</h2>
       <Link to="/diary">{"< Back"}</Link>
-      <div className="flex justify-center flex-wrap md:items-start">
+      <div className="flex items-start justify-center flex-wrap">
         <SelectedFood selected={selected} />
         <FoodTabs
           onSelect={onSelect}

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
-import Foods from "./Foods";
-import RecentFoods from "./RecentFoods";
-import MyFoods from "./MyFoods";
 import ListItem from "../ListItem";
-
-import PropTypes from "prop-types";
+import SearchBar from "./SearchBar";
 
 export default function FoodTabs({ onSelect, setIsLoading, setError }) {
   const [tabIndex, setTabIndex] = useState(0);
@@ -40,7 +37,7 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
     "inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
 
   return (
-    <div className="bg-white p-3 m-2 rounded-lg shadow-lg max-w-md">
+    <div className="bg-white p-2 rounded-lg shadow-lg max-w-md w-full">
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex justify-between">
           <Tab
@@ -70,14 +67,35 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
         </TabList>
         <hr className="my-2" />
         <TabPanel>
-          {dbFoods && dbFoods.map((food) => <ListItem food={food} />)}
-          {/* <Foods data={dbFoods} onSelect={onSelect} /> */}
+          <SearchBar />
+
+          <ul>
+            {dbFoods &&
+              dbFoods.map((food) => (
+                <ListItem food={food} onClickFn={onSelect} />
+              ))}
+          </ul>
         </TabPanel>
         <TabPanel>
-          <RecentFoods data={recent} onSelect={onSelect} />
+          <ul>
+            {dbFoods &&
+              dbFoods.map((food) => (
+                <ListItem food={food} onClickFn={onSelect} />
+              ))}
+          </ul>
         </TabPanel>
         <TabPanel>
-          <MyFoods data={myFoods} onSelect={onSelect} />
+          <div className="flex justify-end">
+            <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1">
+              Create Food
+            </button>
+          </div>
+          <ul>
+            {dbFoods &&
+              dbFoods.map((food) => (
+                <ListItem food={food} onClickFn={onSelect} />
+              ))}
+          </ul>
         </TabPanel>
       </Tabs>
     </div>

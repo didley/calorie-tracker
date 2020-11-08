@@ -115,16 +115,23 @@ export default function SelectedFood({ selected }) {
     return <Redirect to={`/diary`} />;
   }
 
+  const containerStyle =
+    "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-md w-full sm:mx-2";
+
   if (Object.keys(selected).length === 0) {
     return (
-      <div className="border-4 border-gray-600 py-24 h-64 w-1/3 bg-white m-2 rounded-lg shadow-lg bg-gray-200">
-        <h3 className="margin-auto text-center text-gray-800">Select a Food</h3>
+      // <div className="border-4 border-gray-600 py-24 h-64 bg-white m-2 rounded-lg shadow-lg bg-gray-200 max-w-md w-full">
+      <div className={`${containerStyle} bg-gray-200`}>
+        <h3 className="m-auto text-center text-gray-800 py-24">
+          Select a Food
+        </h3>
       </div>
+      // </div>
     );
   }
 
   return (
-    <div className="flex border-2 border-gray-600 flex-col bg-white p-3 m-2 rounded-lg shadow-lg">
+    <div className={containerStyle}>
       <div className="flex justify-between">
         <h3 className="my-auto">Selected Food</h3>
         <button
