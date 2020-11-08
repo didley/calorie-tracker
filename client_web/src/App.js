@@ -17,7 +17,9 @@ export default function App() {
 
   const loadingSpinner = (
     <div className="bg-white">
-      <h1 className="text-center">Loading...</h1>
+      <h1 className="text-center text-gray-900">
+        <i className="animate-spin fas fa-circle-notch fa-sm m-1" />
+      </h1>
     </div>
   );
 
@@ -87,7 +89,11 @@ export default function App() {
           <Diary setIsLoading={setIsLoading} setError={setError} />
         </Route>
         <Route path="/addFoods">
-          <AddFoods setIsLoading={setIsLoading} setError={setError} />
+          <AddFoods
+            setTimedAlert={setTimedAlert}
+            setIsLoading={setIsLoading}
+            setError={setError}
+          />
         </Route>
         <Route path="/">
           <Home setIsLoading={setIsLoading} setError={setError} />

@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function Table({ macros }) {
+  console.log({ macros });
   const {
     CarbohydrateG = 0,
     EnergyKJ = 0,
@@ -12,7 +13,7 @@ export default function Table({ macros }) {
 
   return (
     <table className="mt-3">
-      <thead className="font-thin">
+      <thead className="font-thin text-sm">
         <tr>
           <td>{EnergyKJ}kJ</td>
           <td>Protein</td>

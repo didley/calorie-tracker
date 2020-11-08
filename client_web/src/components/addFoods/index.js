@@ -3,21 +3,22 @@ import { Link } from "react-router-dom";
 import SelectedFood from "../selectedFood";
 import FoodTabs from "./FoodTabs";
 
-export default function AddFoods({ setIsLoading, setError }) {
-  const [selected, setSelected] = useState({});
-
-  const onSelect = (food) => {
-    setSelected(food);
-  };
+export default function AddFoods({ setTimedAlert, setIsLoading, setError }) {
+  const [selectedFood, setSelectedFood] = useState({});
 
   return (
     <div>
       <h2>Add Food</h2>
       <Link to="/diary">{"< Back"}</Link>
       <div className="flex items-start justify-center flex-wrap">
-        <SelectedFood selected={selected} />
+        <SelectedFood
+          selectedFood={selectedFood}
+          setTimedAlert={setTimedAlert}
+          setIsLoading={setIsLoading}
+          setError={setError}
+        />
         <FoodTabs
-          onSelect={onSelect}
+          setSelectedFood={setSelectedFood}
           setIsLoading={setIsLoading}
           setError={setError}
         />

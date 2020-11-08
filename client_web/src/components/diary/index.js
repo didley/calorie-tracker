@@ -45,14 +45,14 @@ export default function Diary({ setIsLoading, setError }) {
 
   return (
     <div className="flex justify-center">
-      <div className="flex flex-col w-full max-w-2xl">
+      <div className="flex flex-col w-full max-w-xl">
         <div className="flex justify-center">
           <DatePickerContainer
             selectedDate={selectedDate}
             handleDateChange={handleDateChange}
           />
         </div>
-        <div className="bg-white p-3 mx-2 mb-3 rounded-lg shadow-lg">
+        <div className="bg-white p-3 mx-1 mb-3 rounded-lg shadow-lg">
           <h2 className="font-bold text-3xl">Diary</h2>
           <div className="space-y-6">
             <div>
@@ -80,7 +80,7 @@ export default function Diary({ setIsLoading, setError }) {
               <div className="border-b flex justify-between">
                 <h3 className="my-auto">To Eat</h3>
                 <Link
-                  to={`/addFoods?date=${selectedDate}&list=eaten`}
+                  to={`/addFoods?date=${selectedDate}&list=to-eat`}
                   className={addBtnStyle}
                 >
                   +

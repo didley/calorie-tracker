@@ -5,7 +5,7 @@ import axios from "axios";
 import ListItem from "../ListItem";
 import SearchBar from "./SearchBar";
 
-export default function FoodTabs({ onSelect, setIsLoading, setError }) {
+export default function FoodTabs({ setSelectedFood, setIsLoading, setError }) {
   const [tabIndex, setTabIndex] = useState(0);
   const [data, setData] = useState({});
 
@@ -21,7 +21,6 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
       setIsLoading(true);
       const res = await axios.get(`/api/${route}`);
       setData({ ...data, [objName]: res.data });
-      console.log("res.data OUTPUT", res.data);
       setIsLoading(false);
     } catch (err) {
       setError(err);
@@ -72,7 +71,11 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
           <ul>
             {dbFoods &&
               dbFoods.map((food) => (
-                <ListItem food={food} onClickFn={onSelect} />
+                <ListItem
+                  key={food._id}
+                  food={food}
+                  onClickFn={() => setSelectedFood(food)}
+                />
               ))}
           </ul>
         </TabPanel>
@@ -80,20 +83,28 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
           <ul>
             {dbFoods &&
               dbFoods.map((food) => (
-                <ListItem food={food} onClickFn={onSelect} />
+                <ListItem
+                  key={food._id}
+                  food={food}
+                  onClickFn={() => setSelectedFood(food)}
+                />
               ))}
           </ul>
         </TabPanel>
         <TabPanel>
           <div className="flex justify-end">
-            <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1">
+            <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1 text-sm">
               Create Food
             </button>
           </div>
           <ul>
             {dbFoods &&
               dbFoods.map((food) => (
-                <ListItem food={food} onClickFn={onSelect} />
+                <ListItem
+                  key={food._id}
+                  food={food}
+                  onClickFn={() => setSelectedFood(food)}
+                />
               ))}
           </ul>
         </TabPanel>
@@ -103,5 +114,5 @@ export default function FoodTabs({ onSelect, setIsLoading, setError }) {
 }
 
 FoodTabs.propTypes = {
-  onSelect: PropTypes.func.isRequired,
+  setSelectedFood: PropTypes.func.isRequired,
 };

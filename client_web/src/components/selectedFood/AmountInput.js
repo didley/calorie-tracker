@@ -9,20 +9,6 @@ export default function AmountInput({
 }) {
   const { isLiquid } = selected;
 
-  // const calculateServingOptionSize = (servingOptionObj, servingSizeObj) => {
-  //   // "g" or "mL"
-  //   // "g" or "serving"
-  //   if (servingOptionObj.servingUnit === "serving") {
-  //     return `(${servingSizeObj.value * servingOptionObj.servingValue}${
-  //       perServeSize.unit
-  //     })`;
-  //   }
-
-  //   return `(${servingOptionObj.value * servingSizeObj.value}${
-  //     perServeSize.unit
-  //   })`;
-  // };
-
   return (
     <div className="flex">
       <div className="w-1/4 mr-2">
@@ -49,7 +35,7 @@ export default function AmountInput({
             >
               {servingOptionsArr &&
                 servingOptionsArr.map((option, index) => (
-                  <option key={option.id} value={index}>
+                  <option key={option._id} value={index}>
                     {`${option.servingName} (${option.servingSize}${
                       isLiquid ? "mL" : "g"
                     })`}

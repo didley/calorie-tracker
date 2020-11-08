@@ -4,21 +4,25 @@ import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
-export default function SelectedFood({ selected }) {
+export default function SelectedFood({
+  selectedFood,
+  setTimedAlert,
+  setIsLoading,
+  setError,
+}) {
   const {
     servingOptions = [],
-    macros = {},
+    macrosPerServe = {},
     brand,
     name,
     perServeSize = 0,
-  } = selected;
+  } = selectedFood;
 
   // TODO: amount input not allowing decimal
 
   const [amountInput, setAmountInput] = useState({});
   const [diaryRedirect, setDiaryRedirect] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
 
   useEffect(() => {
     setAmountInput({
@@ -26,27 +30,25 @@ export default function SelectedFood({ selected }) {
       servingChoice: defaultServingOptions[0],
       index: 0,
     });
+    console.log({ selectedFood });
     // eslint-disable-next-line
-  }, [selected]);
+  }, [selectedFood]);
 
   const defaultServingOptions = [
     {
-      id: "serve",
+      _id: "serve",
       servingName: "1 Serving",
       servingSize: perServeSize,
     },
     {
-      id: "g",
+      _id: "g",
       servingName: "g",
       servingSize: 1,
     },
   ];
   const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
 
-  console.log({ selected });
-  console.log({ servingOptionsArr });
-
-  let adjustedMacros = { ...macros };
+  let adjustedMacros = { ...macrosPerServe };
 
   for (let macro in adjustedMacros) {
     adjustedMacros[macro] =
@@ -55,8 +57,6 @@ export default function SelectedFood({ selected }) {
       amountInput.chosenAmount;
     adjustedMacros[macro] = parseFloat(adjustedMacros[macro].toFixed(1)); // rounds to one decimal
   }
-
-  console.log({ adjustedMacros });
 
   const onChosenAmountChange = (e) => {
     setAmountInput({
@@ -73,43 +73,38 @@ export default function SelectedFood({ selected }) {
     });
   };
   // TODO: implement POST
-  const handleSubmit = () => {
+  async function handleSubmit() {
+    const URLParams = new URLSearchParams(window.location.search);
+    const dateParam = URLParams.get("date");
+    const listParam = URLParams.get("list");
+    console.log({ dateParam, listParam });
+
     const addFoodObj = {
-      ...selected,
-      chosen: {
+      food_id: selectedFood._id,
+      chosenOptions: {
         serving: amountInput.servingChoice,
         chosenAmount: amountInput.chosenAmount,
         chosenMacros: adjustedMacros,
       },
     };
-
-    // console.log({ addFoodObj });
     // TODO: get params query params with post request
 
-    const URLParamString = window.location.search;
-    // const URLParams = new URLSearchParams(window.location.search);
-    // const diaryURLDate = URLParams.get("date");
-    // const diaryURLList = URLParams.get("list");
-    // console.log({ diaryURLDate, diaryURLList });
-    // console.log({ URLParams });
-
-    // async function addFood(routName, data) {
-    //   // eg. GET to /users is getFoods("users")
-    //   try {
-    //     setLoading(true);
-    //     await axios.post(`/${routName}`, data);
-    //     setLoading(false);
-    //     setDiaryRedirect(true);
-    //     console.log(`Food added`);
-    //   } catch (err) {
-    //     setError(err);
-    //     setLoading(false);
-    //     console.log(`Food Error`);
-    //   }
-    // }
-    console.log({ addFoodObj });
-    // addFood(`diary${URLParamString}`, addFoodObj);
-  };
+    try {
+      setLoading(true);
+      await axios.post(
+        `/api/diary/${dateParam}/add-food?list=${listParam}`,
+        addFoodObj
+      );
+      setLoading(false);
+      setTimedAlert(`${name} added to ${listParam} list`);
+      setDiaryRedirect(true);
+      console.log(`Food added`);
+    } catch (err) {
+      setError(err);
+      setLoading(false);
+      console.log(`Food Error`);
+    }
+  }
 
   if (diaryRedirect) {
     return <Redirect to={`/diary`} />;
@@ -118,18 +113,15 @@ export default function SelectedFood({ selected }) {
   const containerStyle =
     "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-md w-full sm:mx-2";
 
-  if (Object.keys(selected).length === 0) {
+  if (Object.keys(selectedFood).length === 0) {
     return (
-      // <div className="border-4 border-gray-600 py-24 h-64 bg-white m-2 rounded-lg shadow-lg bg-gray-200 max-w-md w-full">
       <div className={`${containerStyle} bg-gray-200`}>
         <h3 className="m-auto text-center text-gray-800 py-24">
           Select a Food
         </h3>
       </div>
-      // </div>
     );
   }
-
   return (
     <div className={containerStyle}>
       <div className="flex justify-between">
@@ -142,11 +134,11 @@ export default function SelectedFood({ selected }) {
         </button>
       </div>
       <hr />
-      <p>{brand}</p>
       <h4>{name}</h4>
+      <p>{brand && brand}</p>
       <hr />
       <AmountInput
-        selected={selected}
+        selected={selectedFood}
         servingOptionsArr={servingOptionsArr}
         amountInput={amountInput}
         onChosenAmountChange={onChosenAmountChange}
