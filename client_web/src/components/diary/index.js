@@ -7,6 +7,7 @@ import DatePickerContainer from "./DatePickerContainer";
 export default function Diary({ setIsLoading, setError }) {
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
+  const [showSelectBtn, setShowSelectBtn] = useState(false);
 
   const { eaten, toEat, notes } = data;
 
@@ -53,7 +54,15 @@ export default function Diary({ setIsLoading, setError }) {
           />
         </div>
         <div className="bg-white p-3 mx-1 mb-3 rounded-lg shadow-lg">
-          <h2 className="font-bold text-3xl">Diary</h2>
+          <div className="">
+            <h2 className="inline font-bold text-3xl">Diary</h2>
+            <button
+              onClick={() => setShowSelectBtn(!showSelectBtn)}
+              className="inline text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
+            >
+              {showSelectBtn ? "Done" : "Edit"}
+            </button>
+          </div>
           <div className="space-y-6">
             <div>
               <div className="border-b flex justify-between">
@@ -72,6 +81,7 @@ export default function Diary({ setIsLoading, setError }) {
                       key={food._id}
                       food={food.food_id}
                       chosenOptions={food.chosenOptions}
+                      showSelectBtn={showSelectBtn}
                     />
                   ))}
               </ul>
@@ -93,6 +103,7 @@ export default function Diary({ setIsLoading, setError }) {
                       key={food._id}
                       food={food.food_id}
                       chosenOptions={food.chosenOptions}
+                      showSelectBtn={showSelectBtn}
                     />
                   ))}
               </ul>
