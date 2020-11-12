@@ -4,6 +4,9 @@ import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
 export default function SelectedFood({
   selectedFood,
   setTimedAlert,
@@ -130,7 +133,11 @@ export default function SelectedFood({
           onClick={handleSubmit}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >
-          {loading ? <i className="animate-spin fas fa-circle-notch" /> : "Add"}
+          {loading ? (
+            <FontAwesomeIcon className="animate-spin" icon={faCircleNotch} />
+          ) : (
+            "Add"
+          )}
         </button>
       </div>
       <hr />

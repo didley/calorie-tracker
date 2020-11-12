@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle as fasFaCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+
 export default function ListItem({
   food,
   chosenOptions,
@@ -29,7 +33,9 @@ export default function ListItem({
       onClick={onClickFn}
     >
       <div className="flex">
-        {showSelectBtn && <selectBtn />}
+        <div className="flex-none pr-1 self-center">
+          {showSelectBtn && <SelectBtn selected={selected} hovered={hovered} />}
+        </div>
         <div className="flex-auto">
           <div className="flex justify-between">
             <span>{food.name}</span>
@@ -61,24 +67,12 @@ ListItem.propTypes = {
   showSelectBtn: PropTypes.bool,
 };
 
-const selectBtn = ({ props }) => {
-  const classes = {
-    default: "far fa-curcle text-gray-600",
-    hovered: "fas fa-curcle text-gray-600",
-    selected: "fas fa-curcle text-blue-600",
-  };
-
-  let iconClass;
-  if (props === "selected") {
-    iconClass = classes.selected;
-  } else if (props === "hovered") {
-    iconClass = classes.hovered;
+const SelectBtn = ({ hovered, selected }) => {
+  if (selected) {
+    return <FontAwesomeIcon className="text-blue-700" icon={fasFaCircle} />;
+  } else if (hovered) {
+    return <FontAwesomeIcon className="text-gray-700" icon={fasFaCircle} />;
   } else {
-    iconClass = classes.default;
+    return <FontAwesomeIcon className="text-gray-700" icon={farFaCircle} />;
   }
-  return (
-    <div className="flex-none pr-1 self-center">
-      <i className="far fa-curcle text-gray-600" />
-    </div>
-  );
 };

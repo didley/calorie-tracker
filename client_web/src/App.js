@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+
 import AddFoods from "./components/addFoods";
 import Diary from "./components/diary";
 import NavBar from "./components/layout/NavBar";
@@ -18,7 +21,11 @@ export default function App() {
   const loadingSpinner = (
     <div className="bg-white">
       <h1 className="text-center text-gray-900">
-        <i className="animate-spin fas fa-circle-notch fa-sm m-1" />
+        <FontAwesomeIcon
+          className="animate-spin text-gray-900"
+          icon={faCircleNotch}
+          size="sm"
+        />
       </h1>
     </div>
   );
