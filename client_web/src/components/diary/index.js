@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ListItem from "../ListItem";
+import EditMenu from "../EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 
 export default function Diary({ setIsLoading, setError }) {
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
-  const [showSelectBtn, setShowSelectBtn] = useState(false);
+  const [showSelectBtn, setShowSelectBtn] = useState(true);
   const [selectedIDs, setSelectedIDs] = useState([]);
 
   const { eaten, toEat, notes } = data;
@@ -52,10 +53,8 @@ export default function Diary({ setIsLoading, setError }) {
       const foundId = selectedIDs.find((id) => id === selectedFood._id);
       if (foundId) {
         setSelectedIDs(selectedIDs.filter((id) => id !== foundId));
-        console.log(foundId, "removed from selectedIds");
       } else {
         setSelectedIDs([...selectedIDs, selectedFood._id]);
-        console.log(foundId, "added to selectedIds");
       }
     } else {
       console.log({ selectedFood });
@@ -83,6 +82,7 @@ export default function Diary({ setIsLoading, setError }) {
             >
               {showSelectBtn ? "Done" : "Edit"}
             </button>
+            {showSelectBtn && <EditMenu selectedItems={selectedIDs} />}
           </div>
           <div className="space-y-6">
             <div>
