@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -14,6 +14,10 @@ export default function ListItem({
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
 
+  useEffect(() => {
+    setSelected(false);
+  }, [showSelectBtn]);
+
   let chosenOptionsSting;
   if (chosenOptions) {
     const { chosenAmount, serving } = chosenOptions;
@@ -25,15 +29,26 @@ export default function ListItem({
     ${food.isLiquid ? "mL" : "g"}`;
   }
 
+  function handleClick() {
+    if (showSelectBtn) {
+      setSelected(!selected);
+      onClickFn();
+    } else {
+      onClickFn();
+    }
+  }
+
   return (
     <li
       className={`border-b appearance-none p-1 text-sm ${
         !showSelectBtn ? "hover:bg-gray-300" : ""
       } `}
-      onClick={onClickFn}
+      onClick={handleClick}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
       <div className="flex">
-        <div className="flex-none pr-1 self-center">
+        <div className="grid place-items-center pr-2">
           {showSelectBtn && <SelectBtn selected={selected} hovered={hovered} />}
         </div>
         <div className="flex-auto">
@@ -61,6 +76,7 @@ export default function ListItem({
 }
 
 ListItem.propTypes = {
+  itemId: PropTypes.string.isRequired,
   food: PropTypes.object.isRequired,
   chosenOptions: PropTypes.object,
   onClickFn: PropTypes.func,
@@ -69,9 +85,9 @@ ListItem.propTypes = {
 
 const SelectBtn = ({ hovered, selected }) => {
   if (selected) {
-    return <FontAwesomeIcon className="text-blue-700" icon={fasFaCircle} />;
+    return <FontAwesomeIcon className="text-blue-500" icon={fasFaCircle} />;
   } else if (hovered) {
-    return <FontAwesomeIcon className="text-gray-700" icon={fasFaCircle} />;
+    return <FontAwesomeIcon className="text-gray-600" icon={fasFaCircle} />;
   } else {
     return <FontAwesomeIcon className="text-gray-700" icon={farFaCircle} />;
   }

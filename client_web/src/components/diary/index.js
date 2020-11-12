@@ -8,6 +8,7 @@ export default function Diary({ setIsLoading, setError }) {
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
   const [showSelectBtn, setShowSelectBtn] = useState(false);
+  const [selectedIDs, setSelectedIDs] = useState([]);
 
   const { eaten, toEat, notes } = data;
 
@@ -16,6 +17,11 @@ export default function Diary({ setIsLoading, setError }) {
     getDiaryData(selectedDate);
     // eslint-disable-next-line
   }, [selectedDate]);
+
+  function toggleShowSelectBtn() {
+    setSelectedIDs([]);
+    setShowSelectBtn(!showSelectBtn);
+  }
 
   async function getDiaryData(date) {
     // eg. GET to /users is getFoods("users")
@@ -41,6 +47,21 @@ export default function Diary({ setIsLoading, setError }) {
     setData({ ...data, notes: e.target.value });
   }
 
+  function handleSelectFood(selectedFood) {
+    if (showSelectBtn) {
+      const foundId = selectedIDs.find((id) => id === selectedFood._id);
+      if (foundId) {
+        setSelectedIDs(selectedIDs.filter((id) => id !== foundId));
+        console.log(foundId, "removed from selectedIds");
+      } else {
+        setSelectedIDs([...selectedIDs, selectedFood._id]);
+        console.log(foundId, "added to selectedIds");
+      }
+    } else {
+      console.log({ selectedFood });
+    }
+  }
+
   const addBtnStyle =
     "bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1";
 
@@ -57,7 +78,7 @@ export default function Diary({ setIsLoading, setError }) {
           <div className="">
             <h2 className="inline font-bold text-3xl">Diary</h2>
             <button
-              onClick={() => setShowSelectBtn(!showSelectBtn)}
+              onClick={toggleShowSelectBtn}
               className="inline text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
               {showSelectBtn ? "Done" : "Edit"}
@@ -82,6 +103,7 @@ export default function Diary({ setIsLoading, setError }) {
                       food={food.food_id}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
+                      onClickFn={() => handleSelectFood(food)}
                     />
                   ))}
               </ul>
@@ -104,6 +126,7 @@ export default function Diary({ setIsLoading, setError }) {
                       food={food.food_id}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
+                      onClickFn={() => handleSelectFood(food)}
                     />
                   ))}
               </ul>
