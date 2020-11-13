@@ -71,4 +71,9 @@ module.exports = {
       res.status(400).json({ err });
     }
   },
+  removeSelectedFoodsFromEntry: async (req, res) => {
+    // takes array of IDs in req.body
+
+    console.log(req.body);
+  },
 };

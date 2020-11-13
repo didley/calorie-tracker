@@ -82,7 +82,12 @@ export default function Diary({ setIsLoading, setError }) {
             >
               {showSelectBtn ? "Done" : "Edit"}
             </button>
-            {showSelectBtn && <EditMenu selectedItems={selectedIDs} />}
+            {showSelectBtn && (
+              <EditMenu
+                selectedItems={selectedIDs}
+                selectedDate={selectedDate}
+              />
+            )}
           </div>
           <div className="space-y-6">
             <div>
