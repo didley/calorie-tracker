@@ -5,7 +5,7 @@ import ListItem from "../ListItem";
 import EditMenu from "../EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 
-export default function Diary({ setIsLoading, setError }) {
+export default function Diary({ setTimedAlert, setIsLoading, setError }) {
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
   const [showSelectBtn, setShowSelectBtn] = useState(true);
@@ -84,6 +84,9 @@ export default function Diary({ setIsLoading, setError }) {
             </button>
             {showSelectBtn && (
               <EditMenu
+                setTimedAlert={setTimedAlert}
+                setIsLoading={setIsLoading}
+                setError={setError}
                 selectedItems={selectedIDs}
                 selectedDate={selectedDate}
               />

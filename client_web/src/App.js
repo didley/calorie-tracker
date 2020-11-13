@@ -93,7 +93,11 @@ export default function App() {
           <Register setIsLoading={setIsLoading} setError={setError} />
         </Route>
         <Route path="/diary">
-          <Diary setIsLoading={setIsLoading} setError={setError} />
+          <Diary
+            setTimedAlert={setTimedAlert}
+            setIsLoading={setIsLoading}
+            setError={setError}
+          />
         </Route>
         <Route path="/addFoods">
           <AddFoods

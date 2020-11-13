@@ -72,8 +72,21 @@ module.exports = {
     }
   },
   removeSelectedFoodsFromEntry: async (req, res) => {
-    // takes array of IDs in req.body
+    // takes body {selectedItems:["IDs"]}
+    const { date } = req.params;
+    const data = req.body.selectedItems;
 
-    console.log(req.body);
+    try {
+      const deleteFoodReq = await Diary.updateMany(
+        { entryDate: date, userId: req.user._id },
+        { $pull: { toEat: { _id: data }, eaten: { _id: data } } }
+      );
+
+      deleteFoodReq.nModified > 0
+        ? res.json({ msg: `${data.length} foods removed from ${date}` })
+        : res.status(404).json({ msg: "Food not found" });
+    } catch (err) {
+      res.status(400).json({ err });
+    }
   },
 };

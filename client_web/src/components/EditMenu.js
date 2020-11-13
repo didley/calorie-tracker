@@ -2,7 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
-export default function EditMenu({ selectedItems, selectedDate }) {
+export default function EditMenu({
+  setTimedAlert,
+  setIsLoading,
+  setError,
+  selectedItems,
+  selectedDate,
+}) {
   function handleMove() {
     // TODO
     console.log("move event handler");
@@ -15,10 +21,20 @@ export default function EditMenu({ selectedItems, selectedDate }) {
 
   async function handleDelete() {
     // TODO: working on <<<<<
-    const req = await axios.post(`/diary/${selectedDate}/delete-food`, {
-      selectedItems,
-    });
-    console.log("delete event handler");
+    try {
+      setIsLoading(true);
+      const response = await axios.post(
+        `/api/diary/${selectedDate}/delete-food`,
+        {
+          selectedItems,
+        }
+      );
+      setIsLoading(false);
+      setTimedAlert(response.data.msg);
+    } catch (err) {
+      setIsLoading(false);
+      setError(err);
+    }
   }
 
   return (
