@@ -2,7 +2,7 @@ const Diary = require("../models/Diary");
 const { format } = require("date-fns");
 
 module.exports = {
-  getDiaryEntry: async (req, res) => {
+  async getDiaryEntry(req, res) {
     let { date } = req.params;
     // returns today if no date provided
     if (!date) {

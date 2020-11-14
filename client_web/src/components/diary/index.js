@@ -80,7 +80,7 @@ export default function Diary({ setTimedAlert, setIsLoading, setError }) {
               onClick={toggleShowSelectBtn}
               className="inline text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
-              {showSelectBtn ? "Done" : "Edit"}
+              {showSelectBtn ? "Clear" : "Edit"}
             </button>
             {showSelectBtn && (
               <EditMenu

@@ -2,7 +2,7 @@ const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
 module.exports = {
-  getUserDetails: (req, res) => {
+  getUserDetails(req, res) {
     console.log(req.user);
     if (req.user) {
       return res.json({ user: req.user });
@@ -10,12 +10,12 @@ module.exports = {
       return res.json({ user: null });
     }
   },
-  loginUser: (req, res) => {
+  loginUser(req, res) {
     console.log("POST to /login");
     const { password, ...cleanUser } = req.user._doc;
     return res.json({ user: cleanUser });
   },
-  logoutUser: (req, res) => {
+  logoutUser(req, res) {
     if (req.user) {
       req.session.destroy();
       res.clearCookie("connect.sid");
@@ -24,7 +24,7 @@ module.exports = {
       return res.json({ msg: "no user to log out!" });
     }
   },
-  registerUser: async (req, res) => {
+  async registerUser(req, res) {
     //TODO - Add validation
     try {
       const { name, email, password } = req.body;
