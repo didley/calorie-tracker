@@ -2,7 +2,7 @@
   "name": "server",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
