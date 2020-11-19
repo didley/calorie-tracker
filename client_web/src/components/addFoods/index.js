@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import SelectedFood from "../selectedFood";
+import SelectedFood from "../SelectedFood";
 import FoodTabs from "./FoodTabs";
 
 export default function AddFoods({ setTimedAlert, setIsLoading, setError }) {

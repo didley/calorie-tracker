@@ -4,8 +4,8 @@ import { Switch, Route } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
-import AddFoods from "./components/addFoods";
-import Diary from "./components/diary";
+import AddFoods from "./components/AddFoods";
+import Diary from "./components/Diary";
 import NavBar from "./components/layout/NavBar";
 import Home from "./components/layout/Home";
 import Login from "./components/layout/Login";

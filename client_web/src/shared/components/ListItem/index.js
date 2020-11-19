@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircle as fasFaCircle } from "@fortawesome/free-solid-svg-icons";
-import { faCircle as farFaCircle } from "@fortawesome/free-regular-svg-icons";
+import SelectBtn from "./SelectBtn";
+
+const propTypes = {
+  itemId: PropTypes.string.isRequired,
+  food: PropTypes.object.isRequired,
+  chosenOptions: PropTypes.object,
+  onClickFn: PropTypes.func,
+  showSelectBtn: PropTypes.bool,
+};
 
 export default function ListItem({
   food,
@@ -75,20 +81,4 @@ export default function ListItem({
   );
 }
 
-ListItem.propTypes = {
-  itemId: PropTypes.string.isRequired,
-  food: PropTypes.object.isRequired,
-  chosenOptions: PropTypes.object,
-  onClickFn: PropTypes.func,
-  showSelectBtn: PropTypes.bool,
-};
-
-const SelectBtn = ({ hovered, selected }) => {
-  if (selected) {
-    return <FontAwesomeIcon className="text-blue-500" icon={fasFaCircle} />;
-  } else if (hovered) {
-    return <FontAwesomeIcon className="text-gray-600" icon={fasFaCircle} />;
-  } else {
-    return <FontAwesomeIcon className="text-gray-700" icon={farFaCircle} />;
-  }
-};
+ListItem.propTypes = propTypes;

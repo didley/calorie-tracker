@@ -2,6 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
 
+const propTypes = {
+  selectedItems: PropTypes.array.isRequired,
+  selectedDate: PropTypes.string.isRequired,
+};
+
 export default function EditMenu({
   setTimedAlert,
   setIsLoading,
@@ -64,7 +69,4 @@ export default function EditMenu({
   );
 }
 
-EditMenu.protoTypes = {
-  selectedItems: PropTypes.array.isRequired,
-  selectedDate: PropTypes.string.isRequired,
-};
+EditMenu.protoTypes = propTypes;
