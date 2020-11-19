@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
-import ListItem from "shared/components/ListItem";
+import ListItem from "components/shared/ListItem";
 import SearchBar from "./SearchBar";
 
 export default function FoodTabs({ setSelectedFood, setIsLoading, setError }) {

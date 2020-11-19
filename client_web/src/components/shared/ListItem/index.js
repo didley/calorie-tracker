@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import SelectBtn from "./SelectBtn";
 
 const propTypes = {
-  itemId: PropTypes.string.isRequired,
   food: PropTypes.object.isRequired,
   chosenOptions: PropTypes.object,
   onClickFn: PropTypes.func,

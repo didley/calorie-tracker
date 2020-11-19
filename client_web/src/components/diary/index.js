@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import ListItem from "shared/components/ListItem";
-import EditMenu from "shared/components/EditMenu";
+import ListItem from "components/shared/ListItem";
+import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 
 export default function Diary({ setTimedAlert, setIsLoading, setError }) {
