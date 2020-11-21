@@ -16,6 +16,7 @@ Styling is provided by TailwindCSS, init document is found under /src/tailwind.c
 $ cd calorie-tracker
 $ npm i
 ```
+- [ ] change .env.example to .env and replace its variables with your own
 ### Running
 ```shell
 $ cd calorie-tracker
@@ -23,35 +24,6 @@ $ npm start
 ``` 
 
 <br />
-
-
-## TODO
----
-
-### 👨‍💻  Working On
-  - [ ] note routes
-  - [ ] implement admin management 
-  - [ ] add propTypes to components
-
-### 🌚  Done
-  - [x] user creation
-  - [x] auth
-  - [x] password hashing
-  - [x] finish food routes
-  - [x] start backend
-  - [x] run prebuild script needs to be run separate from start:react, move to single script (start: client, start) 
-  - [x] yesterday/tomorrow on sides of today, onClick to change to that day
-  - [x] center diary
-  - [x] date selector in diary
-
-### 🐛  Bugs
-  - [ ] diary date errors on change if no diary info
-
-### 🚀  Features
-  - [ ] google api for food verification
-
-
-<br/>
 
 
 ## NOTES
