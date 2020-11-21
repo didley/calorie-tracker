@@ -3,6 +3,11 @@ import { Link } from "react-router-dom";
 
 export default function NavBar({ isLoading }) {
   const [hidden, setHidden] = useState(true);
+
+  function handleLinkClick() {
+    setHidden(true);
+  }
+
   return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-5">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
@@ -34,16 +39,16 @@ export default function NavBar({ isLoading }) {
         } md:visible w-full block flex-grow md:flex md:items-center md:w-auto`}
       >
         <nav className="text-sm md:flex-grow">
-          <Link to="/diary" className={linkStyle}>
+          <Link to="/diary" className={linkStyle} onClick={handleLinkClick}>
             Diary
           </Link>
-          <Link to="/login" className={linkStyle}>
+          <Link to="/login" className={linkStyle} onClick={handleLinkClick}>
             Login
           </Link>
-          <Link to="/register" className={linkStyle}>
+          <Link to="/register" className={linkStyle} onClick={handleLinkClick}>
             Register
           </Link>
-          <Link to="/" className={linkStyle}>
+          <Link to="/" className={linkStyle} onClick={handleLinkClick}>
             Home
           </Link>
         </nav>

@@ -15,6 +15,11 @@ Styling is provided by TailwindCSS, init document is found under /src/tailwind.c
 ```shell
 $ cd calorie-tracker
 $ npm i
+$ cd client_web
+$ npm i
+$ cd ..
+$ cd api
+$ npm i
 ```
 - [ ] change .env.example to .env and replace its variables with your own
 ### Running
