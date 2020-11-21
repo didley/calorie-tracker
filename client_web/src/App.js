@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Switch, Route } from "react-router-dom";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import {
+  AlertProvider,
+  useAlertState,
+  useAlertDispatch,
+} from "./utils/alertContext";
 
 import AddFoods from "./components/AddFoods";
 import Diary from "./components/Diary";
@@ -10,106 +12,35 @@ import NavBar from "./components/layout/NavBar";
 import Home from "./components/layout/Home";
 import Login from "./components/layout/Login";
 import Register from "./components/layout/Register";
+import Alert from "./components/layout/Alert";
 
 export default function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [alert, setAlert] = useState("");
-  const [errors, setErrors] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const [user, setUser] = useState(null);
 
-  const loadingSpinner = (
-    <div className="bg-white">
-      <h1 className="text-center text-gray-900">
-        <FontAwesomeIcon
-          className="animate-spin text-gray-900"
-          icon={faCircleNotch}
-          size="sm"
-        />
-      </h1>
-    </div>
-  );
-
-  const alertDisplay = (
-    <div className="flex flex-row bg-blue-500 pl-5">
-      <div className="py-1">
-        <p className="text-white text-sm pl-2">{alert}</p>
-      </div>
-    </div>
-  );
-
-  const errorsDisplay = (
-    <div className="flex flex-row bg-red-600 pl-5">
-      <div>
-        <h3 className="text-white">Error</h3>
-      </div>
-      <div className="py-1">
-        <p className="text-white text-xs pl-2">
-          {errors[0]} <br />
-          {errors[1]}
-        </p>
-      </div>
-    </div>
-  );
-
-  function setError(error) {
-    console.log(error);
-    if (error.message) {
-      error = error.message;
-    }
-    const errString = JSON.stringify(error);
-    const newState = [errString, ...errors];
-    setErrors(newState);
-    setTimeout(() => {
-      setErrors([]);
-    }, 5000);
-  }
-
-  function setTimedAlert(alert) {
-    setAlert(alert);
-
-    setTimeout(() => {
-      setAlert("");
-    }, 3000);
-  }
-
   return (
-    <div className="bg-orange-100 min-h-screen">
-      <NavBar setIsLoading={setIsLoading} setError={setError} />
-      {isLoading && loadingSpinner}
-      {alert && alertDisplay}
-      {errors.length > 0 && errorsDisplay}
-      <Switch>
-        <Route path="/login">
-          <Login
-            setIsLoading={setIsLoading}
-            setError={setError}
-            setUser={setUser}
-            setLoggedIn={setLoggedIn}
-            setTimedAlert={setTimedAlert}
-          />
-        </Route>
-        <Route path="/register">
-          <Register setIsLoading={setIsLoading} setError={setError} />
-        </Route>
-        <Route path="/diary">
-          <Diary
-            setTimedAlert={setTimedAlert}
-            setIsLoading={setIsLoading}
-            setError={setError}
-          />
-        </Route>
-        <Route path="/addFoods">
-          <AddFoods
-            setTimedAlert={setTimedAlert}
-            setIsLoading={setIsLoading}
-            setError={setError}
-          />
-        </Route>
-        <Route path="/">
-          <Home setIsLoading={setIsLoading} setError={setError} />
-        </Route>
-      </Switch>
-    </div>
+    <AlertProvider>
+      <div className="bg-orange-100 min-h-screen">
+        <NavBar />
+        <Alert />
+        <Switch>
+          <Route path="/login">
+            <Login setUser={setUser} setLoggedIn={setLoggedIn} />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <Route path="/diary">
+            <Diary />
+          </Route>
+          <Route path="/addFoods">
+            <AddFoods />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
+    </AlertProvider>
   );
 }
