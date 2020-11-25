@@ -13,6 +13,7 @@ import Home from "./components/layout/Home";
 import Login from "./components/layout/Login";
 import Register from "./components/layout/Register";
 import Alert from "./components/layout/Alert";
+import NoMatch404 from "./components/layout/NoMatch404";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -24,6 +25,9 @@ export default function App() {
         <NavBar />
         <Alert />
         <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
           <Route path="/login">
             <Login setUser={setUser} setLoggedIn={setLoggedIn} />
           </Route>
@@ -36,8 +40,8 @@ export default function App() {
           <Route path="/addFoods">
             <AddFoods />
           </Route>
-          <Route path="/">
-            <Home />
+          <Route path="*">
+            <NoMatch404 />
           </Route>
         </Switch>
       </div>
