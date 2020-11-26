@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
 export default function Login({
@@ -33,9 +33,9 @@ export default function Login({
     }
   }
 
-  return redirectTo ? (
-    <Redirect to={{ pathname: redirectTo }} />
-  ) : (
+  if (redirectTo) return <Redirect to={{ pathname: redirectTo }} />;
+
+  return (
     <div>
       <h1>Login</h1>
       <form onSubmit={handleSubmit}>

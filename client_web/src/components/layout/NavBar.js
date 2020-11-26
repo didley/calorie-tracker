@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-export default function NavBar({ isLoading }) {
+export default function NavBar() {
   const [hidden, setHidden] = useState(true);
 
   function handleLinkClick() {
@@ -15,7 +15,7 @@ export default function NavBar({ isLoading }) {
           Calorie Tracker
         </Link>
       </div>
-      {/* mobile menu button show/hide, delete this comm when functioning */}
+      {/* mobile menu button show/hide */}
       <div className="block md:hidden">
         <button
           onClick={() => {
