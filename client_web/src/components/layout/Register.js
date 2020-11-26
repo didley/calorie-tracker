@@ -7,11 +7,8 @@ export default function Register({ setIsLoading, setError }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const res = await fetch("/api/login", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-    });
-    console.log(res);
+    // TODO
+    console.log({ name, email, password });
   };
 
   return (

@@ -1,19 +1,16 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
+import alertContext from "context/alert/alertContext";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
   selectedDate: PropTypes.string.isRequired,
 };
 
-export default function EditMenu({
-  setTimedAlert,
-  setIsLoading,
-  setError,
-  selectedItems,
-  selectedDate,
-}) {
+export default function EditMenu({ selectedItems, selectedDate }) {
+  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+
   function handleMove() {
     // TODO
     console.log("move event handler");
@@ -30,15 +27,13 @@ export default function EditMenu({
       setIsLoading(true);
       const response = await axios.post(
         `/api/diary/${selectedDate}/delete-food`,
-        {
-          selectedItems,
-        }
+        { selectedItems }
       );
       setIsLoading(false);
-      setTimedAlert(response.data.msg);
+      setTimedAlert("alert", response.data.msg);
     } catch (err) {
       setIsLoading(false);
-      setError(err);
+      setTimedAlert("error", err);
     }
   }
 

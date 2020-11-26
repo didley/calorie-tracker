@@ -1,18 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
+import LoadingSpinner from "components/shared/LoadingSpinner";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
+import alertContext from "context/alert/alertContext";
 
-export default function SelectedFood({
-  selectedFood,
-  setTimedAlert,
-  setIsLoading,
-  setError,
-}) {
+export default function SelectedFood({ selectedFood }) {
+  const { setTimedAlert } = useContext(alertContext);
+
   const {
     servingOptions = [],
     macrosPerServe = {},
@@ -25,7 +22,7 @@ export default function SelectedFood({
 
   const [amountInput, setAmountInput] = useState({});
   const [diaryRedirect, setDiaryRedirect] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [_isLoading, _setIsLoading] = useState(false);
 
   useEffect(() => {
     setAmountInput({
@@ -93,19 +90,17 @@ export default function SelectedFood({
     // TODO: get params query params with post request
 
     try {
-      setLoading(true);
+      _setIsLoading(true);
       await axios.post(
         `/api/diary/${dateParam}/add-food?list=${listParam}`,
         addFoodObj
       );
-      setLoading(false);
-      setTimedAlert(`${name} added to ${listParam} list`);
+      _setIsLoading(false);
+      setTimedAlert("alert", `${name} added to ${listParam} list`);
       setDiaryRedirect(true);
-      console.log(`Food added`);
     } catch (err) {
-      setError(err);
-      setLoading(false);
-      console.log(`Food Error`);
+      setTimedAlert("error", err);
+      _setIsLoading(false);
     }
   }
 
@@ -133,11 +128,7 @@ export default function SelectedFood({
           onClick={handleSubmit}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >
-          {loading ? (
-            <FontAwesomeIcon className="animate-spin" icon={faCircleNotch} />
-          ) : (
-            "Add"
-          )}
+          {_isLoading ? <LoadingSpinner white /> : "Add"}
         </button>
       </div>
       <hr />

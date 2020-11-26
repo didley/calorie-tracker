@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ListItem from "components/shared/ListItem";
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
+import alertContext from "context/alert/alertContext";
 
-export default function Diary({ setTimedAlert, setIsLoading, setError }) {
+export default function Diary() {
+  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+
   const [data, setData] = useState({});
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
   const [showSelectBtn, setShowSelectBtn] = useState(true);
@@ -33,7 +36,7 @@ export default function Diary({ setTimedAlert, setIsLoading, setError }) {
       setIsLoading(false);
     } catch (err) {
       if (err.response.status !== 404) {
-        setError(err);
+        setTimedAlert("error", err);
       }
       setIsLoading(false);
     }
@@ -84,9 +87,6 @@ export default function Diary({ setTimedAlert, setIsLoading, setError }) {
             </button>
             {showSelectBtn && (
               <EditMenu
-                setTimedAlert={setTimedAlert}
-                setIsLoading={setIsLoading}
-                setError={setError}
                 selectedItems={selectedIDs}
                 selectedDate={selectedDate}
               />

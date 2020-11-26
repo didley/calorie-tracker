@@ -1,11 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import ListItem from "components/shared/ListItem";
 import SearchBar from "./SearchBar";
 
-export default function FoodTabs({ setSelectedFood, setIsLoading, setError }) {
+import alertContext from "context/alert/alertContext";
+
+export default function FoodTabs({ setSelectedFood }) {
+  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+
   const [tabIndex, setTabIndex] = useState(0);
   const [data, setData] = useState({});
 
@@ -23,8 +27,7 @@ export default function FoodTabs({ setSelectedFood, setIsLoading, setError }) {
       setData({ ...data, [objName]: res.data });
       setIsLoading(false);
     } catch (err) {
-      setError(err);
-      setIsLoading(false);
+      setTimedAlert("error", err);
     }
   }
 

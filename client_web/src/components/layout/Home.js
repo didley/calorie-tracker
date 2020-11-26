@@ -15,7 +15,7 @@ export default function Home() {
   }
 
   function handleAlertClick() {
-    setTimedAlert("setAlert", "hi", 1000);
+    setTimedAlert("alert", "hi", 1000);
   }
 
   return (

@@ -1,7 +1,7 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import alertContext from "context/alert/alertContext";
 
-import LoadingSpinner from "./LoadingSpinner";
+import LoadingSpinner from "components/shared/LoadingSpinner";
 import AlertDisplay from "./AlertDisplay";
 import ErrorsDisplay from "./ErrorsDisplay";
 

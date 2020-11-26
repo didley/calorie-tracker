@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import AlertContext from "./alertContext";
 
@@ -7,14 +7,16 @@ const AlertState = ({ children }) => {
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
 
-  function setTimedAlert(setFnName, msg, time = 3000) {
-    if (setFnName === "setError") {
-      setError(msg);
-    } else if (setFnName === "setAlert") {
+  function setTimedAlert(alertType, msg, time = 3000) {
+    setIsLoading(false);
+    if (alertType === "error") {
+      console.log("timedAlert Err output", msg);
+      setError(JSON.stringify(msg.message));
+    } else if (alertType === "alert") {
       setAlert(msg);
     } else {
       setAlert(
-        "First parameter of of setTimedAlert must be 'setError' or 'setAlert' as a string"
+        "First parameter of of setTimedAlert must be 'error' or 'alert' as a string"
       );
     }
 

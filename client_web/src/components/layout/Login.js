@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
-export default function Login({
-  setIsLoading,
-  setError,
-  setUser,
-  setLoggedIn,
-  setTimedAlert,
-}) {
+import alertContext from "context/alert/alertContext";
+
+export default function Login({ setUser, setLoggedIn }) {
+  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+
+  // const [loggedIn, setLoggedIn] = useState(false);
+  // const [user, setUser] = useState(null);
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirectTo, setRedirectTO] = useState(null);
@@ -21,13 +22,13 @@ export default function Login({
       setUser(res.data.user);
       setLoggedIn(true);
       setIsLoading(false);
-      setTimedAlert("Login Success!");
+      setTimedAlert("alert", "Login Success!");
       setRedirectTO("/diary");
     } catch (err) {
       if (err.response.status === 401) {
-        setError("Incorrect credentials");
+        setTimedAlert("alert", "Incorrect credentials");
       } else {
-        setError(`Login request error ${err}`);
+        setTimedAlert("error", `Login request error ${err}`);
       }
       setIsLoading(false);
     }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 
 import AlertState from "context/alert/AlertState";
@@ -14,9 +14,6 @@ import Alert from "./components/layout/Alert";
 import NoMatch404 from "./components/layout/NoMatch404";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
-  const [user, setUser] = useState(null);
-
   return (
     <AlertState>
       <AuthState>
@@ -24,24 +21,12 @@ export default function App() {
           <NavBar />
           <Alert />
           <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/login">
-              <Login setUser={setUser} setLoggedIn={setLoggedIn} />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/diary">
-              <Diary />
-            </Route>
-            <Route path="/addFoods">
-              <AddFoods />
-            </Route>
-            <Route path="*">
-              <NoMatch404 />
-            </Route>
+            <Route exact path="/" component={Home} />
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+            <Route path="/diary" component={Diary} />
+            <Route path="/addFoods" component={AddFoods} />
+            <Route path="*" component={NoMatch404} />
           </Switch>
         </div>
       </AuthState>
