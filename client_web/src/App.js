@@ -21,12 +21,24 @@ export default function App() {
           <NavBar />
           <Alert />
           <Switch>
-            <Route exact path="/" component={Home} />
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/diary" component={Diary} />
-            <Route path="/addFoods" component={AddFoods} />
-            <Route path="*" component={NoMatch404} />
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <Route path="/diary">
+              <Diary />
+            </Route>
+            <Route path="/addFoods">
+              <AddFoods />
+            </Route>
+            <Route path="*">
+              <NoMatch404 />
+            </Route>
           </Switch>
         </div>
       </AuthState>

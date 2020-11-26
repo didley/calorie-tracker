@@ -3,12 +3,13 @@ import { Redirect, useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
 import alertContext from "context/alert/alertContext";
+import authContext from "context/auth/authContext";
 
-export default function Login({ setUser, setLoggedIn }) {
+export default function Login() {
   const { setIsLoading, setTimedAlert } = useContext(alertContext);
-
-  // const [loggedIn, setLoggedIn] = useState(false);
-  // const [user, setUser] = useState(null);
+  const { isAuthenticated, setIsAuthenticated, user, setUser } = useContext(
+    authContext
+  );
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,7 +21,7 @@ export default function Login({ setUser, setLoggedIn }) {
     try {
       const res = await axios.post("/api/auth/login", { email, password });
       setUser(res.data.user);
-      setLoggedIn(true);
+      setIsAuthenticated(true);
       setIsLoading(false);
       setTimedAlert("alert", "Login Success!");
       setRedirectTO("/diary");
