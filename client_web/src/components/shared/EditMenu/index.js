@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import axios from "axios";
-import alertContext from "context/alert/alertContext";
+
+import { useAlert } from "hooks/useAlert";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
@@ -9,7 +10,7 @@ const propTypes = {
 };
 
 export default function EditMenu({ selectedItems, selectedDate }) {
-  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+  const { setIsLoading, setTimedAlert } = useAlert();
 
   function handleMove() {
     // TODO

@@ -1,18 +1,12 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
-import axios from "axios";
 
+import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
-
-import alertContext from "context/alert/alertContext";
-import authContext from "context/auth/authContext";
 
 export default function Login() {
   const auth = useAuth();
-  const { setIsLoading, setTimedAlert } = useContext(alertContext);
-  // const { isAuthenticated, setIsAuthenticated, user, setUser } = useContext(
-  //   authContext
-  // );
+  const { setIsLoading, setTimedAlert } = useAlert();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,7 +17,6 @@ export default function Login() {
     setIsLoading(true);
     try {
       const req = await auth.login(email, password);
-      console.log({ req });
       setTimedAlert("alert", `Welcome ${req.name}`);
       setRedirectTo("/diary");
     } catch (err) {
@@ -33,22 +26,6 @@ export default function Login() {
         setTimedAlert("error", `Login request error ${err}`);
       }
     }
-
-    // try {
-    //   const res = await axios.post("/api/auth/login", { email, password });
-    //   setUser(res.data.user);
-    //   setIsAuthenticated(true);
-    //   setIsLoading(false);
-    //   setTimedAlert("alert", "Login Success!");
-    //   setRedirectTo("/diary");
-    // } catch (err) {
-    //   if (err.response.status === 401) {
-    //     setTimedAlert("alert", "Incorrect credentials");
-    //   } else {
-    //     setTimedAlert("error", `Login request error ${err}`);
-    //   }
-    //   setIsLoading(false);
-    // }
   }
 
   if (redirectTo) return <Redirect to={{ pathname: redirectTo }} />;

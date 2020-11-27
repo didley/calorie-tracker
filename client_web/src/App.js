@@ -12,11 +12,14 @@ import Login from "./components/layout/Login";
 import Register from "./components/layout/Register";
 import Alert from "./components/layout/Alert";
 import NoMatch404 from "./components/layout/NoMatch404";
+
+import { ProvideAlert } from "hooks/useAlert";
 import { ProvideAuth } from "hooks/useAuth";
 
 export default function App() {
   return (
-    <AlertState>
+    // <AlertState>
+    <ProvideAlert>
       <AuthState>
         <ProvideAuth>
           <div className="bg-orange-100 min-h-screen">
@@ -45,6 +48,7 @@ export default function App() {
           </div>
         </ProvideAuth>
       </AuthState>
-    </AlertState>
+    </ProvideAlert>
+    //  </AlertState>
   );
 }

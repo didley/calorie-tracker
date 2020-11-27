@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 import LoadingSpinner from "components/shared/LoadingSpinner";
 
-import alertContext from "context/alert/alertContext";
+import { useAlert } from "hooks/useAlert";
 
 export default function SelectedFood({ selectedFood }) {
-  const { setTimedAlert } = useContext(alertContext);
+  const { setTimedAlert } = useAlert();
 
   const {
     servingOptions = [],

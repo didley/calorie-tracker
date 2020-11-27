@@ -1,8 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext, createContext } from "react";
 
-import AlertContext from "./alertContext";
+const alertContext = createContext();
 
-const AlertState = ({ children }) => {
+export function ProvideAlert({ children }) {
+  const alert = useProvideAlert();
+  return (
+    <alertContext.Provider value={alert}>{children}</alertContext.Provider>
+  );
+}
+
+export const useAlert = () => {
+  return useContext(alertContext);
+};
+
+function useProvideAlert() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
@@ -26,19 +37,11 @@ const AlertState = ({ children }) => {
     }, time);
   }
 
-  return (
-    <AlertContext.Provider
-      value={{
-        isLoading,
-        setIsLoading,
-        error,
-        alert,
-        setTimedAlert,
-      }}
-    >
-      {children}
-    </AlertContext.Provider>
-  );
-};
-
-export default AlertState;
+  return {
+    isLoading,
+    setIsLoading,
+    error,
+    alert,
+    setTimedAlert,
+  };
+}

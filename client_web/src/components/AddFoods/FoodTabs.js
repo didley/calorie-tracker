@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import ListItem from "components/shared/ListItem";
 import SearchBar from "./SearchBar";
 
-import alertContext from "context/alert/alertContext";
+import { useAlert } from "hooks/useAlert";
 
 export default function FoodTabs({ setSelectedFood }) {
-  const { setIsLoading, setTimedAlert } = useContext(alertContext);
+  const { setIsLoading, setTimedAlert } = useAlert();
 
   const [tabIndex, setTabIndex] = useState(0);
   const [data, setData] = useState({});

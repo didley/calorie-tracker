@@ -1,12 +1,13 @@
-import React, { useContext } from "react";
-import alertContext from "context/alert/alertContext";
+import React from "react";
+
+import { useAlert } from "hooks/useAlert";
 
 import LoadingSpinner from "components/shared/LoadingSpinner";
 import AlertDisplay from "./AlertDisplay";
 import ErrorsDisplay from "./ErrorsDisplay";
 
 export default function Alert() {
-  const { isLoading, error, alert } = useContext(alertContext);
+  const { isLoading, error, alert } = useAlert();
 
   return (
     <div>
