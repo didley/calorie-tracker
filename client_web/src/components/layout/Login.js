@@ -5,6 +5,8 @@ import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 
 export default function Login() {
+  const history = useHistory();
+  const location = useLocation();
   const auth = useAuth();
   const { setIsLoading, setTimedAlert } = useAlert();
 
@@ -12,13 +14,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [redirectTo, setRedirectTo] = useState(null);
 
+  const { from } = location.state || { from: { pathname: "/" } };
+
   async function handleSubmit(e) {
     e.preventDefault();
     setIsLoading(true);
     try {
       const req = await auth.login(email, password);
       setTimedAlert("alert", `Welcome ${req.name}`);
-      setRedirectTo("/diary");
+      location.state ? history.replace(from) : setRedirectTo("/diary");
     } catch (err) {
       if (err.response.status === 401) {
         setTimedAlert("alert", "Incorrect credentials");

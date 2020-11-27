@@ -13,12 +13,13 @@ import Register from "./components/layout/Register";
 import Alert from "./components/layout/Alert";
 import NoMatch404 from "./components/layout/NoMatch404";
 
+import PrivateRoute from "components/routing/PrivateRoute";
+
 import { ProvideAlert } from "hooks/useAlert";
 import { ProvideAuth } from "hooks/useAuth";
 
 export default function App() {
   return (
-    // <AlertState>
     <ProvideAlert>
       <AuthState>
         <ProvideAuth>
@@ -35,12 +36,12 @@ export default function App() {
               <Route path="/register">
                 <Register />
               </Route>
-              <Route path="/diary">
+              <PrivateRoute path="/diary">
                 <Diary />
-              </Route>
-              <Route path="/addFoods">
+              </PrivateRoute>
+              <PrivateRoute path="/addFoods">
                 <AddFoods />
-              </Route>
+              </PrivateRoute>
               <Route path="*">
                 <NoMatch404 />
               </Route>
@@ -49,6 +50,5 @@ export default function App() {
         </ProvideAuth>
       </AuthState>
     </ProvideAlert>
-    //  </AlertState>
   );
 }

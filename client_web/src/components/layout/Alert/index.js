@@ -11,9 +11,9 @@ export default function Alert() {
 
   return (
     <div>
-      {isLoading && <LoadingSpinner />}
-      {alert && <AlertDisplay alert={alert} />}
       {error && <ErrorsDisplay error={error} />}
+      {alert && <AlertDisplay alert={alert} />}
+      {isLoading && <LoadingSpinner />}
     </div>
   );
 }
