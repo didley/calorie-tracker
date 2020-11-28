@@ -1,9 +1,6 @@
 import React from "react";
 import { Switch, Route } from "react-router-dom";
 
-import AlertState from "context/alert/AlertState";
-import AuthState from "context/auth/AuthState";
-
 import AddFoods from "./components/AddFoods";
 import Diary from "./components/Diary";
 import NavBar from "./components/layout/NavBar";
@@ -21,34 +18,32 @@ import { ProvideAuth } from "hooks/useAuth";
 export default function App() {
   return (
     <ProvideAlert>
-      <AuthState>
-        <ProvideAuth>
-          <div className="bg-orange-100 min-h-screen">
-            <NavBar />
-            <Alert />
-            <Switch>
-              <Route exact path="/">
-                <Home />
-              </Route>
-              <Route path="/login">
-                <Login />
-              </Route>
-              <Route path="/register">
-                <Register />
-              </Route>
-              <PrivateRoute path="/diary">
-                <Diary />
-              </PrivateRoute>
-              <PrivateRoute path="/addFoods">
-                <AddFoods />
-              </PrivateRoute>
-              <Route path="*">
-                <NoMatch404 />
-              </Route>
-            </Switch>
-          </div>
-        </ProvideAuth>
-      </AuthState>
+      <ProvideAuth>
+        <div className="bg-orange-100 min-h-screen">
+          <NavBar />
+          <Alert />
+          <Switch>
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/login">
+              <Login />
+            </Route>
+            <Route path="/register">
+              <Register />
+            </Route>
+            <PrivateRoute path="/diary">
+              <Diary />
+            </PrivateRoute>
+            <PrivateRoute path="/addFoods">
+              <AddFoods />
+            </PrivateRoute>
+            <Route path="*">
+              <NoMatch404 />
+            </Route>
+          </Switch>
+        </div>
+      </ProvideAuth>
     </ProvideAlert>
   );
 }

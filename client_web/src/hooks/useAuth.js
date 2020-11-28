@@ -17,15 +17,15 @@ function useProvideAuth() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    async function checkIfLoggedInUser() {
-      const loggedInUser = await localStorage.getItem("user");
+    (async () => {
+      const loggedInUser = await axios.get("/api/auth/user");
       if (loggedInUser) {
         console.log({ loggedInUser });
-        // const foundUser = await JSON.parse(loggedInUser);
         setUser(loggedInUser);
+      } else {
+        setUser(null);
       }
-    }
-    checkIfLoggedInUser();
+    })();
   }, []);
 
   const login = async (email, password) => {
