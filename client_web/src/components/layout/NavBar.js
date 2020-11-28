@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "hooks/useAuth";
+
 export default function NavBar() {
+  const auth = useAuth();
   const [hidden, setHidden] = useState(true);
 
   function handleLinkClick() {
@@ -11,7 +14,10 @@ export default function NavBar() {
   return (
     <nav className="flex items-center justify-between flex-wrap bg-red-500 p-5">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Link to="/diary" className="font-semibold text-xl tracking-tight">
+        <Link
+          to={auth.user ? "/diary" : "/"}
+          className="font-semibold text-xl tracking-tight"
+        >
           Calorie Tracker
         </Link>
       </div>
@@ -39,18 +45,32 @@ export default function NavBar() {
         } md:visible w-full block flex-grow md:flex md:items-center md:w-auto`}
       >
         <nav className="text-sm md:flex-grow">
-          <Link to="/diary" className={linkStyle} onClick={handleLinkClick}>
-            Diary
-          </Link>
-          <Link to="/login" className={linkStyle} onClick={handleLinkClick}>
-            Login
-          </Link>
-          <Link to="/register" className={linkStyle} onClick={handleLinkClick}>
-            Register
-          </Link>
-          <Link to="/" className={linkStyle} onClick={handleLinkClick}>
-            Home
-          </Link>
+          {auth.user ? (
+            <>
+              <Link to="/diary" className={linkStyle} onClick={handleLinkClick}>
+                Diary
+              </Link>
+              <Link to="#" className={linkStyle} onClick={() => auth.logout()}>
+                Logout
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/" className={linkStyle} onClick={handleLinkClick}>
+                Home
+              </Link>
+              <Link to="/login" className={linkStyle} onClick={handleLinkClick}>
+                Login
+              </Link>
+              <Link
+                to="/register"
+                className={linkStyle}
+                onClick={handleLinkClick}
+              >
+                Register
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </nav>

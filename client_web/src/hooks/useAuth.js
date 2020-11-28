@@ -22,7 +22,6 @@ function useProvideAuth() {
     const req = await axios.get("/api/auth/user");
     const loggedInUser = req.data.user;
     if (loggedInUser !== null) {
-      console.log({ loggedInUser });
       setUser(loggedInUser);
       setCheckingLoggedIn(false);
     } else {
@@ -33,9 +32,9 @@ function useProvideAuth() {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post("/api/auth/login", { email, password });
-      setUser(res.data.user);
-      return res.data.user;
+      const req = await axios.post("/api/auth/login", { email, password });
+      setUser(req.data.user);
+      return req.data.user;
     } catch (err) {
       throw err;
     }
@@ -43,7 +42,14 @@ function useProvideAuth() {
 
   const register = (email, password, name) => {};
 
-  const logout = () => {};
+  const logout = async () => {
+    try {
+      const req = await axios.post("/api/auth/logout");
+      if (req.status === 200) setUser(null);
+    } catch (err) {
+      throw err;
+    }
+  };
 
   return {
     checkingLoggedIn,
