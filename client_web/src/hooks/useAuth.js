@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext, createContext } from "react";
+import React, { useState, useContext, createContext } from "react";
 
 import axios from "axios";
 
@@ -15,24 +15,26 @@ export const useAuth = () => {
 
 function useProvideAuth() {
   const [user, setUser] = useState(null);
+  const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
 
-  useEffect(() => {
-    (async () => {
-      const loggedInUser = await axios.get("/api/auth/user");
-      if (loggedInUser) {
-        console.log({ loggedInUser });
-        setUser(loggedInUser);
-      } else {
-        setUser(null);
-      }
-    })();
-  }, []);
+  const isUserLoggedIn = async () => {
+    setCheckingLoggedIn(true);
+    const req = await axios.get("/api/auth/user");
+    const loggedInUser = req.data.user;
+    if (loggedInUser !== null) {
+      console.log({ loggedInUser });
+      setUser(loggedInUser);
+      setCheckingLoggedIn(false);
+    } else {
+      setUser(null);
+      setCheckingLoggedIn(false);
+    }
+  };
 
   const login = async (email, password) => {
     try {
       const res = await axios.post("/api/auth/login", { email, password });
       setUser(res.data.user);
-      localStorage.setItem("user", res.data.user);
       return res.data.user;
     } catch (err) {
       throw err;
@@ -44,6 +46,8 @@ function useProvideAuth() {
   const logout = () => {};
 
   return {
+    checkingLoggedIn,
+    isUserLoggedIn,
     user,
     login,
     register,

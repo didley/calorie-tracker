@@ -6,15 +6,13 @@ import { useAuth } from "hooks/useAuth";
 export default function PrivateRoute({ children, ...rest }) {
   const auth = useAuth();
 
+  if (auth.checkingLoggedIn) return <div>Loading...</div>;
+
   return (
     <Route
       {...rest}
-      render={({ location }) =>
-        auth.user ? (
-          children
-        ) : (
-          <Redirect to={{ pathname: "/login", state: { from: location } }} />
-        )
+      render={() =>
+        auth.user ? children : <Redirect to={{ pathname: "/login" }} />
       }
     />
   );

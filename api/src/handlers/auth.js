@@ -3,9 +3,11 @@ const User = require("../models/User");
 
 module.exports = {
   getUserDetails(req, res) {
-    console.log(req.user);
     if (req.user) {
-      return res.json({ user: req.user });
+      // return res.json({ user: req.user });
+      const { password, ...cleanUser } = req.user._doc;
+      console.log({ cleanUser });
+      return res.json({ user: cleanUser });
     } else {
       return res.json({ user: null });
     }

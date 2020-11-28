@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 
 import AddFoods from "./components/AddFoods";
@@ -12,38 +12,42 @@ import NoMatch404 from "./components/layout/NoMatch404";
 
 import PrivateRoute from "components/routing/PrivateRoute";
 
-import { ProvideAlert } from "hooks/useAlert";
-import { ProvideAuth } from "hooks/useAuth";
+import { useAuth } from "hooks/useAuth";
 
 export default function App() {
+  const auth = useAuth();
+
+  useEffect(() => {
+    // checks if user is logged in on App mount
+    (async () => {
+      await auth.isUserLoggedIn();
+    })();
+  }, []);
+
   return (
-    <ProvideAlert>
-      <ProvideAuth>
-        <div className="bg-orange-100 min-h-screen">
-          <NavBar />
-          <Alert />
-          <Switch>
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <PrivateRoute path="/diary">
-              <Diary />
-            </PrivateRoute>
-            <PrivateRoute path="/addFoods">
-              <AddFoods />
-            </PrivateRoute>
-            <Route path="*">
-              <NoMatch404 />
-            </Route>
-          </Switch>
-        </div>
-      </ProvideAuth>
-    </ProvideAlert>
+    <div className="bg-orange-100 min-h-screen">
+      <NavBar />
+      <Alert />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <Route path="/register">
+          <Register />
+        </Route>
+        <PrivateRoute path="/diary">
+          <Diary />
+        </PrivateRoute>
+        <PrivateRoute path="/addFoods">
+          <AddFoods />
+        </PrivateRoute>
+        <Route path="*">
+          <NoMatch404 />
+        </Route>
+      </Switch>
+    </div>
   );
 }
