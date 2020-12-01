@@ -12,6 +12,7 @@ module.exports = {
       return res.json({ user: null });
     }
   },
+  // auth handled with passport middleware within router
   loginUser(req, res) {
     console.log("POST to /login");
     const { password, ...cleanUser } = req.user._doc;
@@ -32,7 +33,7 @@ module.exports = {
       const { name, email, password } = req.body;
       const alreadyUser = await User.findOne({ email });
       if (alreadyUser) {
-        return res.status(400).json({ msg: "Email already in use" });
+        return res.status(401).json({ msg: "Email already in use" });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);

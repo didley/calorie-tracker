@@ -24,6 +24,7 @@ function useProvideAlert() {
       console.log("timedAlert Err output", msg);
       setError(JSON.stringify(msg.message));
     } else if (alertType === "alert") {
+      console.log("timedAlert Alert output", msg);
       setAlert(msg);
     } else {
       setAlert(

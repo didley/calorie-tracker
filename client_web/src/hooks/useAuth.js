@@ -40,7 +40,19 @@ function useProvideAuth() {
     }
   };
 
-  const register = (email, password, name) => {};
+  const register = async (email, password, name) => {
+    try {
+      const req = await axios.post("/api/auth/register", {
+        email,
+        password,
+        name,
+      });
+      setUser(req.date.user);
+      return req.data.user;
+    } catch (err) {
+      throw err;
+    }
+  };
 
   const logout = async () => {
     try {
