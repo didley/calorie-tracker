@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
+const passport = require("../passport");
 
 module.exports = {
   getUserDetails(req, res) {
@@ -12,14 +13,20 @@ module.exports = {
       return res.json({ user: null });
     }
   },
-  // auth handled with passport middleware within router
-  loginUser(req, res) {
-    console.log("POST to /login");
-    const { password, ...cleanUser } = req.user._doc;
-    return res.json({ user: cleanUser });
+  loginUser(req, res, next) {
+    passport.authenticate("local", (err, user, info) => {
+      if (err) return next(err);
+      if (!user) return res.status(401).json({ msg: info.message });
+      req.logIn(user, (err) => {
+        if (err) return next(err);
+        console.log("Login success");
+        return res.json({ msg: `Welcome ${req.user.name}` });
+      });
+    })(req, res, next);
   },
   logoutUser(req, res) {
     if (req.user) {
+      req.logout();
       req.session.destroy();
       res.clearCookie("connect.sid");
       return res.json({ msg: "logging you out" });
@@ -40,6 +47,7 @@ module.exports = {
 
       await User.create({ name, email, password: hashedPassword }).then(
         (user) => {
+          req.login();
           const { password, ...cleanUser } = user._doc;
           res.json({ user: cleanUser, msg: "Account created" });
         }

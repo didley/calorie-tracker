@@ -5,18 +5,14 @@ const strategy = new LocalStrategy(
   { usernameField: "email" },
   (email, password, done) => {
     User.findOne({ email }, async (err, userMatch) => {
-      if (err) {
-        return done(err);
-      }
+      if (err) return done(err);
 
-      if (!userMatch) {
+      if (!userMatch)
         return done(null, false, { message: "Account not found" });
-      }
 
       const passwordMatch = await userMatch.checkPassword(password);
-      if (!passwordMatch) {
+      if (!passwordMatch)
         return done(null, false, { message: "Incorrect password" });
-      }
 
       return done(null, userMatch);
     });
