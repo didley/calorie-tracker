@@ -18,6 +18,11 @@ function useProvideAlert() {
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
 
+  function clearAlerts() {
+    setError(null);
+    setAlert(null);
+  }
+
   function setTimedAlert(alertType, msg, time = 3000) {
     setIsLoading(false);
     if (alertType === "error") {
@@ -33,8 +38,7 @@ function useProvideAlert() {
     }
 
     setTimeout(() => {
-      setError(null);
-      setAlert(null);
+      clearAlerts();
     }, time);
   }
 
@@ -43,6 +47,7 @@ function useProvideAlert() {
     setIsLoading,
     error,
     alert,
+    clearAlerts,
     setTimedAlert,
   };
 }
