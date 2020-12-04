@@ -5,7 +5,6 @@ const passport = require("../passport");
 module.exports = {
   getUserDetails(req, res) {
     if (req.user) {
-      // return res.json({ user: req.user });
       const { password, ...cleanUser } = req.user._doc;
       console.log({ cleanUser });
       return res.json({ user: cleanUser });
@@ -27,11 +26,16 @@ module.exports = {
   logoutUser(req, res) {
     if (req.user) {
       req.logout();
-      req.session.destroy();
-      res.clearCookie("connect.sid");
-      return res.json({ msg: "logging you out" });
+      req.session.destroy((err) => {
+        if (err) {
+          res
+            .status(400)
+            .json({ msg: `Error logging you out: ${err.message}` });
+        }
+        res.clearCookie("connect.sid").json({ msg: "Logged out successfully" });
+      });
     } else {
-      return res.json({ msg: "no user to log out!" });
+      res.json({ msg: "No user to log out" });
     }
   },
   async registerUser(req, res) {
