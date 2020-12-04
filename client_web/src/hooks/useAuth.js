@@ -16,7 +16,7 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
-  const { setIsLoading, setTimedAlert } = useAlert();
+  const { setIsLoading, setTimedAlert, clearAlerts } = useAlert();
   const [user, setUser] = useState(null);
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
 
@@ -62,7 +62,10 @@ function useProvideAuth() {
   const logout = async () => {
     try {
       const req = await axios.post("/api/auth/logout");
-      if (req.status === 200) setUser(null);
+      if (req.status === 200) {
+        setUser(null);
+        clearAlerts();
+      }
     } catch (err) {
       throw err;
     }

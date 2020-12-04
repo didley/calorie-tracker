@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -10,7 +10,6 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [redirectTo, setRedirectTo] = useState(null);
 
   const { from } = location.state || { from: { pathname: "/" } };
 
@@ -18,13 +17,11 @@ export default function Login() {
     e.preventDefault();
     try {
       await auth.login(email, password);
-      location.state ? history.replace(from) : setRedirectTo("/diary");
+      history.replace(from);
     } catch (err) {
       return;
     }
   }
-
-  if (redirectTo) return <Redirect to={{ pathname: redirectTo }} />;
 
   return (
     <div>
