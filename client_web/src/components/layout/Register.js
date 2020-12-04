@@ -1,12 +1,10 @@
 import React, { useState } from "react";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 
 export default function Register() {
-  const history = useHistory();
-  const location = useLocation();
   const auth = useAuth();
   const { setTimedAlert } = useAlert();
 
@@ -16,8 +14,6 @@ export default function Register() {
   const [confirmedPassword, setConfirmedPassword] = useState("");
 
   const [redirectTo, setRedirectTo] = useState(null);
-
-  const { from } = location.state || { from: { pathname: "/" } };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -33,7 +29,7 @@ export default function Register() {
 
     try {
       await auth.register(email, password, name);
-      location.state ? history.replace(from) : setRedirectTo("/diary");
+      setRedirectTo("/diary");
     } catch (err) {
       return;
     }
