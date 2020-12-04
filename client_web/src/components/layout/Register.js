@@ -8,7 +8,7 @@ export default function Register() {
   const history = useHistory();
   const location = useLocation();
   const auth = useAuth();
-  const { setIsLoading, setTimedAlert } = useAlert();
+  const { setTimedAlert } = useAlert();
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -30,18 +30,12 @@ export default function Register() {
         "Confirmed password does not match, try again"
       );
     }
-    setIsLoading(true);
+
     try {
-      const req = await auth.register(email, password, name);
-      setTimedAlert("alert", `Welcome ${req.name}`);
+      await auth.register(email, password, name);
       location.state ? history.replace(from) : setRedirectTo("/diary");
     } catch (err) {
-      if (err.response.status === 401) {
-        // TODO: working on
-        setTimedAlert("error", `${err.msg} Incorrect credentials`);
-      } else {
-        setTimedAlert("error", `Login request error ${err}`);
-      }
+      return;
     }
   };
 

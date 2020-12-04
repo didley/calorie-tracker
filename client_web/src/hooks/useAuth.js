@@ -1,5 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 
+import { useAlert } from "hooks/useAlert";
+
 import axios from "axios";
 
 const authContext = createContext();
@@ -14,6 +16,7 @@ export const useAuth = () => {
 };
 
 function useProvideAuth() {
+  const { setIsLoading, setTimedAlert } = useAlert();
   const [user, setUser] = useState(null);
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
 
@@ -31,12 +34,14 @@ function useProvideAuth() {
   };
 
   const login = async (email, password) => {
+    setIsLoading(true);
     try {
       const req = await axios.post("/api/auth/login", { email, password });
       setUser(req.data.user);
-      return req.data.user;
+      setTimedAlert("alert", `${req.data.msg}`);
     } catch (err) {
-      throw err;
+      console.log("err", err.message);
+      setTimedAlert("error", err.msg);
     }
   };
 
@@ -47,8 +52,8 @@ function useProvideAuth() {
         password,
         name,
       });
-      setUser(req.date.user);
-      return req.data.user;
+      setUser(req.data.user);
+      setTimedAlert("alert", `${req.data.msg}`);
     } catch (err) {
       throw err;
     }

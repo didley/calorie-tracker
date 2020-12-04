@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 
-import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 
 export default function Login() {
   const history = useHistory();
   const location = useLocation();
   const auth = useAuth();
-  const { setIsLoading, setTimedAlert } = useAlert();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,17 +16,11 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setIsLoading(true);
     try {
-      const req = await auth.login(email, password);
-      setTimedAlert("alert", `Welcome ${req.name}`);
+      await auth.login(email, password);
       location.state ? history.replace(from) : setRedirectTo("/diary");
     } catch (err) {
-      if (err.response.status === 401) {
-        setTimedAlert("alert", "Incorrect credentials");
-      } else {
-        setTimedAlert("error", `Login request error ${err}`);
-      }
+      return;
     }
   }
 

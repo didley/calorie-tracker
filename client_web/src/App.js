@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query-devtools";
 
 import AddFoods from "./components/AddFoods";
 import Diary from "./components/Diary";
@@ -22,6 +23,7 @@ export default function App() {
     (async () => {
       await auth.isUserLoggedIn();
     })();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -48,6 +50,7 @@ export default function App() {
           <NoMatch404 />
         </Route>
       </Switch>
+      <ReactQueryDevtools />
     </div>
   );
 }

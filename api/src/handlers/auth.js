@@ -56,7 +56,7 @@ module.exports = {
             if (err) throw err;
 
             const { password, ...cleanUser } = user._doc;
-            res.json({ user: cleanUser, msg: "Account created" });
+            res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
           });
         }
       );
