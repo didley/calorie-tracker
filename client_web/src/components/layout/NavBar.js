@@ -50,7 +50,7 @@ export default function NavBar() {
               <Link to="/diary" className={linkStyle} onClick={handleLinkClick}>
                 Diary
               </Link>
-              <Link to="#" className={linkStyle} onClick={() => auth.logout()}>
+              <Link to="/" className={linkStyle} onClick={() => auth.logout()}>
                 Logout
               </Link>
             </>
