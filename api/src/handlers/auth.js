@@ -19,7 +19,8 @@ module.exports = {
       req.logIn(user, (err) => {
         if (err) return next(err);
         console.log("Login success");
-        return res.json({ msg: `Welcome ${req.user.name}` });
+        const { password, ...cleanUser } = req.user._doc;
+        return res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
       });
     })(req, res, next);
   },
