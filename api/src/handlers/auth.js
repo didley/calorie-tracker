@@ -52,9 +52,12 @@ module.exports = {
 
       await User.create({ name, email, password: hashedPassword }).then(
         (user) => {
-          req.login();
-          const { password, ...cleanUser } = user._doc;
-          res.json({ user: cleanUser, msg: "Account created" });
+          req.login(user, (err) => {
+            if (err) throw err;
+
+            const { password, ...cleanUser } = user._doc;
+            res.json({ user: cleanUser, msg: "Account created" });
+          });
         }
       );
     } catch (err) {
