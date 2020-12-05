@@ -1,47 +1,51 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+
 import ListItem from "components/shared/ListItem";
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 
 import { useAlert } from "hooks/useAlert";
+import { useDiary } from "hooks/diary/useDiary";
 
 export default function Diary() {
-  const { setIsLoading, setTimedAlert } = useAlert();
-
-  const [data, setData] = useState({});
-  const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
+  // const [data, setData] = useState({});
+  // const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace initial state with (new Date())
   const [showSelectBtn, setShowSelectBtn] = useState(true);
   const [selectedIDs, setSelectedIDs] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("2020-11-04");
 
+  const { status, data = {}, error, isFetching } = useDiary(selectedDate);
   const { eaten, toEat, notes } = data;
 
-  useEffect(() => {
-    setData({});
-    getDiaryData(selectedDate);
-    // eslint-disable-next-line
-  }, [selectedDate]);
+  const { setIsLoading, setTimedAlert } = useAlert();
+
+  // useEffect(() => {
+  //   setData({});
+  //   getDiaryData(selectedDate);
+  //   // eslint-disable-next-line;
+  // }, [selectedDate]);
 
   function toggleShowSelectBtn() {
     setSelectedIDs([]);
     setShowSelectBtn(!showSelectBtn);
   }
 
-  async function getDiaryData(date) {
-    // eg. GET to /users is getFoods("users")
-    try {
-      setIsLoading(true);
-      const res = await axios.get(`/api/diary/${date}`);
-      setData(res.data);
-      setIsLoading(false);
-    } catch (err) {
-      if (err.response.status !== 404) {
-        setTimedAlert("error", err);
-      }
-      setIsLoading(false);
-    }
-  }
+  // async function getDiaryData(date) {
+  //   // eg. GET to /users is getFoods("users")
+  //   try {
+  //     setIsLoading(true);
+  //     const res = await axios.get(`/api/diary/${date}`);
+  //     setData(res.data);
+  //     setIsLoading(false);
+  //   } catch (err) {
+  //     if (err.response.status !== 404) {
+  //       setTimedAlert("error", err);
+  //     }
+  //     setIsLoading(false);
+  //   }
+  // }
 
   function handleDateChange(date) {
     const ISODate = new Date(date).toISOString().substr(0, 10);
@@ -49,7 +53,7 @@ export default function Diary() {
   }
 
   function handleNoteChange(e) {
-    setData({ ...data, notes: e.target.value });
+    // setData({ ...data, notes: e.target.value });
   }
 
   function handleSelectFood(selectedFood) {
@@ -68,6 +72,8 @@ export default function Diary() {
   const addBtnStyle =
     "bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1";
 
+  if (status === "loading") return <div>Diary Loading...</div>;
+  if (status === "error") return <div>Diary Error:{error.message}</div>;
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full max-w-xl">
@@ -98,7 +104,7 @@ export default function Diary() {
               <div className="border-b flex justify-between">
                 <h3 className="my-auto">Eaten</h3>
                 <Link
-                  to={`/addFoods?date=${selectedDate}&list=eaten`}
+                  // to={`/addFoods?date=${selectedDate}&list=eaten`}
                   className={addBtnStyle}
                 >
                   +
@@ -107,6 +113,7 @@ export default function Diary() {
               <ul className="inline-block w-full h-32">
                 {eaten &&
                   eaten.map((food) => (
+                    // <li key={food._id}>{food.food_id.name}</li>
                     <ListItem
                       key={food._id}
                       food={food.food_id}
@@ -116,6 +123,7 @@ export default function Diary() {
                     />
                   ))}
               </ul>
+              <div>{isFetching ? "Background Updating..." : " "}</div>
             </div>
             <div>
               <div className="border-b flex justify-between">

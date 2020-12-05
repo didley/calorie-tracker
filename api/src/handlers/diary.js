@@ -16,9 +16,10 @@ module.exports = {
       }).populate(["toEat.food_id", "eaten.food_id"]);
 
       if (!diaryEntry) {
-        return res
-          .status(404)
-          .json({ msg: `no diary entry found for ${date}` });
+        return res.json({ eaten: [], toEat: [], notes: "" }); // returns empty entry instead of 404
+        // return res
+        //   .status(404)
+        //   .json({ msg: `no diary entry found for ${date}` });
       }
 
       res.json(diaryEntry);
