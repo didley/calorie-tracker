@@ -14,6 +14,7 @@ export const useAlert = () => {
 };
 
 function useProvideAlert() {
+  const [isFetching, setIsFetching] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [alert, setAlert] = useState(null);
@@ -43,6 +44,8 @@ function useProvideAlert() {
   }
 
   return {
+    isFetching,
+    setIsFetching,
     isLoading,
     setIsLoading,
     error,
