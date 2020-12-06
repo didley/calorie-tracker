@@ -3,7 +3,7 @@ import api from "utils/api";
 import { useAlert } from "hooks/useAlert";
 import { useEffect } from "react";
 
-const getDiaryEntryByDate = async (key, date) => {
+const getDiaryEntryByDate = async (_, date) => {
   const { data } = await api.get(`/diary/${date}`);
   console.log(data);
   return data;

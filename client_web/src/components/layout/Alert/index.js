@@ -14,7 +14,7 @@ export default function Alert() {
       {error && <ErrorsDisplay error={error} />}
       {alert && <AlertDisplay alert={alert} />}
       {isLoading && <LoadingSpinner />}
-      {isFetching && <div>Fetching...</div>}
+      {/* {isFetching && <div>Fetching...</div>} */}
     </div>
   );
 }

@@ -5,14 +5,12 @@ import { faCircleNotch } from "@fortawesome/free-solid-svg-icons";
 
 export default function LoadingSpinner({ white }) {
   return (
-    <div className={!white && "bg-white"}>
-      <h1 className={`text-center ${white ? "text-white" : "text-gray-900"}`}>
-        <FontAwesomeIcon
-          className={`animate-spin`}
-          icon={faCircleNotch}
-          size="sm"
-        />
-      </h1>
+    <div className={`text-center ${!white && "bg-white"}`}>
+      <FontAwesomeIcon
+        className={`animate-spin ${white ? "text-white" : "text-gray-900"}`}
+        icon={faCircleNotch}
+        size="xs"
+      />
     </div>
   );
 }

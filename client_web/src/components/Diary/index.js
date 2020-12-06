@@ -80,7 +80,7 @@ export default function Diary() {
               <div className="border-b flex justify-between">
                 <h3 className="my-auto">Eaten</h3>
                 <Link
-                  // to={`/addFoods?date=${selectedDate}&list=eaten`}
+                  to={`/addFoods?date=${selectedDate}&list=eaten`}
                   className={addBtnStyle}
                 >
                   +
@@ -89,7 +89,6 @@ export default function Diary() {
               <ul className="inline-block w-full h-32">
                 {eaten &&
                   eaten.map((food) => (
-                    // <li key={food._id}>{food.food_id.name}</li>
                     <ListItem
                       key={food._id}
                       food={food.food_id}
