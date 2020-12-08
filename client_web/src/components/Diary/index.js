@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDiaryEntry } from "hooks/diary/useDiaryEntry";
 import { Link } from "react-router-dom";
 
@@ -13,12 +13,6 @@ export default function Diary() {
 
   const { data = {} } = useDiaryEntry(selectedDate);
   const { eaten, toEat, notes } = data;
-
-  // useEffect(() => {
-  //   setData({});
-  //   getDiaryData(selectedDate);
-  //   // eslint-disable-next-line;
-  // }, [selectedDate]);
 
   function toggleShowSelectBtn() {
     setSelectedIDs([]);

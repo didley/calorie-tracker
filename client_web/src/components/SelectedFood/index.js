@@ -8,6 +8,10 @@ import LoadingSpinner from "components/shared/LoadingSpinner";
 import { useAlert } from "hooks/useAlert";
 
 export default function SelectedFood({ selectedFood }) {
+  const [amountInput, setAmountInput] = useState({});
+  const [diaryRedirect, setDiaryRedirect] = useState(false);
+  const [_isLoading, _setIsLoading] = useState(false);
+
   const { setTimedAlert } = useAlert();
 
   const {
@@ -17,21 +21,6 @@ export default function SelectedFood({ selectedFood }) {
     name,
     perServeSize = 0,
   } = selectedFood;
-
-  // TODO: amount input not allowing decimal
-
-  const [amountInput, setAmountInput] = useState({});
-  const [diaryRedirect, setDiaryRedirect] = useState(false);
-  const [_isLoading, _setIsLoading] = useState(false);
-
-  useEffect(() => {
-    setAmountInput({
-      chosenAmount: 1,
-      servingChoice: defaultServingOptions[0],
-      index: 0,
-    });
-    // eslint-disable-next-line
-  }, [selectedFood]);
 
   const defaultServingOptions = [
     {
@@ -45,6 +34,16 @@ export default function SelectedFood({ selectedFood }) {
       servingSize: 1,
     },
   ];
+
+  useEffect(() => {
+    setAmountInput({
+      chosenAmount: 1,
+      servingChoice: defaultServingOptions[0],
+      index: 0,
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedFood]);
+
   const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
 
   let adjustedMacros = { ...macrosPerServe };
@@ -71,7 +70,7 @@ export default function SelectedFood({ selectedFood }) {
       index: e.target.value,
     });
   };
-  // TODO: implement POST
+
   async function handleSubmit() {
     const URLParams = new URLSearchParams(window.location.search);
     const dateParam = URLParams.get("date");
@@ -86,7 +85,6 @@ export default function SelectedFood({ selectedFood }) {
         chosenMacros: adjustedMacros,
       },
     };
-    // TODO: get params query params with post request
 
     try {
       _setIsLoading(true);
@@ -103,10 +101,6 @@ export default function SelectedFood({ selectedFood }) {
     }
   }
 
-  if (diaryRedirect) {
-    return <Redirect to={`/diary`} />;
-  }
-
   const containerStyle =
     "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2";
 
@@ -119,6 +113,8 @@ export default function SelectedFood({ selectedFood }) {
       </div>
     );
   }
+
+  if (diaryRedirect) return <Redirect to={`/diary`} />;
   return (
     <div className={containerStyle}>
       <div className="flex justify-between">

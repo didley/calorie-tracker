@@ -20,10 +20,7 @@ export default function App() {
   const auth = useAuth();
 
   useEffect(() => {
-    // checks if user is logged in on App mount
-    (async () => {
-      await auth.isUserLoggedIn();
-    })();
+    auth.isUserLoggedIn();
     // eslint-disable-next-line
   }, []);
 

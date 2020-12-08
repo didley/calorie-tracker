@@ -12,7 +12,7 @@ export default function NavBar() {
   }
 
   return (
-    <nav className="flex items-center justify-between flex-wrap bg-red-500 p-5">
+    <header className="flex items-center justify-between flex-wrap bg-red-500 p-5">
       <div className="flex items-center flex-shrink-0 text-white mr-6">
         <Link
           to={auth.user ? "/diary" : "/"}
@@ -73,7 +73,7 @@ export default function NavBar() {
           )}
         </nav>
       </div>
-    </nav>
+    </header>
   );
 }
 

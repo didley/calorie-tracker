@@ -25,7 +25,7 @@ export function useDiaryEntry(date) {
     } else setIsFetching(false);
 
     if (status === "error") setTimedAlert(error);
-  }, [status, isFetching]);
+  }, [status, isFetching, setIsLoading, setIsFetching, error, setTimedAlert]);
 
   return { data };
 }

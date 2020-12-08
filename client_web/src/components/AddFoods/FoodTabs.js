@@ -17,8 +17,8 @@ export default function FoodTabs({ setSelectedFood }) {
 
   useEffect(() => {
     getFoods("foods", "dbFoods");
-    // eslint-disable-next-line
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tabIndex]);
 
   async function getFoods(route, objName) {
     try {
