@@ -39,9 +39,9 @@ export default function Register() {
 
   return (
     <div>
-      <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <label>
+        <h1>Register</h1>
+        <label htmlFor="firstName">
           Your first name:
           <input
             type="text"
@@ -61,7 +61,7 @@ export default function Register() {
           />
         </label>
         <br />
-        <label>
+        <label htmlFor="password">
           Password:
           <input
             type="password"
@@ -71,7 +71,7 @@ export default function Register() {
           />
         </label>
         <br />
-        <label>
+        <label htmlFor="confirmationPassword">
           Confirm password:
           <input
             type="password"
@@ -81,7 +81,7 @@ export default function Register() {
           />
         </label>
         <br />
-        <input type="submit" value="Register" />
+        <button>Register</button>
       </form>
     </div>
   );

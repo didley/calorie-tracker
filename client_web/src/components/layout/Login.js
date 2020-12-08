@@ -11,7 +11,7 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const { from } = location.state || { from: { pathname: "/" } };
+  const { from } = location.state || { from: { pathname: "/diary" } };
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -25,9 +25,9 @@ export default function Login() {
 
   return (
     <div>
-      <h1>Login</h1>
       <form onSubmit={handleSubmit}>
-        <label>
+        <h1>Login</h1>
+        <label htmlFor="email">
           Email:
           <input
             type="email"
@@ -37,7 +37,7 @@ export default function Login() {
           />
         </label>
         <br />
-        <label>
+        <label htmlFor="password">
           Password:
           <input
             type="password"
@@ -47,7 +47,7 @@ export default function Login() {
           />
         </label>
         <br />
-        <input type="submit" value="Login" />
+        <button>Login</button>
       </form>
     </div>
   );

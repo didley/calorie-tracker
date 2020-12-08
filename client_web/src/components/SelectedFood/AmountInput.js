@@ -12,7 +12,10 @@ export default function AmountInput({
   return (
     <div className="flex">
       <div className="w-1/4 mr-2">
-        <label className="block tracking-wide text-gray-700 text-xs font-bold my-1">
+        <label
+          htmlFor="amount"
+          className="block tracking-wide text-gray-700 text-xs font-bold my-1"
+        >
           Amount
           <input
             value={amountInput.chosenAmount}
