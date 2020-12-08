@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 const getDiaryEntryByDate = async (_, date) => {
   const { data } = await api.get(`/diary/${date}`);
-  console.log(data);
   return data;
 };
 

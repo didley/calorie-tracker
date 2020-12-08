@@ -3,7 +3,6 @@ const LocalStrategy = require("./localStrategy");
 const User = require("../models/User");
 
 passport.serializeUser((user, done) => {
-  console.log({ user });
   done(null, user.id);
 });
 

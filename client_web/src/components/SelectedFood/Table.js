@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Table({ macros }) {
-  console.log({ macros });
   const {
     CarbohydrateG = 0,
     EnergyKJ = 0,

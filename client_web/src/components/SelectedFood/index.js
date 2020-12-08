@@ -30,7 +30,6 @@ export default function SelectedFood({ selectedFood }) {
       servingChoice: defaultServingOptions[0],
       index: 0,
     });
-    console.log({ selectedFood });
     // eslint-disable-next-line
   }, [selectedFood]);
 

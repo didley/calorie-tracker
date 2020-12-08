@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import api from "utils/api";
 
-import { useQueryCache } from "react-query";
-
-// TODO: working on
 const Test = () => {
-  const cache = useQueryCache();
-  console.log({ cache });
-
   const [testDisplay, setTestDisplay] = useState({
     method: "",
     msg: "",

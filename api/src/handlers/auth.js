@@ -18,7 +18,6 @@ module.exports = {
       if (!user) return res.status(401).json({ msg: info.message });
       req.logIn(user, (err) => {
         if (err) return next(err);
-        console.log("Login success");
         const { password, ...cleanUser } = req.user._doc;
         return res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
       });
