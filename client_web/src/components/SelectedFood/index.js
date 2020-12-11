@@ -8,13 +8,8 @@ import LoadingSpinner from "components/shared/LoadingSpinner";
 import { useAlert } from "hooks/useAlert";
 
 export default function SelectedFood({ selectedFood }) {
-  const [amountInput, setAmountInput] = useState({});
-  const [diaryRedirect, setDiaryRedirect] = useState(false);
-  const [_isLoading, _setIsLoading] = useState(false);
-
-  const { setTimedAlert } = useAlert();
-
   const {
+    isLiquid,
     servingOptions = [],
     macrosPerServe = {},
     brand,
@@ -22,51 +17,58 @@ export default function SelectedFood({ selectedFood }) {
     perServeSize = 0,
   } = selectedFood;
 
-  const defaultServingOptions = [
+  const [diaryRedirect, setDiaryRedirect] = useState(false);
+  const [_isLoading, _setIsLoading] = useState(false);
+  const [chosenServing, setChosenServing] = useState({});
+
+  const { setTimedAlert } = useAlert();
+
+  useEffect(() => {
+    setChosenServing({
+      chosenAmount: 1,
+      servingChoice: {
+        _id: "serve",
+        servingName: "1 Serving",
+        servingSize: perServeSize,
+      },
+      index: 0,
+    });
+  }, [selectedFood, perServeSize]);
+
+  const servingOptionsWithDefaults = [
     {
       _id: "serve",
       servingName: "1 Serving",
       servingSize: perServeSize,
     },
     {
-      _id: "g",
-      servingName: "g",
+      _id: isLiquid ? "mL" : "g",
+      servingName: isLiquid ? "mL" : "g",
       servingSize: 1,
     },
+    ...servingOptions,
   ];
 
-  useEffect(() => {
-    setAmountInput({
-      chosenAmount: 1,
-      servingChoice: defaultServingOptions[0],
-      index: 0,
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedFood]);
-
-  const servingOptionsArr = [...defaultServingOptions, ...servingOptions];
-
   let adjustedMacros = { ...macrosPerServe };
-
   for (let macro in adjustedMacros) {
     adjustedMacros[macro] =
       (adjustedMacros[macro] / perServeSize) *
-      amountInput.servingChoice.servingSize *
-      amountInput.chosenAmount;
+      chosenServing.servingChoice.servingSize *
+      chosenServing.chosenAmount;
     adjustedMacros[macro] = parseFloat(adjustedMacros[macro].toFixed(1)); // rounds to one decimal
   }
 
-  const onChosenAmountChange = (e) => {
-    setAmountInput({
-      ...amountInput,
+  const onAmountChange = (e) => {
+    setChosenServing({
+      ...chosenServing,
       chosenAmount: parseInt(e.target.value),
     });
   };
 
-  const onAmountInputChange = (e) => {
-    setAmountInput({
-      ...amountInput,
-      servingChoice: servingOptionsArr[e.target.value],
+  const onSizeChange = (e) => {
+    setChosenServing({
+      ...chosenServing,
+      servingChoice: servingOptionsWithDefaults[e.target.value],
       index: e.target.value,
     });
   };
@@ -75,23 +77,17 @@ export default function SelectedFood({ selectedFood }) {
     const URLParams = new URLSearchParams(window.location.search);
     const dateParam = URLParams.get("date");
     const listParam = URLParams.get("list");
-    console.log({ dateParam, listParam });
-
-    const addFoodObj = {
-      food_id: selectedFood._id,
-      chosenOptions: {
-        serving: amountInput.servingChoice,
-        chosenAmount: amountInput.chosenAmount,
-        chosenMacros: adjustedMacros,
-      },
-    };
 
     try {
       _setIsLoading(true);
-      await axios.post(
-        `/api/diary/${dateParam}/add-food?list=${listParam}`,
-        addFoodObj
-      );
+      await axios.post(`/api/diary/${dateParam}/add-food?list=${listParam}`, {
+        food_id: selectedFood._id,
+        chosenOptions: {
+          serving: chosenServing.servingChoice,
+          chosenAmount: chosenServing.chosenAmount,
+          chosenMacros: adjustedMacros,
+        },
+      });
       _setIsLoading(false);
       setTimedAlert("alert", `${name} added to ${listParam} list`);
       setDiaryRedirect(true);
@@ -104,6 +100,7 @@ export default function SelectedFood({ selectedFood }) {
   const containerStyle =
     "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2";
 
+  if (diaryRedirect) return <Redirect to={`/diary`} />;
   if (Object.keys(selectedFood).length === 0) {
     return (
       <div className={`${containerStyle} bg-gray-200`}>
@@ -113,8 +110,6 @@ export default function SelectedFood({ selectedFood }) {
       </div>
     );
   }
-
-  if (diaryRedirect) return <Redirect to={`/diary`} />;
   return (
     <div className={containerStyle}>
       <div className="flex justify-between">
@@ -127,15 +122,15 @@ export default function SelectedFood({ selectedFood }) {
         </button>
       </div>
       <hr />
-      <h4>{name}</h4>
+      <h4>{name && name}</h4>
       <p>{brand && brand}</p>
       <hr />
       <AmountInput
-        selected={selectedFood}
-        servingOptionsArr={servingOptionsArr}
-        amountInput={amountInput}
-        onChosenAmountChange={onChosenAmountChange}
-        onAmountInputChange={onAmountInputChange}
+        isLiquid={isLiquid}
+        servingOptions={servingOptionsWithDefaults}
+        chosenServing={chosenServing}
+        onAmountChange={onAmountChange}
+        onSizeChange={onSizeChange}
       />
       <Table macros={adjustedMacros} />
     </div>

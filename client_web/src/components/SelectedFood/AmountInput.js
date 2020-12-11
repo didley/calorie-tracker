@@ -1,14 +1,12 @@
 import React from "react";
 
 export default function AmountInput({
-  selected,
-  servingOptionsArr,
-  amountInput,
-  onChosenAmountChange,
-  onAmountInputChange,
+  isLiquid,
+  servingOptions,
+  chosenServing,
+  onAmountChange,
+  onSizeChange,
 }) {
-  const { isLiquid } = selected;
-
   return (
     <div className="flex">
       <div className="w-1/4 mr-2">
@@ -18,8 +16,8 @@ export default function AmountInput({
         >
           Amount
           <input
-            value={amountInput.chosenAmount}
-            onChange={onChosenAmountChange}
+            value={chosenServing.chosenAmount}
+            onChange={onAmountChange}
             className="w-full text-center appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             type="number"
             min="0"
@@ -32,12 +30,13 @@ export default function AmountInput({
           Size
           <div className="relative">
             <select
-              value={amountInput.index}
-              onChange={onAmountInputChange}
+              value={chosenServing.index}
+              onChange={onSizeChange}
+              disabled={servingOptions.length === 0 ? true : false}
               className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
             >
-              {servingOptionsArr &&
-                servingOptionsArr.map((option, index) => (
+              {servingOptions &&
+                servingOptions.map((option, index) => (
                   <option key={option._id} value={index}>
                     {`${option.servingName} (${option.servingSize}${
                       isLiquid ? "mL" : "g"

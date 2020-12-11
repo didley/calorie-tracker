@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import api from "utils/api";
+import { useAuth } from "hooks/useAuth";
 
 const Test = () => {
+  const auth = useAuth();
+  console.log("Test component user log", auth.user && auth.user.name);
+
   const [testDisplay, setTestDisplay] = useState({
     method: "",
     msg: "",
