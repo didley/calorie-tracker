@@ -31,12 +31,11 @@ async function apiClient(method, endpoint, { body, ...customConfig } = {}) {
       //   window.location.assign('/login');
       //   return Promise.reject({ message: 'Please re-authenticate' });
       // }
-
       const data = await res.json();
       if (res.ok) {
         return data;
       } else {
-        return Promise.reject(data);
+        return Promise.reject(res);
       }
     });
 

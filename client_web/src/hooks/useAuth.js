@@ -2,7 +2,6 @@ import React, { useState, useContext, createContext } from "react";
 
 import { useAlert } from "hooks/useAlert";
 
-import axios from "axios";
 import { client } from "api/client";
 
 const authContext = createContext();
@@ -23,9 +22,8 @@ function useProvideAuth() {
 
   const isUserLoggedIn = async () => {
     setCheckingLoggedIn(true);
-    const req = await client.get("/auth/user");
-    console.log("useAuth >>>>>>", req);
-    const loggedInUser = req.user;
+    const data = await client.get("/auth/user");
+    const loggedInUser = data.user;
     if (loggedInUser !== null) {
       setUser(loggedInUser);
       setCheckingLoggedIn(false);
@@ -38,9 +36,11 @@ function useProvideAuth() {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      const req = await axios.post("/api/auth/login", { email, password });
-      setUser(req.data.user);
-      setTimedAlert("alert", `${req.data.msg}`);
+      const data = await client.post("/auth/login", {
+        body: { email, password },
+      });
+      setUser(data.user);
+      setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
       console.log("err", err.message);
       setTimedAlert("error", err.msg);
@@ -49,13 +49,15 @@ function useProvideAuth() {
 
   const register = async (email, password, name) => {
     try {
-      const req = await axios.post("/api/auth/register", {
-        email,
-        password,
-        name,
+      const data = await client.post("/auth/register", {
+        body: {
+          email,
+          password,
+          name,
+        },
       });
-      setUser(req.data.user);
-      setTimedAlert("alert", `${req.data.msg}`);
+      setUser(data.user);
+      setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
       throw err;
     }
@@ -63,11 +65,9 @@ function useProvideAuth() {
 
   const logout = async () => {
     try {
-      const req = await axios.post("/api/auth/logout");
-      if (req.status === 200) {
-        setUser(null);
-        clearAlerts();
-      }
+      await client.post("/auth/logout");
+      setUser(null);
+      clearAlerts();
     } catch (err) {
       throw err;
     }
