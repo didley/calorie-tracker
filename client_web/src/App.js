@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query-devtools";
 
+import { useAuth } from "hooks/useAuth";
+
 import AddFoods from "./components/AddFoods";
 import Diary from "./components/Diary";
 import NavBar from "./components/layout/NavBar";
@@ -9,12 +11,9 @@ import Home from "./components/layout/Home";
 import Login from "./components/layout/Login";
 import Register from "./components/layout/Register";
 import Alert from "./components/layout/Alert";
-import Test from "./components/Test";
 import NoMatch404 from "./components/layout/NoMatch404";
 
 import PrivateRoute from "components/routing/PrivateRoute";
-
-import { useAuth } from "hooks/useAuth";
 
 export default function App() {
   const auth = useAuth();
@@ -44,9 +43,6 @@ export default function App() {
         <PrivateRoute path="/addFoods">
           <AddFoods />
         </PrivateRoute>
-        <Route path="/test">
-          <Test />
-        </Route>
         <Route path="*">
           <NoMatch404 />
         </Route>

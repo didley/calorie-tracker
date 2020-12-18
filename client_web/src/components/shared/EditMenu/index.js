@@ -1,8 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 
-import { useAlert } from "hooks/useAlert";
+import { useDeleteItems } from "hooks/useDiary";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
@@ -10,8 +9,7 @@ const propTypes = {
 };
 
 export default function EditMenu({ selectedItems, selectedDate }) {
-  const { setIsLoading, setTimedAlert } = useAlert();
-
+  const deleteItems = useDeleteItems();
   function handleMove() {
     // TODO
     console.log("move event handler");
@@ -22,21 +20,23 @@ export default function EditMenu({ selectedItems, selectedDate }) {
     console.log("copy event handler");
   }
 
-  async function handleDelete() {
+  const handleDelete = () => {
+    console.log("delete hander triggered");
+    deleteItems(selectedDate, selectedItems);
     // TODO: working on <<<<<
-    try {
-      setIsLoading(true);
-      const response = await axios.post(
-        `/api/diary/${selectedDate}/delete-food`,
-        { selectedItems }
-      );
-      setIsLoading(false);
-      setTimedAlert("alert", response.data.msg);
-    } catch (err) {
-      setIsLoading(false);
-      setTimedAlert("error", err);
-    }
-  }
+    // try {
+    //   setIsLoading(true);
+    //   const response = await axios.post(
+    //     `/api/diary/${selectedDate}/delete-food`,
+    //     { selectedItems }
+    //   );
+    //   setIsLoading(false);
+    //   setTimedAlert("alert", response.data.msg);
+    // } catch (err) {
+    //   setIsLoading(false);
+    //   setTimedAlert("error", err);
+    // }
+  };
 
   return (
     <div className="inline-flex shadow-md">

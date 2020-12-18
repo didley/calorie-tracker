@@ -5,27 +5,20 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "type": "chrome",
+      "request": "launch",
+      "name": "Brave - Launch",
+      "runtimeExecutable": "/Applications/Brave Browser.app/Contents/MacOS/Brave Browser",
+      "userDataDir": true,
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}"
+    },
+    {
       "name": "server - Launch Program",
       "program": "${workspaceFolder}/server/index.js",
       "request": "launch",
       "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
-    },
-    {
-      "name": "Attach to Edge",
-      "port": 3000,
-      "request": "attach",
-      "type": "pwa-msedge",
-      "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "dev"
-    },
-    {
-      "name": "Launch Edge",
-      "request": "launch",
-      "type": "pwa-msedge",
-      "url": "http://localhost:3000",
-      "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "dev"
     }
   ]
 }

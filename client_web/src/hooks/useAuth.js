@@ -3,6 +3,7 @@ import React, { useState, useContext, createContext } from "react";
 import { useAlert } from "hooks/useAlert";
 
 import axios from "axios";
+import { client } from "api/client";
 
 const authContext = createContext();
 
@@ -22,8 +23,9 @@ function useProvideAuth() {
 
   const isUserLoggedIn = async () => {
     setCheckingLoggedIn(true);
-    const req = await axios.get("/api/auth/user");
-    const loggedInUser = req.data.user;
+    const req = await client.get("/auth/user");
+    console.log("useAuth >>>>>>", req);
+    const loggedInUser = req.user;
     if (loggedInUser !== null) {
       setUser(loggedInUser);
       setCheckingLoggedIn(false);

@@ -1,23 +1,45 @@
-import React, { useState } from "react";
-import { useDiaryEntry } from "hooks/diary/useDiaryEntry";
+import React, { useState, useEffect } from "react";
+import { useDiaryEntry } from "hooks/useDiary";
 import { Link } from "react-router-dom";
 
 import ListItem from "components/shared/ListItem";
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 
+// import axios from "axios";
+import { client } from "api/client";
+import { getDiaryEntry } from "api/diary";
+import { useAlert } from "hooks/useAlert";
+
 export default function Diary() {
-  const [showSelectBtn, setShowSelectBtn] = useState(true);
+  const { setIsLoading, setTimedAlert } = useAlert();
+  const [data, setData] = useState({});
+
+  const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedIDs, setSelectedIDs] = useState([]);
   const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace in production initial state with (new Date())
 
-  const { data = {} } = useDiaryEntry(selectedDate);
-  const { eaten, toEat, notes } = data;
+  // const { data = {} } = useDiaryEntry(selectedDate);
 
-  function toggleShowSelectBtn() {
-    setSelectedIDs([]);
-    setShowSelectBtn(!showSelectBtn);
-  }
+  useEffect(() => {
+    setData({});
+    async function getDiaryData(date) {
+      // eg. GET to /users is getFoods("users")
+      try {
+        setIsLoading(true);
+        const data = await client.get(`/diary/${date}`);
+        setData(data);
+        setIsLoading(false);
+      } catch (err) {
+        setTimedAlert("error", err);
+        setIsLoading(false);
+      }
+    }
+
+    getDiaryData(selectedDate);
+  }, [selectedDate]);
+
+  const { eaten, toEat, notes } = data;
 
   function handleDateChange(date) {
     const ISODate = new Date(date).toISOString().substr(0, 10);
@@ -26,6 +48,11 @@ export default function Diary() {
 
   function handleNoteChange(e) {
     // setData({ ...data, notes: e.target.value });
+  }
+
+  function toggleShowSelectBtn() {
+    setSelectedIDs([]);
+    setShowSelectBtn(!showSelectBtn);
   }
 
   function handleSelectFood(selectedFood) {
