@@ -4,8 +4,10 @@ import { useQuery as _useQuery } from "react-query";
 import { getDiaryEntry, removeDiaryItems } from "api/diary";
 
 function useDiaryEntry(date) {
-  const { data } = _useQuery(["entry", date], getDiaryEntry);
-  return { data };
+  const { data, status } = _useQuery(["entry", date], () =>
+    getDiaryEntry(date)
+  );
+  return { data, status };
 }
 
 function useDeleteItems(selectedDate, selectedItems) {

@@ -1,5 +1,3 @@
-import axios from "axios";
-
 const defaults = {
   baseURL: "/api",
   headers: { "content-type": "application/json" },
@@ -12,7 +10,7 @@ const defaults = {
   },
 };
 
-async function apiClient(method, endpoint, { body, ...customConfig } = {}) {
+async function fetchWrapper(method, endpoint, { body, ...customConfig } = {}) {
   const config = {
     method,
     ...customConfig,
@@ -35,33 +33,15 @@ async function apiClient(method, endpoint, { body, ...customConfig } = {}) {
       if (res.ok) {
         return data;
       } else {
-        return Promise.reject(res);
+        return Promise.reject(data || defaults.error);
       }
     });
-
-  // try {
-  //   const response = await axios({
-  //     url: `${defaults.baseURL}${endpoint}`,
-  //     method,
-  //     headers: defaults.headers,
-  //     params: method === "get" ? variables : undefined,
-  //     data: method !== "get" ? variables : undefined,
-  //   });
-  //   const data = await response.json();
-  //   console.log({ data });
-  //   return data;
-  // } catch (err) {
-  //   console.log(err);
-  //   if (err.response) return err.response.data.error;
-
-  //   return defaults.error;
-  // }
 }
 
 export const client = {
-  get: (...args) => apiClient("GET", ...args),
-  post: (...args) => apiClient("POST", ...args),
-  put: (...args) => apiClient("PUT", ...args),
-  patch: (...args) => apiClient("PATCH", ...args),
-  delete: (...args) => apiClient("DELETE", ...args),
+  get: (...args) => fetchWrapper("GET", ...args),
+  post: (...args) => fetchWrapper("POST", ...args),
+  put: (...args) => fetchWrapper("PUT", ...args),
+  patch: (...args) => fetchWrapper("PATCH", ...args),
+  delete: (...args) => fetchWrapper("DELETE", ...args),
 };

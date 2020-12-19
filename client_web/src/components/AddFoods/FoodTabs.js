@@ -3,12 +3,17 @@ import PropTypes from "prop-types";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import ListItem from "components/shared/ListItem";
+import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
+
 import SearchBar from "./SearchBar";
 
 import { useAlert } from "hooks/useAlert";
 
+const propTypes = {
+  setSelectedFood: PropTypes.func.isRequired,
+};
 export default function FoodTabs({ setSelectedFood }) {
-  const { setIsLoading, setTimedAlert } = useAlert();
+  const { setIsLoading, isLoading, setTimedAlert } = useAlert();
 
   const [tabIndex, setTabIndex] = useState(0);
   const [data, setData] = useState({});
@@ -72,6 +77,7 @@ export default function FoodTabs({ setSelectedFood }) {
           <SearchBar />
 
           <ul>
+            {isLoading === true && <PlaceholderListItem amount={5} />}
             {dbFoods &&
               dbFoods.map((food) => (
                 <ListItem
@@ -116,6 +122,4 @@ export default function FoodTabs({ setSelectedFood }) {
   );
 }
 
-FoodTabs.propTypes = {
-  setSelectedFood: PropTypes.func.isRequired,
-};
+FoodTabs.propTypes = propTypes;

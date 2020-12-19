@@ -3,11 +3,12 @@ import { useQuery as _useQuery } from "react-query";
 import { useAlert } from "hooks/useAlert";
 import { useEffect } from "react";
 
-export function useQuery(key, apiFn, options = {}) {
-  const { globalLoading = true } = options;
+export function useQuery(key, apiFn, globalLoading = true) {
   const { setTimedAlert, setIsLoading, setIsFetching } = useAlert();
-  const { status, data, error, isFetching } = _useQuery(key, apiFn);
+  // If your query function depends on a variable, include it in your query key eg. ry(['todos', todoId], () => fetchTodoById(todoId))
+  const { status, data, error, isFetching } = _useQuery(key, () => apiFn);
 
+  // const { status, data, error, isFetching } = _useQuery(key, apiFn);
   useEffect(() => {
     if (globalLoading) {
       if (status === "loading") {
