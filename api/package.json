@@ -1,8 +1,14 @@
 {
-  "name": "server",
+  "type": "module",
+  "name": "calorie-tracker-api",
+  "engines": {
+    "node": ">=15.0.0"
+  },
+  "author": "DoneDidley",
+  "version": "1.0.0",
   "main": "src/index.js",
   "scripts": {
-    "start": "nodemon src/index.js"
+    "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -10,19 +16,19 @@
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
-    "express-basic-auth": "^1.2.0",
-    "express-openid-connect": "^2.0.0",
     "express-session": "^1.17.1",
-    "mongoose": "^5.10.8",
+    "mongoose": "^5.11.8",
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
-    "path": "^0.12.7",
-    "uuid": "^8.3.1"
+    "path": "^0.12.7"
   },
   "devDependencies": {
-    "eslint": "^7.15.0",
-    "eslint-config-prettier": "^7.0.0",
+    "eslint": "^7.16.0",
+    "eslint-config-prettier": "^7.1.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-security": "^1.4.0",
     "nodemon": "^2.0.6",
     "prettier": "2.2.1"
   }
