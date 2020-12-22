@@ -3,13 +3,18 @@ import PropTypes from "prop-types";
 
 import { useDeleteItems } from "hooks/useDiary";
 
+import { useMutation } from "react-query";
+import { removeDiaryItems } from "api/diary";
+
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
   selectedDate: PropTypes.string.isRequired,
 };
 
 export default function EditMenu({ selectedItems, selectedDate }) {
-  const deleteItems = useDeleteItems();
+  // const { removeDiaryItems } = useDeleteItems();
+  const mutation = useMutation((values) => removeDiaryItems(values));
+
   function handleMove() {
     // TODO
     console.log("move event handler");
@@ -22,7 +27,9 @@ export default function EditMenu({ selectedItems, selectedDate }) {
 
   const handleDelete = () => {
     console.log("delete hander triggered");
-    deleteItems(selectedDate, selectedItems);
+    // removeDiaryItems(selectedDate, selectedItems);
+    mutation.mutate(selectedItems, selectedDate);
+
     // TODO: working on <<<<<
     // try {
     //   setIsLoading(true);
@@ -37,6 +44,9 @@ export default function EditMenu({ selectedItems, selectedDate }) {
     //   setTimedAlert("error", err);
     // }
   };
+
+  if (mutation.isLoading) return <p>Deleting foods</p>;
+  if (mutation.isError) return <p>Error deleting foods</p>;
 
   return (
     <div className="inline-flex shadow-md">

@@ -6,7 +6,7 @@ function getDiaryEntry(date) {
 
 function removeDiaryItems(selectedDate, selectedItems) {
   return client.post(`/diary/${selectedDate}/delete-food`, {
-    selectedItems,
+    body: { selectedItems },
   });
 }
 
