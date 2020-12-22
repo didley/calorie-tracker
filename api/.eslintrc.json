@@ -7,7 +7,7 @@
     "ecmaVersion": 2020,
     "sourceType": "module"
   },
-  "plugins": ["security"],
+  "plugins": ["node", "security"],
   "extends": [
     "prettier",
     "eslint:recommended",

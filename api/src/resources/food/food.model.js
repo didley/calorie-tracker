@@ -1,6 +1,6 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
 
-const FoodSchema = new Schema(
+const FoodSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     brand: String,
@@ -9,9 +9,9 @@ const FoodSchema = new Schema(
     perServeSize: Number,
     barcode: Number,
     createdBy: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.SchemaTypes.ObjectId,
       required: true,
-      ref: "User",
+      ref: "user",
     },
     macrosPerServe: {
       EnergyKJ: { type: Number, required: true },
@@ -29,6 +29,4 @@ const FoodSchema = new Schema(
   { timestamps: true }
 );
 
-const Food = model("Food", FoodSchema);
-
-module.exports = Food;
+export const Food = mongoose.model("food", FoodSchema);

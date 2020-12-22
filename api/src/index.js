@@ -1,16 +1,14 @@
-// const express = require("express");
 import express from "express";
-// const cookieParser = require("cookie-parser");
 import cookieParser from "cookie-parser";
-const bodyParser = require("body-parser");
-
-const session = require("express-session");
-const MongoStore = require("connect-mongo")(session);
-const passport = require("passport");
-
-const { createDBConnection } = require("./db");
+import bodyParser from "body-parser";
+import session from "express-session";
+import connectMongo from "connect-mongo";
+import passport from "passport";
+import router from "./utils/router";
+import { connect } from "./utils/db";
 
 const app = express();
+const MongoStore = connectMongo(session);
 app.use(cookieParser());
 app.use(bodyParser.json());
 
@@ -26,11 +24,11 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use("/api", require("./router"));
+app.use("/api", router);
 
 const initializeApp = async () => {
   try {
-    await createDBConnection();
+    await connect();
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
       console.log(`🚀   Server running on PORT ${PORT}`);

@@ -1,8 +1,8 @@
-const Diary = require("../models/Diary");
-const { format } = require("date-fns");
+import { Diary } from "./diary.model";
+import { format } from "date-fns";
 
-module.exports = {
-  async getDiaryEntry(req, res) {
+export default {
+  getDiaryEntry: async (req, res) => {
     let { date } = req.params;
     // returns today if no date provided
     if (!date) {
@@ -17,6 +17,7 @@ module.exports = {
 
       if (!diaryEntry) {
         return res.json({ eaten: [], toEat: [], notes: "" }); // returns empty entry instead of 404
+
         // return res
         //   .status(404)
         //   .json({ msg: `no diary entry found for ${date}` });

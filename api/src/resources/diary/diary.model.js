@@ -1,8 +1,12 @@
-const { Schema, model } = require("mongoose");
+import mongoose from "mongoose";
 
-const DiarySchema = new Schema(
+const DiarySchema = new mongoose.Schema(
   {
-    userId: { type: Schema.Types.ObjectId, required: true, ref: "User" },
+    userId: {
+      type: mongoose.SchemaTypes.ObjectId,
+      required: true,
+      ref: "user",
+    },
     entryDate: {
       type: String,
       required: true,
@@ -16,9 +20,9 @@ const DiarySchema = new Schema(
           chosenMacros: Object,
         },
         food_id: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.SchemaTypes.ObjectId,
           required: true,
-          ref: "Food",
+          ref: "food",
         },
       },
     ],
@@ -30,9 +34,9 @@ const DiarySchema = new Schema(
           chosenMacros: Object,
         },
         food_id: {
-          type: Schema.Types.ObjectId,
+          type: mongoose.SchemaTypes.ObjectId,
           required: true,
-          ref: "Food",
+          ref: "food",
         },
       },
     ],
@@ -40,4 +44,4 @@ const DiarySchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = DiaryModel = model("diary", DiarySchema);
+export const Diary = mongoose.model("diary", DiarySchema);
