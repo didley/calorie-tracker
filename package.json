@@ -2,10 +2,6 @@
   "name": "calorie-tracker",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "client_web": "file:client_web",
-    "connect-mongo": "^3.2.0"
-  },
   "scripts": {
     "start": "npm-run-all prestart -p start:*",
     "prestart": "npm run prestart --prefix client_web/",

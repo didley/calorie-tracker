@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import session from "express-session";
 import connectMongo from "connect-mongo";
 import passport from "passport";
-import router from "./utils/router";
+import router from "./resources/router";
 import { connect } from "./utils/db";
 
 const app = express();
