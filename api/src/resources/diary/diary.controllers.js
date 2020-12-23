@@ -13,7 +13,9 @@ export default {
       const diaryEntry = await Diary.findOne({
         userId: req.user._id,
         entryDate: date,
-      }).populate(["toEat.food_id", "eaten.food_id"]);
+      })
+        .populate(["toEat.food_id", "eaten.food_id"])
+        .lean();
 
       if (!diaryEntry) {
         return res.json({ eaten: [], toEat: [], notes: "" }); // returns empty entry instead of 404
@@ -40,15 +42,16 @@ export default {
     }
 
     try {
-      const options = { upsert: true };
+      const options = { upsert: true, new: true };
 
-      await Diary.findOneAndUpdate(
+      const data = await Diary.findOneAndUpdate(
         { entryDate: date, userId: req.user._id },
         { $push: { [adjustedList]: req.body } },
         options
       );
 
       res.json({
+        data: data,
         msg: `Food added to ${
           adjustedList === "eaten" ? "eaten" : "to eat"
         } list`,

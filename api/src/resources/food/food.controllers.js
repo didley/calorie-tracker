@@ -3,7 +3,7 @@ import { Food } from "./food.model";
 export default {
   getDBFoods: async (req, res) => {
     try {
-      const DBFoods = await Food.find({}); // TODO: replace with { createdBy: "admin" } after implementing admins
+      const DBFoods = await Food.find({}).lean(); // TODO: replace with { createdBy: "admin" } after implementing admins
       res.json(DBFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
@@ -11,7 +11,7 @@ export default {
   },
   getUsersFoods: async (req, res) => {
     try {
-      const usersFoods = await Food.find({ createdBy: req.user._id });
+      const usersFoods = await Food.find({ createdBy: req.user._id }).lean();
       res.json(usersFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
