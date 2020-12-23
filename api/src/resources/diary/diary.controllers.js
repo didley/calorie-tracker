@@ -1,8 +1,8 @@
-const Diary = require("../models/Diary");
-const { format } = require("date-fns");
+import { Diary } from "./diary.model";
+import { format } from "date-fns";
 
-module.exports = {
-  async getDiaryEntry(req, res) {
+export default {
+  getDiaryEntry: async (req, res) => {
     let { date } = req.params;
     // returns today if no date provided
     if (!date) {
@@ -13,10 +13,13 @@ module.exports = {
       const diaryEntry = await Diary.findOne({
         userId: req.user._id,
         entryDate: date,
-      }).populate(["toEat.food_id", "eaten.food_id"]);
+      })
+        .populate(["toEat.food_id", "eaten.food_id"])
+        .lean();
 
       if (!diaryEntry) {
         return res.json({ eaten: [], toEat: [], notes: "" }); // returns empty entry instead of 404
+
         // return res
         //   .status(404)
         //   .json({ msg: `no diary entry found for ${date}` });
@@ -39,15 +42,16 @@ module.exports = {
     }
 
     try {
-      const options = { upsert: true };
+      const options = { upsert: true, new: true };
 
-      await Diary.findOneAndUpdate(
+      const data = await Diary.findOneAndUpdate(
         { entryDate: date, userId: req.user._id },
         { $push: { [adjustedList]: req.body } },
         options
       );
 
       res.json({
+        data: data,
         msg: `Food added to ${
           adjustedList === "eaten" ? "eaten" : "to eat"
         } list`,

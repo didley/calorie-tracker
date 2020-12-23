@@ -1,5 +1,4 @@
 {
-    "cSpell.words": [
-        "upsert"
-    ]
+  "eslint.workingDirectories": ["./api", "./client_web"],
+  "cSpell.words": ["upsert"]
 }

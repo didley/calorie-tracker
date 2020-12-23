@@ -1,7 +1,8 @@
-const LocalStrategy = require("passport-local").Strategy;
-const User = require("../models/User");
+import passportLocal from "passport-local";
 
-const strategy = new LocalStrategy(
+import { User } from "../../resources/user/user.model";
+
+const strategy = new passportLocal.Strategy(
   { usernameField: "email" },
   (email, password, done) => {
     User.findOne({ email }, async (err, userMatch) => {
@@ -19,4 +20,4 @@ const strategy = new LocalStrategy(
   }
 );
 
-module.exports = strategy;
+export default strategy;

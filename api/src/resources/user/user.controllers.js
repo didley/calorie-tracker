@@ -1,9 +1,9 @@
-const bcrypt = require("bcryptjs");
-const User = require("../models/User");
-const passport = require("../passport");
+import bcrypt from "bcryptjs";
+import passport from "../../utils/passport";
+import { User } from "./user.model";
 
-module.exports = {
-  getUserDetails(req, res) {
+export default {
+  getUserDetails: (req, res) => {
     if (req.user) {
       const { password, ...cleanUser } = req.user._doc;
       console.log({ cleanUser });
@@ -12,7 +12,7 @@ module.exports = {
       return res.json({ user: null });
     }
   },
-  loginUser(req, res, next) {
+  loginUser: (req, res, next) => {
     passport.authenticate("local", (err, user, info) => {
       if (err) return next(err);
       if (!user) return res.status(401).json({ msg: info.message });
@@ -23,7 +23,7 @@ module.exports = {
       });
     })(req, res, next);
   },
-  logoutUser(req, res) {
+  logoutUser: (req, res) => {
     if (req.user) {
       req.logout();
       req.session.destroy((err) => {
@@ -38,7 +38,7 @@ module.exports = {
       res.json({ msg: "No user to log out" });
     }
   },
-  async registerUser(req, res) {
+  registerUser: async (req, res) => {
     //TODO - Add validation
     try {
       const { name, email, password } = req.body;

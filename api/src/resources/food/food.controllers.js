@@ -1,23 +1,23 @@
-const Food = require("../models/Food");
+import { Food } from "./food.model";
 
-module.exports = {
-  async getDBFoods(req, res) {
+export default {
+  getDBFoods: async (req, res) => {
     try {
-      const DBFoods = await Food.find({}); // TODO: replace with { createdBy: "admin" } after implementing admins
+      const DBFoods = await Food.find({}).lean(); // TODO: replace with { createdBy: "admin" } after implementing admins
       res.json(DBFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
     }
   },
-  async getUsersFoods(req, res) {
+  getUsersFoods: async (req, res) => {
     try {
-      const usersFoods = await Food.find({ createdBy: req.user._id });
+      const usersFoods = await Food.find({ createdBy: req.user._id }).lean();
       res.json(usersFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
     }
   },
-  async addDBFood(req, res) {
+  addDBFood: async (req, res) => {
     try {
       const food = await Food.create({ ...req.body, createdBy: "admin" });
       res.json({ msg: `${food.name} Added to foods database` });
@@ -25,7 +25,7 @@ module.exports = {
       res.status(400).json({ msg: "Something went wrong", err });
     }
   },
-  async addUserFood(req, res) {
+  addUserFood: async (req, res) => {
     try {
       const food = await Food.create({ ...req.body, createdBy: req.user._id });
       res.json({ msg: `${food.name} Added to your foods` });

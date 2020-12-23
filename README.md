@@ -1,14 +1,6 @@
 # calorie-tracker
 
 
-## ABOUT
----
-### Styling
-Styling is provided by TailwindCSS, init document is found under /src/tailwind.css
-
-
-<br />
-
 ## SETUP
 ---
 ### Installing
@@ -21,7 +13,13 @@ $ cd ..
 $ cd api
 $ npm i
 ```
-- [ ] change .env.example to .env and replace its variables with your own
+### /api/.env Example
+```shell
+PORT=5000
+DB_URI=
+APP_SECRET=shhhhhhhh
+```
+
 ### Running
 ```shell
 $ cd calorie-tracker
@@ -31,15 +29,3 @@ $ npm start
 <br />
 
 
-## NOTES
----
-### routes
-- /diary
-- /diary?date=2020-09-04
-  - /diary/add?q=foods
-  - /diary/add?q=recent
-  - /diary/add?q=myFoods
-- /weight
-- /profile
-- /help
-- /about
