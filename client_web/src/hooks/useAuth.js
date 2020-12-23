@@ -22,7 +22,7 @@ function useProvideAuth() {
 
   const isUserLoggedIn = async () => {
     setCheckingLoggedIn(true);
-    const data = await client.get("/auth/user");
+    const data = await client.get("/user");
     const loggedInUser = data.user;
     if (loggedInUser !== null) {
       setUser(loggedInUser);
@@ -36,7 +36,7 @@ function useProvideAuth() {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      const data = await client.post("/auth/login", {
+      const data = await client.post("/user/login", {
         body: { email, password },
       });
       setUser(data.user);
@@ -49,7 +49,7 @@ function useProvideAuth() {
 
   const register = async (email, password, name) => {
     try {
-      const data = await client.post("/auth/register", {
+      const data = await client.post("/user/register", {
         body: {
           email,
           password,
@@ -65,7 +65,7 @@ function useProvideAuth() {
 
   const logout = async () => {
     try {
-      await client.post("/auth/logout");
+      await client.post("/user/logout");
       setUser(null);
       clearAlerts();
     } catch (err) {
