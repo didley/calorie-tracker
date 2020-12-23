@@ -149,7 +149,7 @@ export default function Diary() {
             <div>
               <h3 className="border-b my-auto">Notes</h3>
               <textarea
-                className="resize-none border-2 text-sm rounded focus:outline-none focus:shadow-outline h-40 mt-2 p-2 w-full"
+                className="resize-none h-40 mt-2 p-2"
                 type="text"
                 placeholder="Click here to add a note..."
                 value={notes}

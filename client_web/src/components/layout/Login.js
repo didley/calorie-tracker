@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { Page, Container, Button } from "components/shared/styling";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -24,31 +25,33 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Login</h1>
-        <label htmlFor="email">
-          Email:
-          <input
-            type="email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button>Login</button>
-      </form>
-    </div>
+    <Page>
+      <Container>
+        <form onSubmit={handleSubmit}>
+          <h1>Login</h1>
+          <label htmlFor="email">
+            Email
+            <input
+              type="email"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <br />
+          <label htmlFor="password">
+            Password
+            <input
+              type="password"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <br />
+          <Button>Login</Button>
+        </form>
+      </Container>
+    </Page>
   );
 }

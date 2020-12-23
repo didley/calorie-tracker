@@ -10,15 +10,12 @@ export default function AmountInput({
   return (
     <div className="flex">
       <div className="w-1/4 mr-2">
-        <label
-          htmlFor="amount"
-          className="block tracking-wide text-gray-700 text-xs font-bold my-1"
-        >
+        <label htmlFor="amount" className="tracking-wide text-gray-700 text-xs">
           Amount
           <input
             value={chosenServing.chosenAmount}
             onChange={onAmountChange}
-            className="w-full text-center appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            className="py-2"
             type="number"
             min="0"
             placeholder="#"
@@ -26,14 +23,14 @@ export default function AmountInput({
         </label>
       </div>
       <div className="w-3/4">
-        <label className="block tracking-wide text-gray-700 text-xs font-bold my-1">
+        <label className="tracking-wide text-gray-700 text-xs">
           Size
           <div className="relative">
             <select
               value={chosenServing.index}
               onChange={onSizeChange}
               disabled={servingOptions.length === 0 ? true : false}
-              className="w-full block appearance-none bg-gray-200 border text-gray-700 py-3 px-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              className="py-2"
             >
               {servingOptions &&
                 servingOptions.map((option, index) => (
@@ -44,15 +41,7 @@ export default function AmountInput({
                   </option>
                 ))}
             </select>
-            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-              <svg
-                className="fill-current h-4 w-4"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-              >
-                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
-              </svg>
-            </div>
+            <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
           </div>
         </label>
       </div>

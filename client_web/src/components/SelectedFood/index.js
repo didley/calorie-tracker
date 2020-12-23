@@ -97,13 +97,12 @@ export default function SelectedFood({ selectedFood }) {
     }
   }
 
-  const containerStyle =
-    "border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2";
-
   if (diaryRedirect) return <Redirect to={`/diary`} />;
   if (Object.keys(selectedFood).length === 0) {
     return (
-      <div className={`${containerStyle} bg-gray-200`}>
+      <div
+        className={`border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2 bg-gray-200`}
+      >
         <h3 className="m-auto text-center text-gray-800 py-24">
           Select a Food
         </h3>
@@ -111,7 +110,7 @@ export default function SelectedFood({ selectedFood }) {
     );
   }
   return (
-    <div className={containerStyle}>
+    <div className="border border-blue-600 shadow-outline flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2">
       <div className="flex justify-between">
         <h3 className="my-auto">Selected Food</h3>
         <button

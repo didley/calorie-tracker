@@ -13,14 +13,17 @@ export default function NavBar() {
 
   return (
     <header className="flex items-center justify-between flex-wrap bg-red-500 p-5">
-      <div className="flex items-center flex-shrink-0 text-white mr-6">
-        <Link
-          to={auth.user ? "/diary" : "/"}
-          className="font-semibold text-xl tracking-tight"
-        >
-          Calorie Tracker
-        </Link>
-      </div>
+      <Link
+        to={auth.user ? "/diary" : "/"}
+        className="flex items-center flex-shrink-0 text-white mr-6"
+      >
+        <div className="leading-tight">
+          <div className="font-semibold text-2xl tracking-tight">
+            foodNRG.io
+          </div>
+          <div className="text-sm tracking-tight">Calorie Tracker</div>
+        </div>
+      </Link>
       {/* mobile menu button show/hide */}
       <div className="block md:hidden">
         <button

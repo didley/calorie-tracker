@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
+import { Page, Container, Button } from "components/shared/styling";
 
 import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
@@ -38,51 +39,53 @@ export default function Register() {
   if (redirectTo) return <Redirect to={{ pathname: redirectTo }} />;
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <h1>Register</h1>
-        <label htmlFor="firstName">
-          Your first name:
-          <input
-            type="text"
-            value={name}
-            required
-            onChange={(e) => setName(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="email">
-          Email:
-          <input
-            type="email"
-            value={email}
-            required
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="password">
-          Password:
-          <input
-            type="password"
-            value={password}
-            required
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <label htmlFor="confirmationPassword">
-          Confirm password:
-          <input
-            type="password"
-            value={confirmedPassword}
-            required
-            onChange={(e) => setConfirmedPassword(e.target.value)}
-          />
-        </label>
-        <br />
-        <button>Register</button>
-      </form>
-    </div>
+    <Page>
+      <Container>
+        <form onSubmit={handleSubmit}>
+          <h1>Register</h1>
+          <label htmlFor="firstName">
+            Your first name:
+            <input
+              type="text"
+              value={name}
+              required
+              onChange={(e) => setName(e.target.value)}
+            />
+          </label>
+          <br />
+          <label htmlFor="email">
+            Email:
+            <input
+              type="email"
+              value={email}
+              required
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </label>
+          <br />
+          <label htmlFor="password">
+            Password:
+            <input
+              type="password"
+              value={password}
+              required
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </label>
+          <br />
+          <label htmlFor="confirmationPassword">
+            Confirm password:
+            <input
+              type="password"
+              value={confirmedPassword}
+              required
+              onChange={(e) => setConfirmedPassword(e.target.value)}
+            />
+          </label>
+          <br />
+          <Button>Register</Button>
+        </form>
+      </Container>
+    </Page>
   );
 }

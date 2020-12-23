@@ -16,9 +16,7 @@ export default function DatePickerContainer({
 
   return (
     <div className="flex justify-center w-full max-w-sm bg-white p-3 m-2 rounded-lg shadow-lg">
-      <label className="tracking-wide text-gray-700 text-xs font-bold py-1 mx-2">
-        Date
-      </label>
+      <label className="mx-2">Date</label>
       <button
         onClick={() => handleDateChange(adjustDate(selectedDate, -1))}
         className="text-center text-sm appearance-none bg-gray-300 border text-gray-700 py-1 px-3 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
