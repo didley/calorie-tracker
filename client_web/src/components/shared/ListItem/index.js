@@ -27,11 +27,9 @@ export default function ListItem({
   if (chosenOptions) {
     const { chosenAmount, serving } = chosenOptions;
     chosenOptionsSting = `
-    ${chosenAmount} 
-    ${serving.servingName}
-    ${chosenAmount > 1 ? "s" : ""} 
-    ${serving.servingSize * chosenAmount}
-    ${food.isLiquid ? "mL" : "g"}`;
+    ${chosenAmount} x
+    ${serving.servingName}${chosenAmount > 1 ? "s" : ""} 
+    (${serving.servingSize * chosenAmount}${food.isLiquid ? "mL" : "g"})`;
   }
 
   function handleClick() {

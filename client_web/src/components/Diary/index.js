@@ -6,6 +6,7 @@ import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
+import { Button } from "components/shared/styling";
 
 // import axios from "axios";
 import { client } from "api/client";
@@ -69,9 +70,6 @@ export default function Diary() {
     }
   }
 
-  const addBtnStyle =
-    "bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1";
-
   return (
     <div className="flex justify-center">
       <div className="flex flex-col w-full max-w-xl">
@@ -99,13 +97,10 @@ export default function Diary() {
           </div>
           <div className="space-y-6">
             <div>
-              <div className="border-b flex justify-between">
-                <h3 className="my-auto">Eaten</h3>
-                <Link
-                  to={`/addFoods?date=${selectedDate}&list=eaten`}
-                  className={addBtnStyle}
-                >
-                  +
+              <div className="border-b flex justify-between pb-1">
+                <h4 className="my-auto">Eaten</h4>
+                <Link to={`/addFoods?date=${selectedDate}&list=eaten`}>
+                  <Button color="green">+</Button>
                 </Link>
               </div>
               <ul className="inline-block w-full h-32">
@@ -123,13 +118,10 @@ export default function Diary() {
               </ul>
             </div>
             <div>
-              <div className="border-b flex justify-between">
-                <h3 className="my-auto">To Eat</h3>
-                <Link
-                  to={`/addFoods?date=${selectedDate}&list=to-eat`}
-                  className={addBtnStyle}
-                >
-                  +
+              <div className="border-b flex justify-between pb-1">
+                <h4 className="my-auto">To Eat</h4>
+                <Link to={`/addFoods?date=${selectedDate}&list=to-eat`}>
+                  <Button color="green">+</Button>
                 </Link>
               </div>
               <ul className="inline-block w-full h-32">
@@ -147,7 +139,7 @@ export default function Diary() {
               </ul>
             </div>
             <div>
-              <h3 className="border-b my-auto">Notes</h3>
+              <h4 className="border-b my-auto pb-1">Notes</h4>
               <textarea
                 className="resize-none h-40 mt-2 p-2"
                 type="text"

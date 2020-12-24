@@ -1,16 +1,28 @@
 @tailwind base;
 
 h1 {
-  @apply font-serif font-bold text-2xl text-gray-800;
+  @apply font-serif font-bold text-4xl text-gray-800;
 }
 h2 {
-  @apply text-xl text-gray-800;
+  @apply text-3xl text-gray-800;
 }
 h3 {
-  @apply text-lg text-gray-800;
+  @apply text-2xl text-gray-800;
+}
+h4 {
+  @apply text-xl text-gray-900;
+}
+h5 {
+  @apply text-lg text-gray-900;
+}
+h6 {
+  @apply text-base text-gray-900;
 }
 p {
-  @apply text-gray-900;
+  @apply text-sm text-gray-900;
+}
+small {
+  @apply text-xs text-gray-900;
 }
 select {
   @apply mt-1 w-full py-1 text-sm px-3 bg-gray-100 rounded-md border leading-tight text-gray-900;
@@ -29,6 +41,9 @@ input {
 }
 input:focus {
   @apply outline-none border-blue-600 bg-white shadow-outline;
+}
+button:focus {
+  @apply outline-none border border-blue-600 shadow-outline bg-opacity-100;
 }
 label {
   @apply block text-gray-800 text-sm font-bold;

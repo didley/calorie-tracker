@@ -4,6 +4,7 @@ import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 import LoadingSpinner from "components/shared/LoadingSpinner";
+import { Button } from "components/shared/styling";
 
 import { useAlert } from "hooks/useAlert";
 
@@ -103,25 +104,28 @@ export default function SelectedFood({ selectedFood }) {
       <div
         className={`border-2 border-gray-600 flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2 bg-gray-200`}
       >
-        <h3 className="m-auto text-center text-gray-800 py-24">
+        <h5 className="m-auto text-center text-gray-800 py-24">
           Select a Food
-        </h3>
+        </h5>
       </div>
     );
   }
   return (
     <div className="border border-blue-600 shadow-outline flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2">
-      <div className="flex justify-between">
-        <h3 className="my-auto">Selected Food</h3>
-        <button
-          onClick={handleSubmit}
+      <div className="flex justify-between mb-1">
+        <h6 className="my-auto">Selected Food</h6>
+        <Button
+          color="green"
+          loading={_isLoading}
+          onClick={() => handleSubmit()}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >
-          {_isLoading ? <LoadingSpinner white /> : "Add"}
-        </button>
+          Add
+          {/* {_isLoading ? <LoadingSpinner white /> : "Add"} */}
+        </Button>
       </div>
       <hr />
-      <h4>{name && name}</h4>
+      <h5>{name && name}</h5>
       <p>{brand && brand}</p>
       <hr />
       <AmountInput

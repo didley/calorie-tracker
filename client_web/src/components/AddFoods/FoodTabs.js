@@ -5,6 +5,7 @@ import axios from "axios";
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
 
+import { Button } from "components/shared/styling";
 import SearchBar from "./SearchBar";
 
 import { useAlert } from "hooks/useAlert";
@@ -38,10 +39,10 @@ export default function FoodTabs({ setSelectedFood }) {
 
   // Btn styles
   const btnStyleSelected =
-    "inline-block border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white";
+    "inline-block text-sm border border-blue-500 rounded py-2 px-4 bg-blue-500 hover:bg-blue-700 text-white";
 
   const btnStyle =
-    "inline-block border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
+    "inline-block text-sm border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
 
   return (
     <div className="bg-white p-2 rounded-lg shadow-lg max-w-sm mb-4 w-full">
@@ -102,9 +103,7 @@ export default function FoodTabs({ setSelectedFood }) {
         </TabPanel>
         <TabPanel>
           <div className="flex justify-end">
-            <button className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1 text-sm">
-              Create Food
-            </button>
+            <Button color="green">Create</Button>
           </div>
           <ul>
             {dbFoods &&

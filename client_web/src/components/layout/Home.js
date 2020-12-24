@@ -8,10 +8,20 @@ export default function Home() {
     <Page>
       <Container>
         <h1>Welcome!</h1>
-        <p>
-          foodNRG.io is a calorie tracking app made to help you track how much
-          you eat and for me to practice making apps.
-        </p>
+        <h2 className="text-6xl">
+          <span role="img" aria-label="Cookie">
+            🍪
+          </span>
+          <span role="img" aria-label="CrossHandsNo">
+            🙅‍♀️
+          </span>
+          <span role="img" aria-label="NotePad">
+            📝
+          </span>
+          <span role="img" aria-label="MoonWithSmirk">
+            🌝
+          </span>
+        </h2>
       </Container>
     </Page>
   );

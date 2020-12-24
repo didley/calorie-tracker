@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 
-import { Page, Container } from "components/shared/styling";
+import { Page, Container, Button } from "components/shared/styling";
 
 export default function NoMatch404() {
   let location = useLocation();
@@ -13,7 +13,7 @@ export default function NoMatch404() {
           Route <code>{location.pathname}</code>
         </p>
         <Link to="/">
-          <button>Return Home</button>
+          <Button color="gray">Home</Button>
         </Link>
       </Container>
     </Page>

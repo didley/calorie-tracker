@@ -1,11 +1,19 @@
 import React from "react";
+import LoadingSpinner from "components/shared/LoadingSpinner";
 
-export default function Button({ color = "blue", otherStyles, children }) {
+export default function Button({
+  color = "blue",
+  otherStyles,
+  onClick,
+  loading,
+  children,
+}) {
   return (
     <button
-      className={`${otherStyles} bg-${color}-500 rounded m-1 text-white font-bold py-1 px-4 border-b-4 border-${color}-700 hover:border-${color}-500 hover:bg-${color}-400`}
+      onClick={onClick}
+      className={`text-sm bg-${color}-500 rounded text-white font-bold py-1 px-4 border-b-4 border-${color}-700 hover:bg-opacity-75 ${otherStyles}`}
     >
-      {children}
+      {loading ? <LoadingSpinner white /> : children}
     </button>
   );
 }
