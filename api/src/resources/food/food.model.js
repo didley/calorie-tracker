@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import validator from "validator";
 
 const FoodSchema = new mongoose.Schema(
   {
@@ -8,6 +9,13 @@ const FoodSchema = new mongoose.Schema(
     isLiquid: Boolean,
     perServeSize: Number,
     barcode: Number,
+    country: {
+      type: String,
+      validate: [validator.isISO31661Alpha2, "Invalid country"],
+      trim: true,
+      uppercase: true,
+      required: [true, "Country is required"],
+    },
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,

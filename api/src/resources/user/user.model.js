@@ -1,10 +1,11 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import validator from "validator";
 
 const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
-    dateOfBirth: String,
+    dateOfBirth: Date,
     email: {
       type: String,
       required: true,
@@ -13,6 +14,13 @@ const userSchema = new mongoose.Schema(
     password: { type: String, required: true },
     measurements: { heightCm: Number, currentWeightKg: Number },
     goalWeightKg: Number,
+    country: {
+      type: String,
+      validate: [validator.isISO31661Alpha2, "Invalid country"],
+      trim: true,
+      uppercase: true,
+      required: [true, "Country is required"],
+    },
   },
   { timestamps: true }
 );

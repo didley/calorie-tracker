@@ -12,6 +12,7 @@ import Login from "./components/layout/Login";
 import Register from "./components/layout/Register";
 import Alert from "./components/layout/Alert";
 import NoMatch404 from "./components/layout/NoMatch404";
+import Account from "./components/Account";
 
 import PrivateRoute from "components/routing/PrivateRoute";
 
@@ -42,6 +43,9 @@ export default function App() {
         </PrivateRoute>
         <PrivateRoute path="/addFoods">
           <AddFoods />
+        </PrivateRoute>
+        <PrivateRoute path="/account">
+          <Account />
         </PrivateRoute>
         <Route path="*">
           <NoMatch404 />

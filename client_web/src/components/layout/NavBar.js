@@ -49,19 +49,35 @@ export default function NavBar() {
       >
         <nav className="text-sm md:flex-grow">
           {auth.user ? (
-            <>
-              <Link to="/diary" className={linkStyle} onClick={handleLinkClick}>
-                Diary
-              </Link>
-              <Link to="/" className={linkStyle} onClick={() => auth.logout()}>
-                Logout
-              </Link>
-            </>
+            <div className="flex justify-between">
+              <div>
+                <Link
+                  to="/diary"
+                  className={linkStyle}
+                  onClick={handleLinkClick}
+                >
+                  Diary
+                </Link>
+              </div>
+              <div>
+                <Link
+                  to="/account"
+                  className={linkStyle}
+                  onClick={handleLinkClick}
+                >
+                  Account
+                </Link>
+                <Link
+                  to="/"
+                  className={linkStyle}
+                  onClick={() => auth.logout()}
+                >
+                  Logout
+                </Link>
+              </div>
+            </div>
           ) : (
-            <>
-              <Link to="/" className={linkStyle} onClick={handleLinkClick}>
-                Home
-              </Link>
+            <div className="flex justify-end">
               <Link to="/login" className={linkStyle} onClick={handleLinkClick}>
                 Login
               </Link>
@@ -72,7 +88,7 @@ export default function NavBar() {
               >
                 Register
               </Link>
-            </>
+            </div>
           )}
         </nav>
       </div>
