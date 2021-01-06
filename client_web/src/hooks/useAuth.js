@@ -73,6 +73,17 @@ function useProvideAuth() {
     }
   };
 
+  const updateUser = async (changedUserDetails) => {
+    try {
+      const updatedUser = await client.put("/user", {
+        body: { changedUserDetails },
+      });
+      setUser(updatedUser.data);
+    } catch (err) {
+      throw err;
+    }
+  };
+
   return {
     checkingLoggedIn,
     isUserLoggedIn,
@@ -80,5 +91,6 @@ function useProvideAuth() {
     login,
     register,
     logout,
+    updateUser,
   };
 }

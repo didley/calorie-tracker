@@ -6,6 +6,7 @@ const userSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     dateOfBirth: Date,
+    sex: { type: String, enum: ["male", "female"] },
     email: {
       type: String,
       required: true,
@@ -13,7 +14,11 @@ const userSchema = new mongoose.Schema(
     },
     password: { type: String, required: true },
     measurements: { heightCm: Number, currentWeightKg: Number },
-    goalWeightKg: Number,
+    goals: {
+      weightGoalKg: Number,
+      energyGoalKJ: Number,
+    },
+    preferences: { metricSystem: Boolean, useKJ: Boolean },
     country: {
       type: String,
       validate: [validator.isISO31661Alpha2, "Invalid country"],

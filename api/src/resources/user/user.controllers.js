@@ -63,4 +63,26 @@ export default {
       res.status(400).json(err);
     }
   },
+  updateUser: async (req, res) => {
+    // const updatedUser = await User.findOne({ _id: req.user._id });
+    // res.json({ updatedUser });
+
+    try {
+      const updatedUser = await User.findOneAndUpdate(
+        { _id: req.user._id },
+        req.body,
+        { new: true }
+      )
+        .lean()
+        .exec();
+
+      const { password, ...cleanUser } = updatedUser;
+      res.json({ data: cleanUser });
+    } catch (err) {
+      res.status(400).json({ err, msg: "failed to update account" });
+    }
+  },
+  deleteUser: (req, res) => {
+    res.json({ msg: "todo delete user controler" });
+  },
 };

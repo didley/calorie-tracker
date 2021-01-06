@@ -105,6 +105,13 @@ export default function Diary() {
               </div>
               <ul className="inline-block w-full h-32">
                 {status === "loading" && <PlaceholderListItem amount={3} />}
+                {status === "success" &&
+                  eaten.length === 0 &&
+                  toEat.length === 0 && (
+                    <div className="text-center">
+                      <small>No food added yet</small>
+                    </div>
+                  )}
                 {eaten &&
                   eaten.map((food) => (
                     <ListItem

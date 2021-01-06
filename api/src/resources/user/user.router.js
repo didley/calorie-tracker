@@ -3,7 +3,11 @@ const router = Router();
 import controllers from "./user.controllers";
 
 // /api/user
-router.get("/", controllers.getUserDetails);
+router
+  .route("/")
+  .get(controllers.getUserDetails)
+  .put(controllers.updateUser)
+  .delete(controllers.deleteUser);
 // /api/user/login
 router.post("/login", controllers.loginUser);
 router.post("/logout", controllers.logoutUser);
