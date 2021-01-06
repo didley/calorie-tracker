@@ -80,11 +80,11 @@ export default function Diary() {
           />
         </div>
         <div className="bg-white p-3 mx-1 mb-3 rounded-lg shadow-lg">
-          <div className="">
-            <h2 className="inline font-bold text-3xl">Diary</h2>
+          <div className="flex items-baseline">
+            <h2>Diary</h2>
             <button
               onClick={toggleShowSelectBtn}
-              className="inline text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
+              className="text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
               {showSelectBtn ? "Clear" : "Edit"}
             </button>

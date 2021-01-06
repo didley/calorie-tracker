@@ -591,9 +591,8 @@ video {
 }
 
 h1 {
-  font-family: Georgia, Cambria, "Times New Roman", Times, serif;
-  font-weight: 700;
   font-size: 2.25rem;
+  font-weight: 700;
   --text-opacity: 1;
   color: #2d3748;
   color: rgba(45, 55, 72, var(--text-opacity));
@@ -601,6 +600,7 @@ h1 {
 
 h2 {
   font-size: 1.875rem;
+  font-weight: 700;
   --text-opacity: 1;
   color: #2d3748;
   color: rgba(45, 55, 72, var(--text-opacity));
@@ -649,13 +649,12 @@ small {
 }
 
 select {
-  margin-top: 0.25rem;
   width: 100%;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-size: 0.875rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  font-size: 0.875rem;
   --bg-opacity: 1;
   background-color: #f7fafc;
   background-color: rgba(247, 250, 252, var(--bg-opacity));
@@ -680,13 +679,12 @@ select:focus {
 }
 
 textarea {
-  margin-top: 0.25rem;
   width: 100%;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-size: 0.875rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  font-size: 0.875rem;
   --bg-opacity: 1;
   background-color: #f7fafc;
   background-color: rgba(247, 250, 252, var(--bg-opacity));
@@ -711,13 +709,12 @@ textarea:focus {
 }
 
 input {
-  margin-top: 0.25rem;
   width: 100%;
   padding-top: 0.25rem;
   padding-bottom: 0.25rem;
-  font-size: 0.875rem;
   padding-left: 0.75rem;
   padding-right: 0.75rem;
+  font-size: 0.875rem;
   --bg-opacity: 1;
   background-color: #f7fafc;
   background-color: rgba(247, 250, 252, var(--bg-opacity));

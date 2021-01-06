@@ -58,6 +58,13 @@ export default function NavBar() {
                 >
                   Diary
                 </Link>
+                <Link
+                  to="/weight"
+                  className={linkStyle}
+                  onClick={handleLinkClick}
+                >
+                  Weight
+                </Link>
               </div>
               <div>
                 <Link

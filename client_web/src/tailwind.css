@@ -1,10 +1,10 @@
 @tailwind base;
 
 h1 {
-  @apply font-serif font-bold text-4xl text-gray-800;
+  @apply text-4xl font-bold text-gray-800;
 }
 h2 {
-  @apply text-3xl text-gray-800;
+  @apply text-3xl font-bold text-gray-800;
 }
 h3 {
   @apply text-2xl text-gray-800;
@@ -25,19 +25,19 @@ small {
   @apply text-xs text-gray-900;
 }
 select {
-  @apply mt-1 w-full py-1 text-sm px-3 bg-gray-100 rounded-md border leading-tight text-gray-900;
+  @apply w-full py-1 px-3 text-sm bg-gray-100 rounded-md border leading-tight text-gray-900;
 }
 select:focus {
   @apply outline-none border-blue-600 bg-white shadow-outline;
 }
 textarea {
-  @apply mt-1 w-full py-1 text-sm px-3 bg-gray-100 rounded-md border leading-tight text-gray-900;
+  @apply w-full py-1 px-3 text-sm bg-gray-100 rounded-md border leading-tight text-gray-900;
 }
 textarea:focus {
   @apply outline-none border-blue-600 bg-white shadow-outline;
 }
 input {
-  @apply mt-1 w-full py-1 text-sm px-3 bg-gray-100 rounded-md border leading-tight text-gray-900;
+  @apply w-full py-1 px-3 text-sm bg-gray-100 rounded-md border leading-tight text-gray-900;
 }
 input:focus {
   @apply outline-none border-blue-600 bg-white shadow-outline;

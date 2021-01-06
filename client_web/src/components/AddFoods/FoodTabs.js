@@ -4,6 +4,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import axios from "axios";
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
+import { Link } from "react-router-dom";
 
 import { Button } from "components/shared/styling";
 import SearchBar from "./SearchBar";
@@ -45,7 +46,16 @@ export default function FoodTabs({ setSelectedFood }) {
     "inline-block text-sm border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
 
   return (
-    <div className="bg-white p-2 rounded-lg shadow-lg max-w-sm mb-4 w-full">
+    <div className="bg-white p-2 pt-0 rounded-lg shadow-lg max-w-sm mb-4 w-full">
+      <div className="flex items-stretch">
+        <Link
+          to="/diary"
+          className="py-1 pl-1 pr-3 rounded self-center hover:bg-gray-400"
+        >
+          {"<"}
+        </Link>
+        <h3>Add Food</h3>
+      </div>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex justify-between">
           <Tab

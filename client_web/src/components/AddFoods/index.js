@@ -7,13 +7,10 @@ export default function AddFoods() {
   const [selectedFood, setSelectedFood] = useState({});
 
   return (
-    <div>
-      <h2>Add Food</h2>
-      <Link to="/diary">{"< Back"}</Link>
-      <div className="flex items-start justify-center flex-wrap">
-        <SelectedFood selectedFood={selectedFood} />
-        <FoodTabs setSelectedFood={setSelectedFood} />
-      </div>
+    <div className="flex items-start justify-center flex-wrap mt-2">
+      {/* <h2>Add Food</h2> */}
+      <SelectedFood selectedFood={selectedFood} />
+      <FoodTabs setSelectedFood={setSelectedFood} />
     </div>
   );
 }
