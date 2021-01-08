@@ -6,12 +6,20 @@ export default function Button({
   otherStyles,
   onClick,
   loading,
+  disabled,
+  type = "button",
   children,
 }) {
   return (
     <button
       onClick={onClick}
-      className={`text-sm bg-${color}-500 rounded text-white font-bold py-1 px-4 border-b-4 border-${color}-700 hover:bg-opacity-75 ${otherStyles}`}
+      type={type}
+      className={`text-sm bg-${
+        disabled ? "gray" : color
+      }-500 rounded text-white font-bold py-1 px-4 border-b-4 border-${
+        disabled ? "gray" : color
+      }-700 hover:bg-opacity-75 ${otherStyles}`}
+      disabled={disabled}
     >
       {loading ? <LoadingSpinner white /> : children}
     </button>
