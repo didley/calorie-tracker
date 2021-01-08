@@ -25,14 +25,11 @@ import { useAuth } from "hooks/useAuth";
 export default function Account() {
   const { user, updateUser } = useAuth();
 
-  const handleSubmit = (values, actions) => {
-    console.log({ formOutput: values });
-    setTimeout(() => {
-      actions.setSubmitting(false);
-    }, 2000);
+  const handleSubmit = async (values, actions) => {
+    await updateUser(values);
+    actions.setSubmitting(false);
   };
 
-  // TODO: working on
   return (
     <Page>
       <Container>
@@ -46,8 +43,9 @@ export default function Account() {
             errors,
             touched,
             handleChange,
-
+            handleSubmit,
             isSubmitting,
+            dirty,
           }) => (
             <Form>
               <fieldset>
@@ -93,6 +91,8 @@ export default function Account() {
                       onChange={handleChange}
                       value={values.heightCm || ""}
                       name="heightCm"
+                      min="1"
+                      max="1000"
                     />
                   </label>
                   <label htmlFor="current weight">
@@ -102,6 +102,8 @@ export default function Account() {
                       onChange={handleChange}
                       value={values.currentWeightKg || ""}
                       name="currentWeightKg"
+                      min="1"
+                      max="1000"
                     />
                   </label>
                 </div>
@@ -114,17 +116,23 @@ export default function Account() {
                 <label htmlFor="weight goal">
                   Weight goal
                   <Field
+                    type="number"
                     onChange={handleChange}
                     value={values.goals.weightGoalKg || ""}
                     name="goals.weightGoalKg"
+                    min="1"
+                    max="1000"
                   />
                 </label>
                 <label htmlFor="energy goal">
                   Energy goal
                   <Field
+                    type="number"
                     onChange={handleChange}
                     value={values.goals.energyGoalKJ || ""}
                     name="goals.energyGoalKJ"
+                    min="1"
+                    max="1000000"
                   />
                 </label>
               </fieldset>
@@ -190,14 +198,21 @@ export default function Account() {
                 <button>
                   <small className="text-red-600">Delete Account</small>
                 </button>
-                <Button
-                  type="submit"
-                  className="justify-right"
-                  loading={isSubmitting}
-                  disabled={isSubmitting}
-                >
-                  Save
-                </Button>
+                <div className="flex space-x-2">
+                  {dirty && !isSubmitting && (
+                    <Button type="reset" className="justify-right" color="gray">
+                      Cancel
+                    </Button>
+                  )}
+                  <Button
+                    type="submit"
+                    className="justify-right"
+                    loading={isSubmitting}
+                    disabled={isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </div>
               </fieldset>
             </Form>
           )}

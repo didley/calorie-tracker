@@ -83,7 +83,7 @@ export default function Register() {
             />
           </label>
           <br />
-          <Button>Register</Button>
+          <Button type="submit">Register</Button>
         </form>
       </Container>
     </Page>

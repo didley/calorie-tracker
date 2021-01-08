@@ -9,9 +9,11 @@ export default function Button({
   disabled,
   type = "button",
   children,
+  ...otherProps
 }) {
   return (
     <button
+      {...otherProps}
       onClick={onClick}
       type={type}
       className={`text-sm bg-${
@@ -19,7 +21,6 @@ export default function Button({
       }-500 rounded text-white font-bold py-1 px-4 border-b-4 border-${
         disabled ? "gray" : color
       }-700 hover:bg-opacity-75 ${otherStyles}`}
-      disabled={disabled}
     >
       {loading ? <LoadingSpinner white /> : children}
     </button>

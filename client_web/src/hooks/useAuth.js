@@ -76,9 +76,11 @@ function useProvideAuth() {
   const updateUser = async (changedUserDetails) => {
     try {
       const updatedUser = await client.put("/user", {
-        body: { changedUserDetails },
+        body: changedUserDetails,
       });
+
       setUser(updatedUser.data);
+      setTimedAlert("alert", "Account successfully updated");
     } catch (err) {
       throw err;
     }

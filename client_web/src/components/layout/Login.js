@@ -49,7 +49,7 @@ export default function Login() {
             />
           </label>
           <br />
-          <Button>Login</Button>
+          <Button type="submit">Login</Button>
         </form>
       </Container>
     </Page>
