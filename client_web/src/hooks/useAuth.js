@@ -42,8 +42,7 @@ function useProvideAuth() {
       setUser(data.user);
       setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
-      console.log("err", err.message);
-      setTimedAlert("error", err.msg);
+      setTimedAlert("error", err);
     }
   };
 
@@ -59,7 +58,7 @@ function useProvideAuth() {
       setUser(data.user);
       setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
-      throw err;
+      setTimedAlert("error", err);
     }
   };
 
@@ -69,7 +68,7 @@ function useProvideAuth() {
       setUser(null);
       clearAlerts();
     } catch (err) {
-      throw err;
+      setTimedAlert("error", err);
     }
   };
 
@@ -82,7 +81,7 @@ function useProvideAuth() {
       setUser(updatedUser.data);
       setTimedAlert("alert", "Account successfully updated");
     } catch (err) {
-      throw err;
+      setTimedAlert("error", err);
     }
   };
 

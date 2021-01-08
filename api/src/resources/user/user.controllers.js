@@ -71,7 +71,7 @@ export default {
       const updatedUser = await User.findOneAndUpdate(
         { _id: req.user._id },
         req.body,
-        { new: true }
+        { new: true, runValidators: true }
       )
         .lean()
         .exec();
@@ -83,6 +83,6 @@ export default {
     }
   },
   deleteUser: (req, res) => {
-    res.json({ msg: "todo delete user controler" });
+    res.json({ msg: "todo delete user controller" });
   },
 };

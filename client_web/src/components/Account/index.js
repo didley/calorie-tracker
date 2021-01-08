@@ -78,6 +78,7 @@ export default function Account() {
                       name="sex"
                       component="select"
                     >
+                      <option value="">Unselected</option>
                       <option value="male">Male</option>
                       <option value="female">Female</option>
                     </Field>
