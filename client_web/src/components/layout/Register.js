@@ -44,42 +44,46 @@ export default function Register() {
         <form onSubmit={handleSubmit}>
           <h1>Register</h1>
           <label htmlFor="firstName">
-            Your first name:
+            Your first name
             <input
               type="text"
               value={name}
               required
               onChange={(e) => setName(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />
           <label htmlFor="email">
-            Email:
+            Email
             <input
               type="email"
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />
           <label htmlFor="password">
-            Password:
+            Password
             <input
               type="password"
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />
           <label htmlFor="confirmationPassword">
-            Confirm password:
+            Confirm password
             <input
               type="password"
               value={confirmedPassword}
               required
               onChange={(e) => setConfirmedPassword(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />

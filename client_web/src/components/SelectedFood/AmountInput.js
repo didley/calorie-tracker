@@ -15,9 +15,10 @@ export default function AmountInput({
           <input
             value={chosenServing.chosenAmount}
             onChange={onAmountChange}
-            className="py-2"
+            className="w-full py-2"
             type="number"
             min="0"
+            max="9999999"
             placeholder="#"
           />
         </label>
@@ -30,7 +31,7 @@ export default function AmountInput({
               value={chosenServing.index}
               onChange={onSizeChange}
               disabled={servingOptions.length === 0 ? true : false}
-              className="py-2"
+              className="w-full py-2"
             >
               {servingOptions &&
                 servingOptions.map((option, index) => (

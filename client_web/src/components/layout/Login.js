@@ -36,6 +36,7 @@ export default function Login() {
               value={email}
               required
               onChange={(e) => setEmail(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />
@@ -46,6 +47,7 @@ export default function Login() {
               value={password}
               required
               onChange={(e) => setPassword(e.target.value)}
+              className="w-full"
             />
           </label>
           <br />

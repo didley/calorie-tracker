@@ -148,7 +148,7 @@ export default function Diary() {
             <div>
               <h4 className="border-b my-auto pb-1">Notes</h4>
               <textarea
-                className="resize-none h-40 mt-2 p-2"
+                className="w-full resize-none h-40 mt-2 p-2"
                 type="text"
                 placeholder="Click here to add a note..."
                 value={notes}
