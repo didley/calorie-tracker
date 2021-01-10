@@ -73,13 +73,15 @@ export default function Account() {
                       name="dateOfBirth"
                       type="date"
                       className="appearance-none block w-full"
+                      min="1900-01-01"
+                      max="2050-01-01"
                     />
                   </label>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <label htmlFor="current weight" className="col-span-1">
                     Current weight (
-                    {user.preferences.metricSystem ? "kg" : "lbs"})
+                    {values.preferences.metricSystem ? "kg" : "lbs"})
                     <Field
                       type="number"
                       onChange={handleChange}
@@ -91,7 +93,7 @@ export default function Account() {
                     />
                   </label>
                   <label htmlFor="height" className="col-span-1">
-                    Height ({user.preferences.metricSystem ? "cm" : "in"})
+                    Height ({values.preferences.metricSystem ? "cm" : "in"})
                     <Field
                       type="number"
                       onChange={handleChange}
@@ -127,7 +129,7 @@ export default function Account() {
                   <div className="grid grid-cols-1 col-span-1 gap-3">
                     <label htmlFor="weight goal">
                       Weight goal (
-                      {user.preferences.metricSystem ? "kg" : "lbs"})
+                      {values.preferences.metricSystem ? "kg" : "lbs"})
                       <Field
                         type="number"
                         onChange={handleChange}
@@ -139,7 +141,7 @@ export default function Account() {
                       />
                     </label>
                     <label htmlFor="energy goal">
-                      Energy goal ({user.preferences.useKJ ? "kJ" : "cal"})
+                      Energy goal ({values.preferences.useKJ ? "kJ" : "cal"})
                       <Field
                         type="number"
                         onChange={handleChange}
