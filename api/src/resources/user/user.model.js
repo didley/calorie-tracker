@@ -4,8 +4,8 @@ import validator from "validator";
 
 const userSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    dateOfBirth: Date,
+    name: { type: String, required: true, trim: true },
+    dateOfBirth: String,
     sex: {
       type: String,
       enum: ["male", "female", ""],
@@ -24,11 +24,19 @@ const userSchema = new mongoose.Schema(
     },
     preferences: { metricSystem: Boolean, useKJ: Boolean },
     country: {
-      type: String,
-      validate: [validator.isISO31661Alpha2, "Invalid country"],
-      trim: true,
-      uppercase: true,
-      required: [true, "Country is required"],
+      availableCountry: {
+        type: String,
+        validate: {
+          validator: (selectOption) =>
+            validator.isISO31661Alpha3(selectOption) ||
+            selectOption === "OTHER",
+          message: "Invalid country",
+        },
+        trim: true,
+        uppercase: true,
+        required: [true, "Country is required"],
+      },
+      otherCountry: { type: String, trim: true, uppercase: true },
     },
   },
   { timestamps: true }

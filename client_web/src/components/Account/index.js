@@ -1,7 +1,10 @@
 import React from "react";
 import { Page, Container, Button } from "components/shared/styling";
 import { Formik, Form, Field } from "formik";
-import { CountryDropdown } from "react-country-region-selector";
+// import { CountryDropdown } from "react-country-region-selector";
+import CountryDropdown from "components/shared/CountryDropdown";
+
+import DatePicker from "react-datepicker";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -57,7 +60,7 @@ export default function Account() {
                     Name
                     <Field
                       onChange={handleChange}
-                      value={values.name || ""}
+                      value={values.name}
                       name="name"
                       className="block w-full"
                     />
@@ -66,33 +69,34 @@ export default function Account() {
                     Date of birth
                     <Field
                       onChange={handleChange}
-                      value={values.dateOfBirth || ""}
+                      value={values.dateOfBirth}
                       name="dateOfBirth"
                       type="date"
-                      className="block w-full"
+                      className="appearance-none block w-full"
                     />
                   </label>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                   <label htmlFor="current weight" className="col-span-1">
-                    Current weight
+                    Current weight (
+                    {user.preferences.metricSystem ? "kg" : "lbs"})
                     <Field
                       type="number"
                       onChange={handleChange}
-                      value={values.currentWeightKg || ""}
-                      name="currentWeightKg"
+                      value={values.measurements.currentWeightKg}
+                      name="measurements.currentWeightKg"
                       min="1"
                       max="1000"
                       className="block w-full"
                     />
                   </label>
                   <label htmlFor="height" className="col-span-1">
-                    Height
+                    Height ({user.preferences.metricSystem ? "cm" : "in"})
                     <Field
                       type="number"
                       onChange={handleChange}
-                      value={values.heightCm || ""}
-                      name="heightCm"
+                      value={values.measurements.heightCm}
+                      name="measurements.heightCm"
                       min="1"
                       max="1000"
                       className="block w-full"
@@ -102,7 +106,7 @@ export default function Account() {
                     Sex
                     <Field
                       onChange={handleChange}
-                      value={values.sex || ""}
+                      value={values.sex}
                       name="sex"
                       component="select"
                       className="block w-full"
@@ -122,11 +126,12 @@ export default function Account() {
                   </legend>
                   <div className="grid grid-cols-1 col-span-1 gap-3">
                     <label htmlFor="weight goal">
-                      Weight goal
+                      Weight goal (
+                      {user.preferences.metricSystem ? "kg" : "lbs"})
                       <Field
                         type="number"
                         onChange={handleChange}
-                        value={values.goals.weightGoalKg || ""}
+                        value={values.goals.weightGoalKg || 1}
                         name="goals.weightGoalKg"
                         min="1"
                         max="1000"
@@ -134,11 +139,11 @@ export default function Account() {
                       />
                     </label>
                     <label htmlFor="energy goal">
-                      Energy goal
+                      Energy goal ({user.preferences.useKJ ? "kJ" : "cal"})
                       <Field
                         type="number"
                         onChange={handleChange}
-                        value={values.goals.energyGoalKJ || ""}
+                        value={values.goals.energyGoalKJ}
                         name="goals.energyGoalKJ"
                         min="1"
                         max="1000000"
@@ -155,19 +160,31 @@ export default function Account() {
                   <div className="grid grid-cols-1 gap-3">
                     <label htmlFor="country">
                       Country
-                      <CountryDropdown
+                      <Field
+                        name="country.availableCountry"
                         onChange={handleChange}
-                        value={values.country || ""}
-                        name="country"
+                        value={values.country.availableCountry}
                         className="block w-full col-span-1"
+                        as={(props) => <CountryDropdown {...props} />}
                       />
                     </label>
+                    {values.country.availableCountry === "OTHER" && (
+                      <label htmlFor="other country">
+                        Other country name
+                        <Field
+                          name="country.otherCountry"
+                          onChange={handleChange}
+                          value={values.country.otherCountry}
+                          className="block w-full col-span-1"
+                        />
+                      </label>
+                    )}
                     <div className="grid grid-cols-2 gap-3">
                       <label htmlFor="units">
                         Units
                         <Field
                           onChange={handleChange}
-                          value={values.preferences.metricSystem || ""}
+                          value={values.preferences.metricSystem}
                           name="preferences.metricSystem"
                           component="select"
                           className="block w-full"
@@ -180,7 +197,7 @@ export default function Account() {
                         Energy
                         <Field
                           onChange={handleChange}
-                          value={values.preferences.useKJ || ""}
+                          value={values.preferences.useKJ}
                           name="preferences.useKJ"
                           component="select"
                           className="block w-full"
@@ -203,7 +220,7 @@ export default function Account() {
                     Email
                     <Field
                       onChange={handleChange}
-                      value={values.email || ""}
+                      value={values.email}
                       name="email"
                       type="email"
                       className="block w-full"
@@ -220,7 +237,7 @@ export default function Account() {
                 <button>
                   <small className="text-red-600">Delete Account</small>
                 </button>
-                <div>
+                <div className="space-x-3">
                   {dirty && !isSubmitting && (
                     <Button type="reset" color="gray">
                       Cancel
