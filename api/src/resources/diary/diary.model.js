@@ -11,7 +11,7 @@ const DiarySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    notes: String,
+    note: String,
     eaten: [
       {
         chosenOptions: {

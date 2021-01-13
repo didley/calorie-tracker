@@ -6,4 +6,6 @@ router.get(["/", "/:date"], controllers.getDiaryEntry);
 router.post("/:date/add-food", controllers.addFoodToEntryList);
 router.post("/:date/delete-food", controllers.removeSelectedFoodsFromEntry);
 
+router.put("/:date/note", controllers.updateNote);
+
 export default router;

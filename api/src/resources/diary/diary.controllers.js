@@ -94,4 +94,22 @@ export default {
       res.status(400).json({ err });
     }
   },
+  updateNote: async (req, res) => {
+    const { date } = req.params;
+    const { note } = req.body;
+
+    try {
+      const data = await Diary.findOneAndUpdate(
+        { entryDate: date, userId: req.user._id },
+        { $push: { note } }
+      );
+
+      res.json({
+        data: data,
+        msg: `Note updated`,
+      });
+    } catch (err) {
+      res.status(400).json({ err });
+    }
+  },
 };
