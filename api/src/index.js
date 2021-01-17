@@ -6,11 +6,15 @@ import connectMongo from "connect-mongo";
 import passport from "passport";
 import router from "./resources/router";
 import { connect } from "./utils/db";
+import morgan from "morgan";
+import helmet from "helmet";
 
 const app = express();
 const MongoStore = connectMongo(session);
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.use(morgan("dev"));
+app.use(helmet());
 
 app.use(
   session({
