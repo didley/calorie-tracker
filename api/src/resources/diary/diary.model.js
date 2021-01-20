@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-const DiarySchema = new mongoose.Schema(
+const chosenFoodSchema = new mongoose.Schema({
+  chosenOptions: {
+    serving: { servingName: String, servingSize: Number },
+    chosenAmount: Number,
+    chosenMacros: Object,
+  },
+  chosenFood: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true,
+    ref: "food",
+  },
+});
+
+const diarySchema = new mongoose.Schema(
   {
     userId: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -12,36 +25,9 @@ const DiarySchema = new mongoose.Schema(
       required: true,
     },
     note: String,
-    eaten: [
-      {
-        chosenOptions: {
-          serving: { servingName: String, servingSize: Number },
-          chosenAmount: Number,
-          chosenMacros: Object,
-        },
-        food_id: {
-          type: mongoose.SchemaTypes.ObjectId,
-          required: true,
-          ref: "food",
-        },
-      },
-    ],
-    toEat: [
-      {
-        chosenOptions: {
-          serving: { servingName: String, servingSize: Number },
-          chosenAmount: Number,
-          chosenMacros: Object,
-        },
-        food_id: {
-          type: mongoose.SchemaTypes.ObjectId,
-          required: true,
-          ref: "food",
-        },
-      },
-    ],
+    lists: { toEat: [chosenFoodSchema], eaten: [chosenFoodSchema] },
   },
   { timestamps: true }
 );
 
-export const Diary = mongoose.model("diary", DiarySchema);
+export const Diary = mongoose.model("diary", diarySchema);
