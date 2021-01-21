@@ -15,8 +15,9 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       unique: true,
+      lowercase: true,
     },
-    password: { type: String, required: true },
+    password: { type: String, required: true, trip: true, minLength: 7 },
     measurements: { heightCm: Number, currentWeightKg: Number },
     goals: {
       weightGoalKg: Number,
@@ -34,13 +35,20 @@ const userSchema = new mongoose.Schema(
         },
         trim: true,
         uppercase: true,
-        required: [true, "Country is required"],
+        // required: [true, "Country is required"],
       },
       otherCountry: { type: String, trim: true, uppercase: true },
     },
   },
   { timestamps: true }
 );
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
+  next();
+});
 
 userSchema.methods = {
   checkPassword: function (inputPassword) {

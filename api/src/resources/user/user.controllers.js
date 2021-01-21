@@ -1,6 +1,6 @@
-import bcrypt from "bcryptjs";
 import passport from "../../utils/passport";
 import { User } from "./user.model";
+import validator from "validator";
 
 export default {
   getUserDetails: (req, res) => {
@@ -47,18 +47,14 @@ export default {
         return res.status(401).json({ msg: "Email already in use" });
       }
 
-      const hashedPassword = await bcrypt.hash(password, 10);
+      await User.create({ name, email, password }).then((user) => {
+        req.login(user, (err) => {
+          if (err) throw err;
 
-      await User.create({ name, email, password: hashedPassword }).then(
-        (user) => {
-          req.login(user, (err) => {
-            if (err) throw err;
-
-            const { password, ...cleanUser } = user._doc;
-            res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
-          });
-        }
-      );
+          const { password, ...cleanUser } = user._doc;
+          res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
+        });
+      });
     } catch (err) {
       res.status(400).json(err);
     }
