@@ -27,19 +27,11 @@ const userSchema = new mongoose.Schema(
     },
     preferences: { metricSystem: Boolean, useKJ: Boolean },
     country: {
-      availableCountry: {
-        type: String,
-        validate: {
-          validator: (selectOption) =>
-            validator.isISO31661Alpha3(selectOption) ||
-            selectOption === "OTHER",
-          message: "Invalid country",
-        },
-        trim: true,
-        uppercase: true,
-        // required: [true, "Country is required"],
-      },
-      otherCountry: { type: String, trim: true, uppercase: true },
+      type: String,
+      validate: [validator.isISO31661Alpha3, "Invalid country"],
+      trim: true,
+      uppercase: true,
+      required: [true, "Country is required"],
     },
   },
   { timestamps: true }

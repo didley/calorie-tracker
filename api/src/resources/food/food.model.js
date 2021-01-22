@@ -9,13 +9,6 @@ const FoodSchema = new mongoose.Schema(
     isLiquid: Boolean,
     perServeSize: Number,
     barcode: Number,
-    country: {
-      type: String,
-      validate: [validator.isISO31661Alpha2, "Invalid country"],
-      trim: true,
-      uppercase: true,
-      required: [true, "Country is required"],
-    },
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
       required: true,
@@ -32,6 +25,13 @@ const FoodSchema = new mongoose.Schema(
       SodiumMg: { type: Number, default: 0 },
       calciumMg: { type: Number, default: 0 },
       glutenG: { type: Number, default: 0 },
+    },
+    country: {
+      type: String,
+      validate: [validator.isISO31661Alpha3, "Invalid country"],
+      trim: true,
+      uppercase: true,
+      required: [true, "Country is required"],
     },
   },
   { timestamps: true }
