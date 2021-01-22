@@ -78,7 +78,12 @@ export default {
       res.status(400).json({ err, msg: "failed to update account" });
     }
   },
-  deleteUser: (req, res) => {
-    res.json({ msg: "todo delete user controller" });
+  deleteUser: async (req, res) => {
+    try {
+      await User.deleteOne({ _id: req.user._id });
+      res.send();
+    } catch (err) {
+      res.status(400).send();
+    }
   },
 };

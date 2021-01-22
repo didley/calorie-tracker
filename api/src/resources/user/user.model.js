@@ -1,6 +1,8 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import validator from "validator";
+import { Diary } from "../diary/diary.model";
+import { Food } from "../food/food.model";
 
 const userSchema = new mongoose.Schema(
   {
@@ -45,8 +47,26 @@ const userSchema = new mongoose.Schema(
 
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
-    this.password = await bcrypt.hash(this.password, 10);
+    try {
+      this.password = await bcrypt.hash(this.password, 10);
+    } catch (err) {
+      return next(err);
+    }
   }
+
+  next();
+});
+
+userSchema.pre("deleteOne", async function (next) {
+  const userId = this._conditions._id;
+
+  try {
+    await Diary.deleteMany({ userId: userId });
+    await Food.deleteMany({ createdBy: userId });
+  } catch (err) {
+    return next(err);
+  }
+
   next();
 });
 
