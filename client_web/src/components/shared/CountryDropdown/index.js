@@ -1,22 +1,49 @@
 import React from "react";
-import { CountryDropdown as CountryDropdownPkg } from "react-country-region-selector";
+import countryList from "./countryListAlpha3";
 
-const countries = [
-  { countryName: "Australia", alpha3Code: "AUS" },
-  { countryName: "United Kingdom", alpha3Code: "GBR" },
-  { countryName: "United States of America", alpha3Code: "USA" },
+const countryShortList = [
+  {
+    alpha3Code: "AUS",
+    countryName: "Australia",
+  },
+  {
+    alpha3Code: "CAN",
+    countryName: "Canada",
+  },
+  {
+    alpha3Code: "GBR",
+    countryName: "United Kingdom of Great Britain and Northern Ireland (the)",
+  },
+  {
+    alpha3Code: "NZL",
+    countryName: "New Zealand",
+  },
+  {
+    alpha3Code: "USA",
+    countryName: "United States of America (the)",
+  },
 ];
 
 export default function CountryDropdown(props) {
   return (
     <select {...props}>
-      <option value={null}>Select a country</option>
-      {countries.map(({ alpha3Code, countryName }) => (
-        <option key={alpha3Code} value={alpha3Code}>
-          {countryName}
-        </option>
-      ))}
-      <option value="OTHER">Other</option>
+      <option value="" disabled>
+        Select a country
+      </option>
+      <optgroup label="Popular">
+        {countryShortList.map(({ alpha3Code, countryName }) => (
+          <option key={alpha3Code} value={alpha3Code}>
+            {countryName}
+          </option>
+        ))}
+      </optgroup>
+      <optgroup label="All">
+        {countryList.map(({ alpha3Code, countryName }) => (
+          <option key={alpha3Code} value={alpha3Code}>
+            {countryName}
+          </option>
+        ))}
+      </optgroup>
     </select>
   );
 }

@@ -1,7 +1,6 @@
 import React from "react";
 import { Page, Container, Button } from "components/shared/styling";
 import { Formik, Form, Field } from "formik";
-// import { CountryDropdown } from "react-country-region-selector";
 import CountryDropdown from "components/shared/CountryDropdown";
 
 import DatePicker from "react-datepicker";
@@ -163,24 +162,13 @@ export default function Account() {
                     <label htmlFor="country">
                       Country
                       <Field
-                        name="country.availableCountry"
+                        name="country"
                         onChange={handleChange}
-                        value={values.country.availableCountry}
+                        value={values.country}
                         className="block w-full col-span-1"
-                        as={(props) => <CountryDropdown {...props} />}
+                        as={(props) => <CountryDropdown required {...props} />}
                       />
                     </label>
-                    {values.country.availableCountry === "OTHER" && (
-                      <label htmlFor="other country">
-                        Other country name
-                        <Field
-                          name="country.otherCountry"
-                          onChange={handleChange}
-                          value={values.country.otherCountry}
-                          className="block w-full col-span-1"
-                        />
-                      </label>
-                    )}
                     <div className="grid grid-cols-2 gap-3">
                       <label htmlFor="units">
                         Units

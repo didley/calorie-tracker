@@ -4,6 +4,7 @@ import { Page, Container, Button } from "components/shared/styling";
 
 import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
+import CountryDropdown from "components/shared/CountryDropdown";
 
 export default function Register() {
   const auth = useAuth();
@@ -13,6 +14,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
+  const [country, setCountry] = useState("");
 
   const [redirectTo, setRedirectTo] = useState(null);
 
@@ -29,7 +31,7 @@ export default function Register() {
     }
 
     try {
-      await auth.register(email, password, name);
+      await auth.register(email, password, name, country);
       setRedirectTo("/diary");
     } catch (err) {
       return;
@@ -83,6 +85,16 @@ export default function Register() {
               value={confirmedPassword}
               required
               onChange={(e) => setConfirmedPassword(e.target.value)}
+              className="w-full"
+            />
+          </label>
+          <br />
+          <label htmlFor="country">
+            Country
+            <CountryDropdown
+              value={country}
+              required
+              onChange={(e) => setCountry(e.target.value)}
               className="w-full"
             />
           </label>
