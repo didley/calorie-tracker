@@ -7,7 +7,7 @@ export default {
       const diaryEntry = await Diary.findOne({
         userId: req.user._id,
         entryDate: date,
-      }).populate(["lists.toEat.chosenFood", "lists.eaten.chosenFood"]);
+      }).populate(["toEat.chosenFood", "eaten.chosenFood"]);
 
       if (!diaryEntry) {
         return res.json({ eaten: [], toEat: [], notes: "" });
@@ -23,40 +23,50 @@ export default {
     const { date } = req.params;
     const { listName, items } = req.body;
 
-    const listSelector = `lists.${listName}`;
-
     try {
-      const data = await Diary.findOneAndUpdate(
+      await Diary.updateOne(
         { entryDate: date, userId: req.user._id },
-        { $push: { [listSelector]: items } },
-        { upsert: true, new: true }
+        { $push: { [listName]: items } },
+        { upsert: true }
       );
 
-      res.json({ data: data.lists });
+      res.send();
     } catch (err) {
       res.status(400).json({ err });
     }
   },
   updateDiaryEntry: async (req, res) => {
-    // body {note/listsObj: changed}
+    // body {note: String, or  toEat: {}, eaten: {}}
     const { date } = req.params;
-    const { note, lists } = req.body;
 
-    if (!note && !lists) {
+    const updates = Object.keys(req.body);
+    const allowedUpdates = ["eaten", "toEat", "note"];
+    const validUpdate = updates.every((update) =>
+      allowedUpdates.includes(update)
+    );
+
+    if (!validUpdate) {
       return res.status(400).json({
-        err: "patch request can only be made to diary note or lists object",
+        err:
+          "Invalid updates, updates can only be made to diary eaten, toEat & note",
       });
     }
 
     try {
-      const data = await Diary.findOneAndUpdate(
+      const doc = await Diary.findOneAndUpdate(
         { entryDate: date, userId: req.user._id },
-        req.body,
+        { $set: req.body },
         { upsert: true, new: true }
       );
-      res.json(data);
+
+      // Deletes diary document if empty
+      const { eaten, toEat, note } = doc;
+      if ((eaten.length === 0, toEat.length === 0, note === "")) {
+        await Diary.deleteOne({ entryDate: date, userId: req.user._id });
+      }
+
+      res.send();
     } catch (err) {
-      console.log({ err });
       res.json({ err });
     }
   },

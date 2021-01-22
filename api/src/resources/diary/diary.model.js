@@ -24,8 +24,9 @@ const diarySchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    note: String,
-    lists: { toEat: [chosenFoodSchema], eaten: [chosenFoodSchema] },
+    note: { type: String, trim: true },
+    toEat: [chosenFoodSchema],
+    eaten: [chosenFoodSchema],
   },
   { timestamps: true }
 );
