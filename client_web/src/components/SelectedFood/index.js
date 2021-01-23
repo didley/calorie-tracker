@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { Redirect } from "react-router-dom";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
-import LoadingSpinner from "components/shared/LoadingSpinner";
 import { Button } from "components/shared/styling";
-
 import { useAlert } from "hooks/useAlert";
+import { useAddFood } from "hooks/useDiary";
 
 export default function SelectedFood({ selectedFood }) {
   const {
@@ -18,11 +16,10 @@ export default function SelectedFood({ selectedFood }) {
     perServeSize = 0,
   } = selectedFood;
 
-  const [diaryRedirect, setDiaryRedirect] = useState(false);
-  const [_isLoading, _setIsLoading] = useState(false);
   const [chosenServing, setChosenServing] = useState({});
 
   const { setTimedAlert } = useAlert();
+  const [addFood, { isLoading, isSuccess, isError, error }] = useAddFood();
 
   useEffect(() => {
     setChosenServing({
@@ -74,31 +71,25 @@ export default function SelectedFood({ selectedFood }) {
     });
   };
 
-  async function handleSubmit() {
+  function handleSubmit() {
     const URLParams = new URLSearchParams(window.location.search);
-    const dateParam = URLParams.get("date");
-    const listParam = URLParams.get("list");
+    const date = URLParams.get("date");
+    const listName = URLParams.get("list");
 
-    try {
-      _setIsLoading(true);
-      await axios.post(`/api/diary/${dateParam}/add-food?list=${listParam}`, {
-        food_id: selectedFood._id,
-        chosenOptions: {
-          serving: chosenServing.servingChoice,
-          chosenAmount: chosenServing.chosenAmount,
-          chosenMacros: adjustedMacros,
-        },
-      });
-      _setIsLoading(false);
-      setTimedAlert("alert", `${name} added to ${listParam} list`);
-      setDiaryRedirect(true);
-    } catch (err) {
-      setTimedAlert("error", err);
-      _setIsLoading(false);
-    }
+    const foodItem = {
+      chosenFood: selectedFood._id,
+      chosenOptions: {
+        serving: chosenServing.servingChoice,
+        chosenAmount: chosenServing.chosenAmount,
+        chosenMacros: adjustedMacros,
+      },
+    };
+
+    addFood({ date, listName, items: foodItem });
+    //TODO: error handling
   }
 
-  if (diaryRedirect) return <Redirect to={`/diary`} />;
+  if (isSuccess) return <Redirect to={`/diary`} />;
   if (Object.keys(selectedFood).length === 0) {
     return (
       <div
@@ -116,12 +107,11 @@ export default function SelectedFood({ selectedFood }) {
         <h6 className="my-auto">Selected Food</h6>
         <Button
           color="green"
-          loading={_isLoading}
-          onClick={() => handleSubmit()}
+          loading={isLoading}
+          onClick={handleSubmit}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >
           Add
-          {/* {_isLoading ? <LoadingSpinner white /> : "Add"} */}
         </Button>
       </div>
       <hr />

@@ -13,7 +13,7 @@ export default {
         return res.json({ eaten: [], toEat: [], notes: "" });
       }
 
-      res.json(diaryEntry);
+      res.status(200).json(diaryEntry);
     } catch (err) {
       res.status(400).json({ err });
     }
@@ -30,7 +30,7 @@ export default {
         { upsert: true }
       );
 
-      res.send();
+      res.json({ msg: "Food added" });
     } catch (err) {
       res.status(400).json({ err });
     }
@@ -65,7 +65,7 @@ export default {
         await Diary.deleteOne({ entryDate: date, userId: req.user._id });
       }
 
-      res.send();
+      res.status(200).json({ msg: "Diary updated" });
     } catch (err) {
       res.json({ err });
     }
@@ -86,7 +86,7 @@ export default {
         }
       );
 
-      res.status(200).send();
+      res.status(200).json({ msg: "Foods removed" });
     } catch (err) {
       res.status(400).json({ err });
     }

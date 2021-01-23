@@ -14,7 +14,11 @@ function useDiaryEntry(date) {
   return useQuery(["entry", date], () => getDiaryEntryByDate(date));
 }
 
-export { useDiaryEntry };
+function useAddFood() {
+  return useMutation((data) => addFoodToEntryList(data));
+}
+
+export { useDiaryEntry, useAddFood };
 
 // export function useDiary(selectedDate) {
 //   const [diaryEntry, setDiaryEntry] = useState({});

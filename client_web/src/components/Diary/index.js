@@ -22,7 +22,9 @@ export default function Diary() {
   const [selectedIDs, setSelectedIDs] = useState([]);
   const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
 
-  const { data = {}, status, error } = useDiaryEntry(selectedDate);
+  const { data = {}, isLoading, isSuccess, error } = useDiaryEntry(
+    selectedDate
+  );
 
   // const {
   //   diaryEntry: { data = {}, status },
@@ -108,14 +110,12 @@ export default function Diary() {
                 </Link>
               </div>
               <ul className="inline-block w-full h-32">
-                {status === "loading" && <PlaceholderListItem amount={3} />}
-                {status === "success" &&
-                  eaten.length === 0 &&
-                  toEat.length === 0 && (
-                    <div className="text-center">
-                      <small>No food added yet</small>
-                    </div>
-                  )}
+                {isLoading && <PlaceholderListItem amount={3} />}
+                {isSuccess && eaten.length === 0 && toEat.length === 0 && (
+                  <div className="text-center">
+                    <small>No food added yet</small>
+                  </div>
+                )}
                 {eaten &&
                   eaten.map((food) => (
                     <ListItem
@@ -131,12 +131,12 @@ export default function Diary() {
             <div>
               <div className="border-b flex justify-between pb-1">
                 <h4 className="my-auto">To Eat</h4>
-                <Link to={`/addFoods?date=${selectedDate}&list=to-eat`}>
+                <Link to={`/addFoods?date=${selectedDate}&list=toEat`}>
                   <Button color="green">+</Button>
                 </Link>
               </div>
               <ul className="inline-block w-full h-32">
-                {status === "loading" && <PlaceholderListItem amount={2} />}
+                {isLoading && <PlaceholderListItem amount={2} />}
                 {toEat &&
                   toEat.map((food) => (
                     <ListItem

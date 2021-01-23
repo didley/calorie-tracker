@@ -4,7 +4,7 @@ function getDiaryEntryByDate(date) {
   return client.get(`/diary/${date}`);
 }
 
-function addFoodToEntryList(date, listName, items) {
+function addFoodToEntryList({ date, listName, items }) {
   return client.post(`/diary/${date}`, { body: { listName, items } });
 }
 
