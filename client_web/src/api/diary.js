@@ -1,13 +1,24 @@
 import { client } from "./client";
 
-function getDiaryEntry(date) {
+function getDiaryEntryByDate(date) {
   return client.get(`/diary/${date}`);
 }
 
-function removeDiaryItems(selectedDate, selectedItems) {
-  return client.post(`/diary/${selectedDate}/delete-food`, {
-    body: { selectedItems },
-  });
+function addFoodToEntryList(date, listName, items) {
+  return client.post(`/diary/${date}`, { body: { listName, items } });
 }
 
-export { getDiaryEntry, removeDiaryItems };
+function updateDiaryEntry(date, updates) {
+  return client.patch(`/diary/${date}`, { body: updates });
+}
+
+function removeFoodsByIds(date, selectedIds) {
+  return client.delete(`/diary/${date}/${selectedIds}`);
+}
+
+export {
+  getDiaryEntryByDate,
+  addFoodToEntryList,
+  updateDiaryEntry,
+  removeFoodsByIds,
+};

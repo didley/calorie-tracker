@@ -24,11 +24,6 @@ async function fetchWrapper(method, endpoint, { body, ...customConfig } = {}) {
   return window
     .fetch(`${defaults.baseURL}${endpoint}`, config)
     .then(async (res) => {
-      // if (res.status === 401) {
-      //   logout();
-      //   window.location.assign('/login');
-      //   return Promise.reject({ message: 'Please re-authenticate' });
-      // }
       const data = await res.json();
       if (res.ok) {
         return data;

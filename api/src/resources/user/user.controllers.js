@@ -41,13 +41,13 @@ export default {
   registerUser: async (req, res) => {
     //TODO - Add validation
     try {
-      const { name, email, password } = req.body;
+      const { name, email, password, country } = req.body;
       const alreadyUser = await User.findOne({ email });
       if (alreadyUser) {
         return res.status(401).json({ msg: "Email already in use" });
       }
 
-      await User.create({ name, email, password }).then((user) => {
+      await User.create({ name, email, password, country }).then((user) => {
         req.login(user, (err) => {
           if (err) throw err;
 

@@ -31,7 +31,7 @@ export default function Register() {
     }
 
     try {
-      await auth.register(email, password, name, country);
+      await auth.register({ email, password, name, country });
       setRedirectTo("/diary");
     } catch (err) {
       return;

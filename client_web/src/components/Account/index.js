@@ -3,8 +3,6 @@ import { Page, Container, Button } from "components/shared/styling";
 import { Formik, Form, Field } from "formik";
 import CountryDropdown from "components/shared/CountryDropdown";
 
-import DatePicker from "react-datepicker";
-
 import { useAuth } from "hooks/useAuth";
 
 // Name

@@ -12,6 +12,7 @@ import { Button } from "components/shared/styling";
 import { client } from "api/client";
 import { getDiaryEntry } from "api/diary";
 import { useAlert } from "hooks/useAlert";
+import NoteField from "./NoteField";
 
 export default function Diary() {
   // const { setIsLoading, setTimedAlert } = useAlert();
@@ -19,9 +20,14 @@ export default function Diary() {
 
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedIDs, setSelectedIDs] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("2020-11-04"); // TODO: Replace in production initial state with (new Date())
+  const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
 
-  const { data = {}, status } = useDiaryEntry(selectedDate);
+  const { data = {}, status, error } = useDiaryEntry(selectedDate);
+
+  // const {
+  //   diaryEntry: { data = {}, status },
+  // } = useDiary(selectedDate);
+  const { eaten, toEat, note } = data;
 
   // useEffect(() => {
   //   setData({});
@@ -41,15 +47,13 @@ export default function Diary() {
   //   getDiaryData(selectedDate);
   // }, [selectedDate]);
 
-  const { eaten, toEat, notes } = data;
+  function handleNoteChange(e) {
+    // e.target.value;
+  }
 
   function handleDateChange(date) {
     const ISODate = new Date(date).toISOString().substr(0, 10);
     setSelectedDate(ISODate);
-  }
-
-  function handleNoteChange(e) {
-    // setData({ ...data, notes: e.target.value });
   }
 
   function toggleShowSelectBtn() {
@@ -116,7 +120,7 @@ export default function Diary() {
                   eaten.map((food) => (
                     <ListItem
                       key={food._id}
-                      food={food.food_id}
+                      food={food.chosenFood}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
                       onClickFn={() => handleSelectFood(food)}
@@ -137,7 +141,7 @@ export default function Diary() {
                   toEat.map((food) => (
                     <ListItem
                       key={food._id}
-                      food={food.food_id}
+                      food={food.chosenFood}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
                       onClickFn={() => handleSelectFood(food)}
@@ -145,16 +149,7 @@ export default function Diary() {
                   ))}
               </ul>
             </div>
-            <div>
-              <h4 className="border-b my-auto pb-1">Notes</h4>
-              <textarea
-                className="w-full resize-none h-40 mt-2 p-2"
-                type="text"
-                placeholder="Click here to add a note..."
-                value={notes}
-                onChange={handleNoteChange}
-              />
-            </div>
+            <NoteField onChange={handleNoteChange} value={note} />
           </div>
         </div>
       </div>

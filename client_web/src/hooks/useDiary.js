@@ -1,27 +1,48 @@
-import { useMutation } from "hooks/useApi/useMutation";
-import { useQuery } from "hooks/useApi/useQuery";
-import { useQuery as _useQuery } from "react-query";
-import { useMutation as _useMutation } from "react-query";
+import { useState, useEffect } from "react";
+// import { useMutation as _useMutation } from "hooks/useApi/useMutation";
+// import { useQuery as _useQuery } from "hooks/useApi/useQuery";
+import { useQuery, useMutation } from "react-query";
 
-import { getDiaryEntry, removeDiaryItems } from "api/diary";
+import {
+  getDiaryEntryByDate,
+  addFoodToEntryList,
+  updateDiaryEntry,
+  removeFoodsByIds,
+} from "api/diary";
 
 function useDiaryEntry(date) {
-  const { data, status } = _useQuery(["entry", date], () =>
-    getDiaryEntry(date)
-  );
-  return { data, status };
+  return useQuery(["entry", date], () => getDiaryEntryByDate(date));
 }
 
-function useDeleteItems(selectedDate, selectedItems) {
-  const mutation = _useMutation((selectedDate, selectedItems) =>
-    removeDiaryItems(selectedDate, selectedItems)
-  );
-  const { removeDiaryItems, isError } = mutation;
+export { useDiaryEntry };
 
-  return [removeDiaryItems, { isError }];
-  // const { mutate, data } = _useMutation(removeDiaryItems);
-  // mutate(selectedDate, selectedItems);
-  // return { data };
-}
+// export function useDiary(selectedDate) {
+//   const [diaryEntry, setDiaryEntry] = useState({});
 
-export { useDiaryEntry, useDeleteItems };
+//   useEffect(() => {
+//     const { data, status } = _useQuery(
+//       ["entry", selectedDate],
+//       getDiaryEntry(selectedDate)
+//     );
+
+//     setDiaryEntry({ data, status });
+//   }, [selectedDate]);
+
+//   function deleteFoods(selectedDate, selectedItems) {
+//     const mutation = _useMutation((selectedDate, selectedItems) =>
+//       removeDiaryItems(selectedDate, selectedItems)
+//     );
+//     const { removeDiaryItems, isError } = mutation;
+
+//     return [removeDiaryItems, { isError }];
+//     // const { mutate, data } = _useMutation(removeDiaryItems);
+//     // mutate(selectedDate, selectedItems);
+//     // return { data };
+//   }
+
+//   function handleNoteChange(event) {
+//     setDiaryEntry({ note: event.target.value, ...diaryEntry });
+//   }
+
+//   return { diaryEntry, setDiaryEntry, deleteFoods, handleNoteChange };
+// }

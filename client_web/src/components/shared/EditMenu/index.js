@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { useDeleteItems } from "hooks/useDiary";
+// import { useDeleteItems } from "hooks/useDiary";
 
 import { useMutation } from "react-query";
-import { removeDiaryItems } from "api/diary";
+// import { removeDiaryItems } from "api/diary";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
@@ -13,7 +13,7 @@ const propTypes = {
 
 export default function EditMenu({ selectedItems, selectedDate }) {
   // const { removeDiaryItems } = useDeleteItems();
-  const mutation = useMutation((values) => removeDiaryItems(values));
+  // const mutation = useMutation((values) => removeDiaryItems(values));
 
   function handleMove() {
     // TODO
@@ -28,7 +28,7 @@ export default function EditMenu({ selectedItems, selectedDate }) {
   const handleDelete = () => {
     console.log("delete hander triggered");
     // removeDiaryItems(selectedDate, selectedItems);
-    mutation.mutate(selectedItems, selectedDate);
+    // mutation.mutate(selectedItems, selectedDate);
 
     // TODO: working on <<<<<
     // try {
@@ -45,8 +45,8 @@ export default function EditMenu({ selectedItems, selectedDate }) {
     // }
   };
 
-  if (mutation.isLoading) return <p>Deleting foods</p>;
-  if (mutation.isError) return <p>Error deleting foods</p>;
+  // if (mutation.isLoading) return <p>Deleting foods</p>;
+  // if (mutation.isError) return <p>Error deleting foods</p>;
 
   return (
     <div className="inline-flex shadow-md">

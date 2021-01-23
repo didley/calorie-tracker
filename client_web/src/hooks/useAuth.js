@@ -46,15 +46,9 @@ function useProvideAuth() {
     }
   };
 
-  const register = async (email, password, name) => {
+  const register = async (body) => {
     try {
-      const data = await client.post("/user/register", {
-        body: {
-          email,
-          password,
-          name,
-        },
-      });
+      const data = await client.post("/user/register", { body });
       setUser(data.user);
       setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
