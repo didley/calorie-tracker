@@ -8,7 +8,7 @@ function addFoodToEntryList({ date, listName, items }) {
   return client.post(`/diary/${date}`, { body: { listName, items } });
 }
 
-function updateDiaryEntry(date, updates) {
+function updateDiaryEntry({ date, updates }) {
   return client.patch(`/diary/${date}`, { body: updates });
 }
 

@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useQuery, useMutation, queryCache } from "react-query";
+// import { useState, useEffect } from "react";
 // import { useMutation as _useMutation } from "hooks/useApi/useMutation";
 // import { useQuery as _useQuery } from "hooks/useApi/useQuery";
-import { useQuery, useMutation } from "react-query";
 
 import {
   getDiaryEntryByDate,
@@ -18,7 +18,14 @@ function useAddFood() {
   return useMutation((data) => addFoodToEntryList(data));
 }
 
-export { useDiaryEntry, useAddFood };
+function useUpdateEntry() {
+  // To move from Diary component
+}
+
+function useRemoveFoods() {
+  return useMutation((ids) => removeFoodsByIds(ids));
+}
+export { useDiaryEntry, useAddFood, useUpdateEntry, useRemoveFoods };
 
 // export function useDiary(selectedDate) {
 //   const [diaryEntry, setDiaryEntry] = useState({});

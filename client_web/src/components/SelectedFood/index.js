@@ -19,7 +19,8 @@ export default function SelectedFood({ selectedFood }) {
   const [chosenServing, setChosenServing] = useState({});
 
   const { setTimedAlert } = useAlert();
-  const [addFood, { isLoading, isSuccess, isError, error }] = useAddFood();
+  const addFoodMutation = useAddFood();
+  // const [addFood, { isLoading, isSuccess, isError, error }] = useAddFood();
 
   useEffect(() => {
     setChosenServing({
@@ -85,11 +86,11 @@ export default function SelectedFood({ selectedFood }) {
       },
     };
 
-    addFood({ date, listName, items: foodItem });
+    addFoodMutation.mutate({ date, listName, items: foodItem });
     //TODO: error handling
   }
 
-  if (isSuccess) return <Redirect to={`/diary`} />;
+  if (addFoodMutation.isSuccess) return <Redirect to={`/diary`} />;
   if (Object.keys(selectedFood).length === 0) {
     return (
       <div
@@ -107,7 +108,7 @@ export default function SelectedFood({ selectedFood }) {
         <h6 className="my-auto">Selected Food</h6>
         <Button
           color="green"
-          loading={isLoading}
+          loading={addFoodMutation.isLoading}
           onClick={handleSubmit}
           className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
         >

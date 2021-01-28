@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
-import { ReactQueryDevtools } from "react-query-devtools";
 
 import { useAuth } from "hooks/useAuth";
 
@@ -55,7 +54,6 @@ export default function App() {
           <NoMatch404 />
         </Route>
       </Switch>
-      <ReactQueryDevtools />
     </div>
   );
 }

@@ -1,26 +1,28 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { QueryCache, ReactQueryCacheProvider } from "react-query";
-import { BrowserRouter as Router } from "react-router-dom";
 import App from "./App";
 import "./tailwind.output.css";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 import { ProvideAlert } from "hooks/useAlert";
 import { ProvideAuth } from "hooks/useAuth";
+import { BrowserRouter as Router } from "react-router-dom";
 
-const queryCache = new QueryCache();
+const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
-    <Router>
+    <QueryClientProvider client={queryClient}>
       <ProvideAlert>
-        <ReactQueryCacheProvider queryCache={queryCache}>
-          <ProvideAuth>
+        <ProvideAuth>
+          <Router>
             <App />
-          </ProvideAuth>
-        </ReactQueryCacheProvider>
+            <ReactQueryDevtools />
+          </Router>
+        </ProvideAuth>
       </ProvideAlert>
-    </Router>
+    </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

@@ -1,11 +1,7 @@
 import React from "react";
-import { Button } from "components/shared/styling";
+import LoadingSpinner from "components/shared/LoadingSpinner";
 
-export default function NoteField({ value, onChange }) {
-  function handleClick(e) {
-    // setData({ ...data, note: e.target.value });
-  }
-
+export default function NoteField({ value, onChange, loading }) {
   return (
     <div>
       <h4 className="border-b my-auto pb-1">Notes</h4>
@@ -19,13 +15,7 @@ export default function NoteField({ value, onChange }) {
         />
 
         <div className="absolute right-0 bottom-0 mb-3 mr-2 space-x-2">
-          <Button type="reset" color="gray">
-            Cancel
-          </Button>
-
-          <Button onClick={handleClick} loading={false} disabled={false}>
-            Save
-          </Button>
+          {loading ? <LoadingSpinner size="sm" /> : null}
         </div>
       </div>
     </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useDiaryEntry } from "hooks/useDiary";
 import { Link } from "react-router-dom";
 
@@ -7,11 +7,15 @@ import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem"
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 import { Button } from "components/shared/styling";
+import { useUpdateEntry } from "hooks/useDiary";
+
+import { useMutation, useQueryClient } from "react-query";
+import { updateDiaryEntry } from "api/diary";
 
 // import axios from "axios";
-import { client } from "api/client";
-import { getDiaryEntry } from "api/diary";
-import { useAlert } from "hooks/useAlert";
+// import { client } from "api/client";
+// import { getDiaryEntry } from "api/diary";
+// import { useAlert } from "hooks/useAlert";
 import NoteField from "./NoteField";
 
 export default function Diary() {
@@ -22,35 +26,47 @@ export default function Diary() {
   const [selectedIDs, setSelectedIDs] = useState([]);
   const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
 
+  const queryClient = useQueryClient();
   const { data = {}, isLoading, isSuccess, error } = useDiaryEntry(
     selectedDate
   );
-
-  // const {
-  //   diaryEntry: { data = {}, status },
-  // } = useDiary(selectedDate);
   const { eaten, toEat, note } = data;
 
-  // useEffect(() => {
-  //   setData({});
-  //   async function getDiaryData(date) {
-  //     // eg. GET to /users is getFoods("users")
-  //     try {
-  //       setIsLoading(true);
-  //       const data = await client.get(`/diary/${date}`);
-  //       setData(data);
-  //       setIsLoading(false);
-  //     } catch (err) {
-  //       setTimedAlert("error", err);
-  //       setIsLoading(false);
-  //     }
-  //   }
+  const updateNoteMutation = useMutation(updateDiaryEntry, {
+    onMutate: async (newData) => {
+      await queryClient.cancelQueries(["entry", selectedDate]);
 
-  //   getDiaryData(selectedDate);
-  // }, [selectedDate]);
+      const previousEntry = queryClient.getQueryData(["entry", selectedDate]);
+
+      queryClient.setQueryData(["entry", selectedDate], (prev) => ({
+        ...prev,
+        note: newData.updates.note,
+      }));
+
+      return { previousEntry };
+    },
+    onError: (err, newData, rollback) => {
+      queryClient.setQueryData(["entry", selectedDate], rollback.previousEntry);
+    },
+    onSettled: () => queryClient.refetchQueries(["entry", selectedDate]),
+  });
+
+  // const [
+  //   updateEntry,
+  //   {
+  //     isLoading: noteIsLoading,
+  //     isSuccess: noteIsSuccess,
+  //     isError: noteIsError,
+  //     error: noteError,
+  //   },
+  // ] = useUpdateEntry();
+  // const [updateEntry] = useUpdateEntry();
 
   function handleNoteChange(e) {
-    // e.target.value;
+    updateNoteMutation.mutate({
+      date: selectedDate,
+      updates: { note: e.target.value },
+    });
   }
 
   function handleDateChange(date) {
@@ -149,7 +165,11 @@ export default function Diary() {
                   ))}
               </ul>
             </div>
-            <NoteField onChange={handleNoteChange} value={note} />
+            <NoteField
+              onChange={handleNoteChange}
+              value={note}
+              // loading={noteIsLoading}
+            />
           </div>
         </div>
       </div>
