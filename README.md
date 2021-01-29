@@ -3,12 +3,13 @@
 
 ## SETUP
 ---
+since moving to react v17 error corrupts npm installs so yarn is required for now
 ### Installing
 ```shell
 $ cd calorie-tracker
 $ npm i
 $ cd client_web
-$ npm i
+$ yarn install 
 $ cd ..
 $ cd api
 $ npm i

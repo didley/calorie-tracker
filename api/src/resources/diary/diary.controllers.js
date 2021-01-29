@@ -59,9 +59,10 @@ export default {
         { upsert: true, new: true }
       );
 
-      // Deletes diary document if empty
       const { eaten, toEat, note } = doc;
-      if ((eaten.length === 0, toEat.length === 0, note === "")) {
+
+      // Deletes diary document if empty
+      if (eaten.length === 0 && toEat.length === 0 && note === "") {
         await Diary.deleteOne({ entryDate: date, userId: req.user._id });
       }
 
