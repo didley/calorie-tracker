@@ -13,6 +13,7 @@ import Alert from "./components/layout/Alert";
 import NoMatch404 from "./components/layout/NoMatch404";
 import Account from "./components/Account";
 import Weight from "./components/Weight";
+import ErrorBoundary from "./components/shared/ErrorBoundary";
 
 import PrivateRoute from "components/routing/PrivateRoute";
 
@@ -28,32 +29,34 @@ export default function App() {
     <div className="bg-orange-100 min-h-screen">
       <NavBar />
       <Alert />
-      <Switch>
-        <Route exact path="/">
-          <Home />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/register">
-          <Register />
-        </Route>
-        <PrivateRoute path="/diary">
-          <Diary />
-        </PrivateRoute>
-        <PrivateRoute path="/addFoods">
-          <AddFoods />
-        </PrivateRoute>
-        <PrivateRoute path="/weight">
-          <Weight />
-        </PrivateRoute>
-        <PrivateRoute path="/account">
-          <Account />
-        </PrivateRoute>
-        <Route path="*">
-          <NoMatch404 />
-        </Route>
-      </Switch>
+      <ErrorBoundary>
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/register">
+            <Register />
+          </Route>
+          <PrivateRoute path="/diary">
+            <Diary />
+          </PrivateRoute>
+          <PrivateRoute path="/addFoods">
+            <AddFoods />
+          </PrivateRoute>
+          <PrivateRoute path="/weight">
+            <Weight />
+          </PrivateRoute>
+          <PrivateRoute path="/account">
+            <Account />
+          </PrivateRoute>
+          <Route path="*">
+            <NoMatch404 />
+          </Route>
+        </Switch>
+      </ErrorBoundary>
     </div>
   );
 }
