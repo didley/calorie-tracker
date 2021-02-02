@@ -1,11 +1,10 @@
 # calorie-tracker
 
-
-## SETUP
----
-since moving to react v17 error corrupts npm installs so yarn is required for now
 ### Installing
-```shell
+
+Since moving to react v17 error corrupts npm installs so yarn is required for now
+
+```console
 $ cd calorie-tracker
 $ npm i
 $ cd client_web
@@ -15,18 +14,16 @@ $ cd api
 $ npm i
 ```
 ### /api/.env Example
-```shell
+
+```console
 PORT=5000
 DB_URI=
 APP_SECRET=shhhhhhhh
 ```
 
-### Running
-```shell
+## Running
+
+```console
 $ cd calorie-tracker
 $ npm start
 ``` 
-
-<br />
-
-
