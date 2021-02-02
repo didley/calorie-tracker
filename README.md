@@ -1,6 +1,6 @@
 # calorie-tracker
 
-### Installing
+## Installing
 
 Since moving to react v17 error corrupts npm installs so yarn is required for now
 
