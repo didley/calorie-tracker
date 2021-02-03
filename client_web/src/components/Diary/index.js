@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useDiaryEntry } from "hooks/useDiary";
 import { Link } from "react-router-dom";
 
@@ -7,30 +7,24 @@ import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem"
 import EditMenu from "components/shared/EditMenu";
 import DatePickerContainer from "./DatePickerContainer";
 import { Button } from "components/shared/styling";
-import { useUpdateEntry } from "hooks/useDiary";
 
 import { useMutation, useQueryClient } from "react-query";
 import { updateDiaryEntry } from "api/diary";
+import { useDebounce } from "hooks/useDebounce";
 
-// import axios from "axios";
-// import { client } from "api/client";
-// import { getDiaryEntry } from "api/diary";
-// import { useAlert } from "hooks/useAlert";
 import NoteField from "./NoteField";
 
 export default function Diary() {
-  // const { setIsLoading, setTimedAlert } = useAlert();
-  // const [data, setData] = useState({});
-
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedIDs, setSelectedIDs] = useState([]);
   const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
+  const [note, setNote] = useState(null);
 
   const queryClient = useQueryClient();
   const { data = {}, isLoading, isSuccess, error } = useDiaryEntry(
     selectedDate
   );
-  const { eaten, toEat, note } = data;
+  const { eaten = [], toEat = [] } = data;
 
   const updateNoteMutation = useMutation(updateDiaryEntry, {
     onMutate: async (newData) => {
@@ -48,26 +42,39 @@ export default function Diary() {
     onError: (err, newData, rollback) => {
       queryClient.setQueryData(["entry", selectedDate], rollback.previousEntry);
     },
-    onSettled: () => queryClient.refetchQueries(["entry", selectedDate]),
+    onSettled: () => queryClient.invalidateQueries(["entry", selectedDate]),
   });
 
-  // const [
-  //   updateEntry,
-  //   {
-  //     isLoading: noteIsLoading,
-  //     isSuccess: noteIsSuccess,
-  //     isError: noteIsError,
-  //     error: noteError,
-  //   },
-  // ] = useUpdateEntry();
-  // const [updateEntry] = useUpdateEntry();
+  useEffect(() => {
+    if (data.note) {
+      setNote(data.note);
+    } else {
+      setNote("");
+    }
+  }, [data.note]);
 
-  function handleNoteChange(e) {
-    updateNoteMutation.mutate({
-      date: selectedDate,
-      updates: { note: e.target.value },
-    });
-  }
+  const debouncedNote = useDebounce(note, 1000);
+
+  const debounceHookSet = useRef(false);
+
+  useEffect(() => {
+    debounceHookSet.current = false;
+  }, [selectedDate]);
+  useEffect(() => {
+    if (debouncedNote !== null) {
+      // Skips mutation on initial component render
+      if (!debounceHookSet.current) {
+        // Skips mutation on note state being set
+        debounceHookSet.current = true;
+        return;
+      }
+
+      updateNoteMutation.mutate({
+        date: selectedDate,
+        updates: { note: debouncedNote },
+      });
+    }
+  }, [debouncedNote]);
 
   function handleDateChange(date) {
     const ISODate = new Date(date).toISOString().substr(0, 10);
@@ -166,9 +173,12 @@ export default function Diary() {
               </ul>
             </div>
             <NoteField
-              onChange={handleNoteChange}
-              value={note}
-              // loading={noteIsLoading}
+              onChange={(e) => {
+                setNote(e.target.value);
+              }}
+              value={note || ""}
+              loading={updateNoteMutation.isLoading}
+              disabled={isLoading}
             />
           </div>
         </div>
