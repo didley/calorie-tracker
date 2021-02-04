@@ -79,6 +79,7 @@ export default function Diary() {
   function handleDateChange(date) {
     const ISODate = new Date(date).toISOString().substr(0, 10);
     setSelectedDate(ISODate);
+    setShowSelectBtn(false);
   }
 
   function toggleShowSelectBtn() {

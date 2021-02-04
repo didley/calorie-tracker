@@ -13,7 +13,6 @@ function updateDiaryEntry({ date, updates }) {
 }
 
 function removeFoodsByIds({ date, selectedIds }) {
-  console.log(`/diary/${date}/${selectedIds}`);
   return client.delete(`/diary/${date}/${selectedIds}`);
 }
 
