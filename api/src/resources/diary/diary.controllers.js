@@ -81,8 +81,8 @@ export default {
         { entryDate: date, userId: req.user._id },
         {
           $pull: {
-            "lists.toEat": { _id: idsArray },
-            "lists.eaten": { _id: idsArray },
+            toEat: { _id: idsArray },
+            eaten: { _id: idsArray },
           },
         }
       );

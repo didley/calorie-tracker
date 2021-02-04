@@ -1,19 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-// import { useDeleteItems } from "hooks/useDiary";
-
-import { useMutation } from "react-query";
-// import { removeDiaryItems } from "api/diary";
+import { useRemoveFoods } from "hooks/useDiary";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
   selectedDate: PropTypes.string.isRequired,
 };
 
-export default function EditMenu({ selectedItems, selectedDate }) {
-  // const { removeDiaryItems } = useDeleteItems();
-  // const mutation = useMutation((values) => removeDiaryItems(values));
+export default function EditMenu({
+  selectedItems,
+  selectedDate,
+  setShowSelectBtn,
+}) {
+  const removeFoodsMutation = useRemoveFoods();
 
   function handleMove() {
     // TODO
@@ -26,27 +26,12 @@ export default function EditMenu({ selectedItems, selectedDate }) {
   }
 
   const handleDelete = () => {
-    console.log("delete hander triggered");
-    // removeDiaryItems(selectedDate, selectedItems);
-    // mutation.mutate(selectedItems, selectedDate);
-
-    // TODO: working on <<<<<
-    // try {
-    //   setIsLoading(true);
-    //   const response = await axios.post(
-    //     `/api/diary/${selectedDate}/delete-food`,
-    //     { selectedItems }
-    //   );
-    //   setIsLoading(false);
-    //   setTimedAlert("alert", response.data.msg);
-    // } catch (err) {
-    //   setIsLoading(false);
-    //   setTimedAlert("error", err);
-    // }
+    removeFoodsMutation.mutate({
+      date: selectedDate,
+      selectedIds: selectedItems,
+    });
+    setShowSelectBtn(false);
   };
-
-  // if (mutation.isLoading) return <p>Deleting foods</p>;
-  // if (mutation.isError) return <p>Error deleting foods</p>;
 
   return (
     <div className="inline-flex shadow-md">

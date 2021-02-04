@@ -121,6 +121,7 @@ export default function Diary() {
               <EditMenu
                 selectedItems={selectedIDs}
                 selectedDate={selectedDate}
+                setShowSelectBtn={setShowSelectBtn}
               />
             )}
           </div>

@@ -1,4 +1,4 @@
-import { useQuery, useMutation, queryCache } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "react-query";
 
 import {
   getDiaryEntryByDate,
@@ -20,6 +20,11 @@ function useUpdateEntry() {
 }
 
 function useRemoveFoods() {
-  return useMutation((ids) => removeFoodsByIds(ids));
+  const queryClient = useQueryClient();
+  return useMutation(removeFoodsByIds, {
+    onSuccess: (_response, variables) => {
+      queryClient.invalidateQueries(["entry", variables.date]);
+    },
+  });
 }
 export { useDiaryEntry, useAddFood, useUpdateEntry, useRemoveFoods };
