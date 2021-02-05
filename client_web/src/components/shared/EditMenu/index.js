@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 
-import { useRemoveFoods } from "hooks/useDiary";
+import { useAddFood, useRemoveFoods } from "hooks/useDiary";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
@@ -25,6 +25,7 @@ export default function EditMenu({
 
   const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
+  const addFoodsMutation = useAddFood();
   const removeFoodsMutation = useRemoveFoods();
 
   function handleMove() {
@@ -47,7 +48,16 @@ export default function EditMenu({
 
   function handleCopy() {
     if (state.showDatePicker) {
-      console.log("copy request triggered");
+      const itemsNoIDs = selectedItems.map(
+        ({ _id, ...removedIdItem }) => removedIdItem
+      );
+
+      addFoodsMutation.mutate({
+        date: selectedEditDate,
+        listName: "toEat",
+        items: itemsNoIDs,
+      });
+
       setState(initialState);
       setShowSelectBtn(false);
       return;
@@ -63,11 +73,13 @@ export default function EditMenu({
     });
   }
 
-  const handleDelete = () => {
+  function handleDelete() {
     if (state.showConfirmation) {
+      const selectedIds = selectedItems.map((item) => item._id);
+
       removeFoodsMutation.mutate({
         date: selectedDate,
-        selectedIds: selectedItems,
+        selectedIds,
       });
       setState(initialState);
       setShowSelectBtn(false);
@@ -82,7 +94,7 @@ export default function EditMenu({
       showDelete: true,
       showCancel: true,
     });
-  };
+  }
 
   return (
     <div

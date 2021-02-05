@@ -16,7 +16,7 @@ import NoteField from "./NoteField";
 
 export default function Diary() {
   const [showSelectBtn, setShowSelectBtn] = useState(false);
-  const [selectedIDs, setSelectedIDs] = useState([]);
+  const [selectedFoods, setSelectedFoods] = useState([]);
   const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
   const [note, setNote] = useState(null);
 
@@ -83,21 +83,13 @@ export default function Diary() {
   }
 
   function toggleShowSelectBtn() {
-    setSelectedIDs([]);
+    setSelectedFoods([]);
     setShowSelectBtn(!showSelectBtn);
   }
 
   function handleSelectFood(selectedFood) {
-    if (showSelectBtn) {
-      const foundId = selectedIDs.find((id) => id === selectedFood._id);
-      if (foundId) {
-        setSelectedIDs(selectedIDs.filter((id) => id !== foundId));
-      } else {
-        setSelectedIDs([...selectedIDs, selectedFood._id]);
-      }
-    } else {
-      console.log({ selectedFood });
-    }
+    console.log({ selectedFood });
+    if (showSelectBtn) setSelectedFoods([...selectedFoods, selectedFood]); // !Bug, only adds to array, doesnt removed on unelsect
   }
 
   return (
@@ -120,7 +112,7 @@ export default function Diary() {
             </button>
             {showSelectBtn && (
               <EditMenu
-                selectedItems={selectedIDs}
+                selectedItems={selectedFoods}
                 selectedDate={selectedDate}
                 setShowSelectBtn={setShowSelectBtn}
               />

@@ -12,7 +12,12 @@ function useDiaryEntry(date) {
 }
 
 function useAddFood() {
-  return useMutation((data) => addFoodToEntryList(data));
+  const queryClient = useQueryClient();
+  return useMutation(addFoodToEntryList, {
+    onSuccess: (_response, variables) => {
+      queryClient.invalidateQueries(["entry", variables.date]);
+    },
+  });
 }
 
 function useUpdateEntry() {
