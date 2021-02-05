@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
+import dateOnly from "utils/dateOnly";
 
 import { useAddFood, useRemoveFoods } from "hooks/useDiary";
 
@@ -30,7 +31,21 @@ export default function EditMenu({
 
   function handleMove() {
     if (state.showDatePicker) {
-      console.log("move request triggered");
+      const itemsNoIDs = selectedItems.map(
+        ({ _id, ...removedIdItem }) => removedIdItem
+      );
+      addFoodsMutation.mutate({
+        date: selectedEditDate,
+        listName: "toEat",
+        items: itemsNoIDs,
+      });
+
+      const selectedIds = selectedItems.map((item) => item._id);
+      removeFoodsMutation.mutate({
+        date: selectedDate,
+        selectedIds,
+      });
+
       setState(initialState);
       setShowSelectBtn(false);
       return;
@@ -48,6 +63,8 @@ export default function EditMenu({
 
   function handleCopy() {
     if (state.showDatePicker) {
+      console.log({ selectedEditDate });
+      console.log({ selectedItems });
       const itemsNoIDs = selectedItems.map(
         ({ _id, ...removedIdItem }) => removedIdItem
       );
@@ -107,7 +124,9 @@ export default function EditMenu({
           <DatePicker
             dateFormat="dd/MM/yyyy"
             selected={Date.parse(selectedEditDate)}
-            onChange={(date) => setSelectedEditDate(date)}
+            onChange={(date) => {
+              setSelectedEditDate(dateOnly(date));
+            }}
             className="w-24 text-center bg-gray-700 text-gray-100 appearance-none px-1 border-none h-10 leading-tight focus:outline-none focus:bg-gray-700 hover:text-red-500"
           />
         </div>

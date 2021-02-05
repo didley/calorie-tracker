@@ -13,6 +13,7 @@ import { updateDiaryEntry } from "api/diary";
 import { useDebounce } from "hooks/useDebounce";
 
 import NoteField from "./NoteField";
+import dateOnly from "utils/dateOnly";
 
 export default function Diary() {
   const [showSelectBtn, setShowSelectBtn] = useState(false);
@@ -77,8 +78,7 @@ export default function Diary() {
   }, [debouncedNote]);
 
   function handleDateChange(date) {
-    const ISODate = new Date(date).toISOString().substr(0, 10);
-    setSelectedDate(ISODate);
+    setSelectedDate(dateOnly(date));
     setShowSelectBtn(false);
   }
 
