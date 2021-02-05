@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 
@@ -8,72 +8,88 @@ const propTypes = {
   selectedItems: PropTypes.array.isRequired,
   selectedDate: PropTypes.string.isRequired,
 };
-
-const initialState = {
-  showDatePicker: false,
-  showSelected: true,
-  showMove: true,
-  showCopy: true,
-  showDelete: true,
-  showCancel: false,
-};
-
-function reducer(state, action) {
-  switch (action.type) {
-    case "MOVE":
-      return {
-        showDatePicker: true,
-        showSelected: false,
-        showMove: true,
-        showCopy: false,
-        showDelete: false,
-        showCancel: true,
-      };
-    case "COPY":
-      return {
-        showDatePicker: true,
-        showSelected: false,
-        showMove: false,
-        showCopy: true,
-        showDelete: false,
-        showCancel: true,
-      };
-    case "CANCEL":
-      return initialState;
-    default:
-      throw new Error();
-  }
-}
-
 export default function EditMenu({
   selectedItems,
   selectedDate,
   setShowSelectBtn,
 }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const initialState = {
+    showDatePicker: false,
+    showSelected: true,
+    showMove: true,
+    showCopy: true,
+    showConfirmation: false,
+    showDelete: true,
+    showCancel: false,
+  };
+
+  const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
   const removeFoodsMutation = useRemoveFoods();
 
   function handleMove() {
-    dispatch({ type: "MOVE" });
-    console.log("move event handler");
+    if (state.showDatePicker) {
+      console.log("move request triggered");
+      setState(initialState);
+      setShowSelectBtn(false);
+      return;
+    }
+    setState({
+      showDatePicker: true,
+      showSelected: false,
+      showMove: true,
+      showCopy: false,
+      showConfirmation: false,
+      showDelete: false,
+      showCancel: true,
+    });
   }
 
   function handleCopy() {
-    dispatch({ type: "COPY" });
-    console.log("copy event handler");
+    if (state.showDatePicker) {
+      console.log("copy request triggered");
+      setState(initialState);
+      setShowSelectBtn(false);
+      return;
+    }
+    setState({
+      showDatePicker: true,
+      showSelected: false,
+      showMove: false,
+      showCopy: true,
+      showConfirmation: false,
+      showDelete: false,
+      showCancel: true,
+    });
   }
 
   const handleDelete = () => {
-    removeFoodsMutation.mutate({
-      date: selectedDate,
-      selectedIds: selectedItems,
+    if (state.showConfirmation) {
+      removeFoodsMutation.mutate({
+        date: selectedDate,
+        selectedIds: selectedItems,
+      });
+      setState(initialState);
+      setShowSelectBtn(false);
+      return;
+    }
+    setState({
+      showDatePicker: false,
+      showSelected: true,
+      showMove: false,
+      showCopy: false,
+      showConfirmation: true,
+      showDelete: true,
+      showCancel: true,
     });
-    setShowSelectBtn(false);
   };
 
   return (
-    <div className="inline-flex shadow-md">
+    <div
+      className={`inline-flex shadow-md ${
+        selectedItems.length === 0 ? "opacity-50" : null
+      }`}
+    >
       {state.showDatePicker && (
         <div className="bg-gray-700 text-gray-100 rounded-l">
           <DatePicker
@@ -91,6 +107,7 @@ export default function EditMenu({
       )}
       {state.showMove && (
         <button
+          disabled={selectedItems.length === 0}
           className="bg-gray-300 hover:bg-gray-400 border-r border-white text-gray-800 font-bold text-sm py-2 px-4"
           onClick={handleMove}
         >
@@ -99,6 +116,7 @@ export default function EditMenu({
       )}
       {state.showCopy && (
         <button
+          disabled={selectedItems.length === 0}
           className="bg-gray-300 hover:bg-gray-400 border-r border-white text-gray-800 font-bold text-sm py-2 px-4"
           onClick={handleCopy}
         >
@@ -107,6 +125,7 @@ export default function EditMenu({
       )}
       {state.showDelete && (
         <button
+          disabled={selectedItems.length === 0}
           className="bg-gray-300 hover:bg-red-600 hover:text-gray-100 text-red-600 font-bold text-sm py-2 px-4 rounded-r"
           onClick={handleDelete}
         >
@@ -116,10 +135,7 @@ export default function EditMenu({
       {state.showCancel && (
         <button
           className="bg-gray-300 hover:bg-gray-400 border-r border-white text-gray-600 font-bold text-sm py-2 px-4 rounded-r"
-          onClick={() => {
-            dispatch({ type: "CANCEL" });
-            setSelectedEditDate(selectedDate);
-          }}
+          onClick={() => setState(initialState)}
         >
           Cancel
         </button>
