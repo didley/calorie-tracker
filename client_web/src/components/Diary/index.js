@@ -88,8 +88,17 @@ export default function Diary() {
   }
 
   function handleSelectFood(selectedFood) {
-    console.log({ selectedFood });
-    if (showSelectBtn) setSelectedFoods([...selectedFoods, selectedFood]); // !Bug, only adds to array, doesnt removed on unelsect
+    if (showSelectBtn) {
+      const selectedIds = selectedFoods.map(({ _id }) => _id);
+      const alreadySelected = selectedIds.includes(selectedFood._id);
+      if (alreadySelected) {
+        const selectedRemoved = selectedFoods.filter(
+          (item) => item._id !== selectedFood._id
+        );
+        return setSelectedFoods(selectedRemoved);
+      }
+      setSelectedFoods([...selectedFoods, selectedFood]);
+    }
   }
 
   return (
