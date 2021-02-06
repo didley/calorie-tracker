@@ -1,9 +1,13 @@
 import React from "react";
 
-export default function SearchBar({ onSubmit, value, onChange }) {
+export default function SearchBar({ onSubmit, value, onChange, hidden }) {
   return (
     <form onSubmit={onSubmit}>
-      <div className="relative text-gray-600 focus-within:text-gray-400">
+      <div
+        className={`relative text-gray-600 focus-within:text-gray-400 ${
+          hidden ? "hidden" : null
+        }`}
+      >
         <span className="absolute inset-y-0 left-0 flex items-center pl-2">
           <button
             type="submit"

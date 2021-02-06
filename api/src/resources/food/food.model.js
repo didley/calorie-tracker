@@ -6,8 +6,8 @@ const FoodSchema = new mongoose.Schema(
     name: { type: String, required: true },
     brand: String,
     servingOptions: [{ servingName: String, servingSize: Number }],
-    isLiquid: Boolean,
     perServeSize: Number,
+    isLiquid: Boolean,
     barcode: Number,
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
