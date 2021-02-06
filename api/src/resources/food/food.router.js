@@ -11,4 +11,7 @@ router
   .get(controllers.getUsersFoods)
   .post(controllers.addUserFood);
 
+router.put("/my-foods/:id", controllers.updateUserFood);
+router.delete("/my-foods/:ids", controllers.deleteUserFood);
+
 export default router;
