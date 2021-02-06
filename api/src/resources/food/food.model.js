@@ -33,6 +33,7 @@ const FoodSchema = new mongoose.Schema(
       uppercase: true,
       required: [true, "Country is required"],
     },
+    isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

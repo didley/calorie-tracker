@@ -11,7 +11,10 @@ export default {
   },
   getUsersFoods: async (req, res) => {
     try {
-      const usersFoods = await Food.find({ createdBy: req.user._id }).lean();
+      const usersFoods = await Food.find({
+        createdBy: req.user._id,
+        isDeleted: false,
+      }).lean();
       res.json(usersFoods);
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
@@ -59,10 +62,13 @@ export default {
 
     try {
       const idsArray = ids.split(",");
-      await Food.deleteMany({
-        createdBy: req.user._id,
-        _id: { $in: idsArray },
-      });
+      await Food.updateMany(
+        {
+          createdBy: req.user._id,
+          _id: { $in: idsArray },
+        },
+        { isDeleted: true }
+      );
 
       res.status(200).json({ msg: "Foods deleted" });
     } catch (err) {

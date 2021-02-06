@@ -1,42 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
-import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import axios from "axios";
-import ListItem from "components/shared/ListItem";
-import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
 import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
-import { Button } from "components/shared/styling";
-import SearchBar from "./SearchBar";
-
-import { useAlert } from "hooks/useAlert";
+import MyFoodsTab from "./MyFoodsTab";
 
 const propTypes = {
   setSelectedFood: PropTypes.func.isRequired,
 };
 export default function FoodTabs({ setSelectedFood }) {
-  const { setIsLoading, isLoading, setTimedAlert } = useAlert();
-
   const [tabIndex, setTabIndex] = useState(0);
-  const [data, setData] = useState({});
-
-  const { dbFoods, recent, myFoods } = data;
-
-  useEffect(() => {
-    getFoods("foods", "dbFoods");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tabIndex]);
-
-  async function getFoods(route, objName) {
-    try {
-      setIsLoading(true);
-      const res = await axios.get(`/api/${route}`);
-      setData({ ...data, [objName]: res.data });
-      setIsLoading(false);
-    } catch (err) {
-      setTimedAlert("error", err);
-    }
-  }
 
   // Btn styles
   const btnStyleSelected =
@@ -58,73 +31,25 @@ export default function FoodTabs({ setSelectedFood }) {
       </div>
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex justify-between">
-          <Tab
-            className={tabIndex === 0 ? btnStyleSelected : btnStyle}
-            onClick={() => {
-              getFoods("dbFoods");
-            }}
-          >
+          <Tab className={tabIndex === 0 ? btnStyleSelected : btnStyle}>
             Foods
           </Tab>
-          <Tab
-            className={tabIndex === 1 ? btnStyleSelected : btnStyle}
-            onClick={() => {
-              getFoods("recent");
-            }}
-          >
+          <Tab className={tabIndex === 1 ? btnStyleSelected : btnStyle}>
             Recent
           </Tab>
-          <Tab
-            className={tabIndex === 2 ? btnStyleSelected : btnStyle}
-            onClick={() => {
-              getFoods("myFoods");
-            }}
-          >
+          <Tab className={tabIndex === 2 ? btnStyleSelected : btnStyle}>
             My Food
           </Tab>
         </TabList>
         <hr className="my-2" />
         <TabPanel>
-          <SearchBar />
-
-          <ul>
-            {isLoading === true && <PlaceholderListItem amount={5} />}
-            {dbFoods &&
-              dbFoods.map((food) => (
-                <ListItem
-                  key={food._id}
-                  food={food}
-                  onClickFn={() => setSelectedFood(food)}
-                />
-              ))}
-          </ul>
+          <p>TODO</p>
         </TabPanel>
         <TabPanel>
-          <ul>
-            {dbFoods &&
-              dbFoods.map((food) => (
-                <ListItem
-                  key={food._id}
-                  food={food}
-                  onClickFn={() => setSelectedFood(food)}
-                />
-              ))}
-          </ul>
+          <p>TODO</p>
         </TabPanel>
         <TabPanel>
-          <div className="flex justify-end">
-            <Button color="green">Create</Button>
-          </div>
-          <ul>
-            {dbFoods &&
-              dbFoods.map((food) => (
-                <ListItem
-                  key={food._id}
-                  food={food}
-                  onClickFn={() => setSelectedFood(food)}
-                />
-              ))}
-          </ul>
+          <MyFoodsTab setSelectedFood={setSelectedFood} />
         </TabPanel>
       </Tabs>
     </div>
