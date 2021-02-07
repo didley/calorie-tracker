@@ -164,7 +164,7 @@ export default function Account() {
                         onChange={handleChange}
                         value={values.country}
                         className="block w-full col-span-1"
-                        as={(props) => <CountryDropdown required {...props} />}
+                        as={CountryDropdown}
                       />
                     </label>
                     <div className="grid grid-cols-2 gap-3">

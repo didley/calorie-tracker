@@ -27,7 +27,7 @@ const countryShortList = [
 export default function CountryDropdown(props) {
   return (
     <select {...props}>
-      <option value="" disabled>
+      <option key="selectACounty" value="" disabled>
         Select a country
       </option>
       <optgroup label="Popular">
