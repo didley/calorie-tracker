@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 
-export default function ServingOptionItem({ index, remove }) {
+export default function ServingOptionItem({ index, remove, required = false }) {
   return (
     <li className="flex">
       <button
@@ -24,6 +24,7 @@ export default function ServingOptionItem({ index, remove }) {
             name={`servingOptions.${index}.servingName`}
             placeholder="eg. Package, Container, Bowl full"
             autoComplete="off"
+            required={required}
           />
         </label>
 
@@ -37,8 +38,10 @@ export default function ServingOptionItem({ index, remove }) {
             name={`servingOptions.${index}.servingSize`}
             autoComplete="off"
             type="number"
-            min="1"
-            max="10000"
+            step=".1"
+            min=".1"
+            max="50"
+            required={required}
           />
         </label>
       </div>

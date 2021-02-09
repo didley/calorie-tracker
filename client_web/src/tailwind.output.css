@@ -665,8 +665,8 @@ select:focus {
   outline: 2px solid transparent;
   outline-offset: 2px;
   --border-opacity: 1;
-  border-color: #3182ce;
-  border-color: rgba(49, 130, 206, var(--border-opacity));
+  border-color: #4299e1;
+  border-color: rgba(66, 153, 225, var(--border-opacity));
   --bg-opacity: 1;
   background-color: #fff;
   background-color: rgba(255, 255, 255, var(--bg-opacity));
