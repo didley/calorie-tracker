@@ -3,7 +3,7 @@ import { Switch, Route } from "react-router-dom";
 
 import { useAuth } from "hooks/useAuth";
 
-import AddFoods from "./components/AddFoods";
+import AddFoods from "./components/AddFoods/index";
 import Diary from "./components/Diary";
 import NavBar from "./components/layout/NavBar";
 import Home from "./components/layout/Home";

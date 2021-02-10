@@ -3,6 +3,7 @@ import { Formik, Form, Field, FieldArray } from "formik";
 import { useAddUserFood } from "hooks/useFood";
 import CountryDropdown from "components/shared/CountryDropdown";
 import ServingOptionItem from "./ServingOptionItem";
+import ServingOptionsAddBtn from "./ServingOptionsAddBtn";
 import { toCal, toKJ } from "utils/foodEnegy";
 
 export default function CreateFoodForm({ setShowCreateFoodForm }) {
@@ -203,19 +204,9 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
                       key={index}
                       index={index}
                       remove={remove}
-                      required={
-                        values.servingOptions.servingName !== "" ||
-                        values.servingOptions.servingSize !== 0
-                      }
                     />
                   ))}
-                  <button
-                    type="button"
-                    onClick={() => push({ servingName: "", servingSize: 0 })}
-                    className="w-full bg-green-500 text-white font-bold mt-1 rounded-sm hover:bg-green-300"
-                  >
-                    +
-                  </button>
+                  <ServingOptionsAddBtn values={values} push={push} />
                 </ul>
               )}
             />
