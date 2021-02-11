@@ -1,15 +1,15 @@
 import React from "react";
 
-export default function ServingOptionsAddBtn({ values, push }) {
+export default function ServingOptionsAddBtn({ servingOptionsLength, push }) {
   const SERVING_OPTIONS_LIMIT = 5;
-  const limitReached = values.servingOptions.length >= SERVING_OPTIONS_LIMIT;
+  const limitReached = servingOptionsLength >= SERVING_OPTIONS_LIMIT;
 
   return (
     <button
       type="button"
       onClick={() => {
         if (!limitReached) {
-          push({ servingName: "", servingSize: null });
+          push({ servingName: "", servingSize: "" });
         }
       }}
       disabled={limitReached}

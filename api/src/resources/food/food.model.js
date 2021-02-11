@@ -5,8 +5,8 @@ const FoodSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     brand: String,
-    perServeSize: Number,
-    isLiquid: Boolean,
+    perServeSize: { type: Number, required: true },
+    isLiquid: { type: Boolean, required: true },
     barcode: Number,
     createdBy: {
       type: mongoose.SchemaTypes.ObjectId,
@@ -25,7 +25,12 @@ const FoodSchema = new mongoose.Schema(
       calciumMg: { type: Number, default: 0 },
       glutenG: { type: Number, default: 0 },
     },
-    servingOptions: [{ servingName: String, servingSize: Number }],
+    servingOptions: [
+      {
+        servingName: { type: String, required: true },
+        servingSize: { type: Number, required: true },
+      },
+    ],
     country: {
       type: String,
       validate: [validator.isISO31661Alpha3, "Invalid country"],

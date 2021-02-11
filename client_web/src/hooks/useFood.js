@@ -14,11 +14,18 @@ import {
 function useGetDBFoods(params) {
   // TODO
 }
-function useGetUsersFoods(params) {
+function useGetUsersFoods() {
   return useQuery("userFoods", getUsersFoods);
 }
 function useAddDBFood(params) {}
-function useAddUserFood(params) {}
+function useAddUserFood() {
+  const queryClient = useQueryClient();
+  return useMutation(addUserFood, {
+    onSuccess: (_response, variables) => {
+      queryClient.invalidateQueries(["userFoods", variables.date]);
+    },
+  });
+}
 function useUpdateDBFood(params) {}
 function useUpdateUserFood(params) {}
 function useDeleteDBFood(params) {}

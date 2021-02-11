@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 
-export default function ServingOptionItem({ index, remove }) {
+export default function ServingOptionItem({ index, remove, option }) {
   return (
     <li className="flex">
       <button
