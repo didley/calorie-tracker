@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { parseQuery } from "utils/parseQuery";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import MyFoodsTab from "./MyFoodsTab";
@@ -8,6 +9,9 @@ import SelectedFood from "components/SelectedFood";
 export default function AddFoods() {
   const [selectedFood, setSelectedFood] = useState({});
   const [tabIndex, setTabIndex] = useState(0);
+
+  const location = useLocation();
+  const params = parseQuery(location.search);
 
   const btnStyle =
     "inline-block text-sm border border-white rounded hover:border-gray-200 text-blue-500 hover:bg-gray-200 py-2 px-4";
@@ -20,7 +24,7 @@ export default function AddFoods() {
       <div className="bg-white p-2 pt-0 rounded-lg shadow-lg max-w-sm mb-4 w-full">
         <div className="flex items-stretch">
           <Link
-            to="/diary"
+            to={`/diary/${params.date}`}
             className="py-1 pl-1 pr-3 rounded self-center hover:bg-gray-400"
           >
             {"<"}

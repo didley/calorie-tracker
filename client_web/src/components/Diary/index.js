@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDiaryEntry } from "hooks/useDiary";
-import { Link } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
@@ -16,9 +16,13 @@ import NoteField from "./NoteField";
 import dateOnly from "utils/dateOnly";
 
 export default function Diary() {
+  const history = useHistory();
+  const params = useParams();
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
-  const [selectedDate, setSelectedDate] = useState("2020-11-06"); // TODO: Replace in production initial state with (new Date())
+  // const selectedDate = "2020-11-06"; //TODO: in prod replace with below comment
+  const selectedDate = dateOnly(params.date);
+
   const [note, setNote] = useState(null);
 
   const queryClient = useQueryClient();
@@ -78,7 +82,7 @@ export default function Diary() {
   }, [debouncedNote]);
 
   function handleDateChange(date) {
-    setSelectedDate(dateOnly(date));
+    history.push(`/diary/${dateOnly(date)}`);
     setShowSelectBtn(false);
   }
 
@@ -131,7 +135,12 @@ export default function Diary() {
             <div>
               <div className="border-b flex justify-between pb-1">
                 <h4 className="my-auto">Eaten</h4>
-                <Link to={`/addFoods?date=${selectedDate}&list=eaten`}>
+                <Link
+                  to={{
+                    pathname: "/addFoods",
+                    search: `?date=${selectedDate}&list=eaten`,
+                  }}
+                >
                   <Button color="green">+</Button>
                 </Link>
               </div>

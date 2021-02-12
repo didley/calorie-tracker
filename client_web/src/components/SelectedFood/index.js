@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
+import { parseQuery } from "utils/parseQuery";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 import { Button } from "components/shared/styling";
-import { useAlert } from "hooks/useAlert";
 import { useAddFood } from "hooks/useDiary";
 
 export default function SelectedFood({ selectedFood }) {
@@ -17,17 +17,16 @@ export default function SelectedFood({ selectedFood }) {
   } = selectedFood;
 
   const [chosenServing, setChosenServing] = useState({});
-
-  const { setTimedAlert } = useAlert();
+  const location = useLocation();
+  const params = parseQuery(location.search);
   const addFoodMutation = useAddFood();
-  // const [addFood, { isLoading, isSuccess, isError, error }] = useAddFood();
 
   useEffect(() => {
     setChosenServing({
       chosenAmount: 1,
       servingChoice: {
         _id: "serve",
-        servingName: "1 Serving",
+        servingName: "Serving",
         servingSize: perServeSize,
       },
       index: 0,
@@ -37,7 +36,7 @@ export default function SelectedFood({ selectedFood }) {
   const servingOptionsWithDefaults = [
     {
       _id: "serve",
-      servingName: "1 Serving",
+      servingName: "Serving",
       servingSize: perServeSize,
     },
     {
@@ -73,9 +72,9 @@ export default function SelectedFood({ selectedFood }) {
   };
 
   function handleSubmit() {
-    const URLParams = new URLSearchParams(window.location.search);
-    const date = URLParams.get("date");
-    const listName = URLParams.get("list");
+    // const URLParams = new URLSearchParams(window.location.search);
+    // const date = URLParams.get("date");
+    // const listName = URLParams.get("list");
 
     const foodItem = {
       chosenFood: selectedFood._id,
@@ -86,11 +85,16 @@ export default function SelectedFood({ selectedFood }) {
       },
     };
 
-    addFoodMutation.mutate({ date, listName, items: foodItem });
+    addFoodMutation.mutate({
+      date: params.date,
+      listName: params.list,
+      items: foodItem,
+    });
     //TODO: error handling
   }
 
-  if (addFoodMutation.isSuccess) return <Redirect to={`/diary`} />;
+  if (addFoodMutation.isSuccess)
+    return <Redirect to={`/diary/${params.date}`} />;
   if (Object.keys(selectedFood).length === 0) {
     return (
       <div
