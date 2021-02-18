@@ -12,36 +12,37 @@ export default function MyFoodsTab({ setSelectedFood }) {
 
   return (
     <div>
-      {showCreateFoodForm && (
+      {showCreateFoodForm ? (
         <CreateFoodForm setShowCreateFoodForm={setShowCreateFoodForm} />
-      )}
-      <div className="grid grid-cols-5 gap-2">
-        {!showCreateFoodForm && (
-          <>
+      ) : (
+        <>
+          <div className="grid grid-cols-5 gap-2">
             <SearchBar />
             <Button
               color="green"
-              onClick={() => setShowCreateFoodForm(true)}
+              onClick={() => {
+                setShowCreateFoodForm(true);
+                setSelectedFood([]);
+              }}
               className="col-start-5 col-span-2"
             >
               Create
             </Button>
-          </>
-        )}
-      </div>
-      <hr className="my-2" />
-      <ul>
-        {isLoading && <PlaceholderListItem amount={5} />}
-        {data &&
-          !showCreateFoodForm &&
-          data.map((food) => (
-            <ListItem
-              key={food._id}
-              food={food}
-              onClickFn={() => setSelectedFood(food)}
-            />
-          ))}
-      </ul>
+          </div>
+          <hr className="my-2" />
+          <ul>
+            {isLoading && <PlaceholderListItem amount={5} />}
+            {data &&
+              data.map((food) => (
+                <ListItem
+                  key={food._id}
+                  food={food}
+                  onClickFn={() => setSelectedFood(food)}
+                />
+              ))}
+          </ul>
+        </>
+      )}
     </div>
   );
 }

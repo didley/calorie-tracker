@@ -1,5 +1,6 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
+import { useAuth } from "hooks/useAuth";
 import { useAddUserFood } from "hooks/useFood";
 import CountryDropdown from "components/shared/CountryDropdown";
 import MacrosSection from "./MacrosSection";
@@ -9,6 +10,7 @@ import { toCal, toKJ } from "utils/foodEnegy";
 import { Button } from "components/shared/styling";
 
 export default function CreateFoodForm({ setShowCreateFoodForm }) {
+  const { user } = useAuth();
   const addUserFoodMutation = useAddUserFood();
 
   function handleSubmit(values) {
@@ -46,7 +48,7 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
         },
         isCal: "false",
         servingOptions: [],
-        country: "AUS",
+        country: user.country,
       }}
       onSubmit={(values) => handleSubmit(values)}
     >
