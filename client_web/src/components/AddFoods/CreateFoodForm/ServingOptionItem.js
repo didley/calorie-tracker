@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 
-export default function ServingOptionItem({ index, remove, option }) {
+export default function ServingOptionItem({ index, remove, option, isLiquid }) {
   return (
     <li className="flex">
       <button
@@ -31,7 +31,7 @@ export default function ServingOptionItem({ index, remove, option }) {
           htmlFor={`servingOptions.${index}.servingSize`}
           className="block col-span-2"
         >
-          Serving Size
+          Serving Size ({isLiquid === true ? "mL" : "g"})
           <Field
             name={`servingOptions.${index}.servingSize`}
             autoComplete="off"

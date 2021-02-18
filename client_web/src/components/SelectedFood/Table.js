@@ -1,4 +1,5 @@
 import React from "react";
+import { toCal } from "utils/foodEnegy";
 
 export default function Table({ macros }) {
   const {
@@ -26,7 +27,7 @@ export default function Table({ macros }) {
         <tr>
           <td>
             <hr />
-            {Math.floor(EnergyKJ / 4.184)}Cal
+            {toCal(EnergyKJ)}Cal
           </td>
           <td>
             <hr />

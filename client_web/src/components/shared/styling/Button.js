@@ -3,7 +3,7 @@ import LoadingSpinner from "components/shared/LoadingSpinner";
 
 export default function Button({
   color = "blue",
-  otherStyles,
+  className,
   onClick,
   loading,
   disabled,
@@ -18,9 +18,9 @@ export default function Button({
       type={type}
       className={`text-sm bg-${
         disabled ? "gray" : color
-      }-500 rounded text-white font-bold py-1 px-4 border-b-4 border-${
+      }-500 rounded text-white font-bold py-1 px-3 border-b-4 border-${
         disabled ? "gray" : color
-      }-700 hover:bg-opacity-75 ${otherStyles}`}
+      }-700 hover:bg-opacity-75 text-center ${className}`}
     >
       {loading ? <LoadingSpinner white /> : children}
     </button>

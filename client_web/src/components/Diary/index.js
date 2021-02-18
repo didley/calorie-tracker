@@ -18,10 +18,9 @@ import dateOnly from "utils/dateOnly";
 export default function Diary() {
   const history = useHistory();
   const params = useParams();
+  const selectedDate = dateOnly(params.date);
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
-  // const selectedDate = "2020-11-06"; //TODO: in prod replace with below comment
-  const selectedDate = dateOnly(params.date);
 
   const [note, setNote] = useState(null);
 

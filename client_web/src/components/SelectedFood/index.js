@@ -72,10 +72,6 @@ export default function SelectedFood({ selectedFood }) {
   };
 
   function handleSubmit() {
-    // const URLParams = new URLSearchParams(window.location.search);
-    // const date = URLParams.get("date");
-    // const listName = URLParams.get("list");
-
     const foodItem = {
       chosenFood: selectedFood._id,
       chosenOptions: {

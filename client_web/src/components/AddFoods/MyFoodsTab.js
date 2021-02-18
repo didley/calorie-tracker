@@ -15,14 +15,19 @@ export default function MyFoodsTab({ setSelectedFood }) {
       {showCreateFoodForm && (
         <CreateFoodForm setShowCreateFoodForm={setShowCreateFoodForm} />
       )}
-      <div className="flex justify-between">
-        <SearchBar hidden={showCreateFoodForm} />
-        <Button
-          color="green"
-          onClick={() => setShowCreateFoodForm(!showCreateFoodForm)}
-        >
-          Create
-        </Button>
+      <div className="grid grid-cols-5 gap-2">
+        {!showCreateFoodForm && (
+          <>
+            <SearchBar />
+            <Button
+              color="green"
+              onClick={() => setShowCreateFoodForm(true)}
+              className="col-start-5 col-span-2"
+            >
+              Create
+            </Button>
+          </>
+        )}
       </div>
       <hr className="my-2" />
       <ul>

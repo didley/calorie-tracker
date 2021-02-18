@@ -6,6 +6,7 @@ import MacrosSection from "./MacrosSection";
 import ServingOptionItem from "./ServingOptionItem";
 import ServingOptionsAddBtn from "./ServingOptionsAddBtn";
 import { toCal, toKJ } from "utils/foodEnegy";
+import { Button } from "components/shared/styling";
 
 export default function CreateFoodForm({ setShowCreateFoodForm }) {
   const addUserFoodMutation = useAddUserFood();
@@ -53,11 +54,12 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
         <Form className="relative">
           <fieldset>
             <button
-              className="absolute top-0 right-0 border-2 border-blue-500 rounded-full w-8 h-8 font-bold bg-blue-500 text-white hover:text-blue-500 hover:bg-white"
+              className="absolute top-0 right-0 text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
               onClick={() => setShowCreateFoodForm(false)}
             >
-              X
+              Cancel
             </button>
+
             <legend>
               <h6 className="text-gray-700">Create Food</h6>
             </legend>
@@ -79,7 +81,7 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
             <div className="grid grid-cols-5 gap-1">
               <div className="col-span-3">
                 <label htmlFor="perServeSize">
-                  Per Serve Size
+                  Per Serve Size ({values.isLiquid === "true" ? "mL" : "g"})
                   <Field
                     className="block w-full"
                     name="perServeSize"
@@ -111,14 +113,14 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
             <div className="grid grid-cols-5 gap-1">
               <div className="col-span-3">
                 <label htmlFor="macrosPerServe.EnergyKJ">
-                  EnergyKJ
+                  Energy ({values.isCal === "true" ? "Cal" : "KJ"})
                   <Field
                     name="macrosPerServe.EnergyKJ"
                     className="block w-full"
                     type="number"
                     min="0"
                     max="10000"
-                    step=".01"
+                    step="1"
                     required
                   />
                 </label>
@@ -181,11 +183,12 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
               name="servingOptions"
               render={({ remove, push }) => (
                 <ul>
-                  {values.servingOptions.map((option, index) => (
+                  {values.servingOptions.map((_option, index) => (
                     <ServingOptionItem
                       key={index}
                       index={index}
                       remove={remove}
+                      isLiquid={values.isLiquid === "true" ? true : false}
                     />
                   ))}
                   {values.servingOptions.length === 0 && (
@@ -209,7 +212,15 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
             />
           </label>
           <br />
-          <button type="submit">Send it</button>
+          <div className="grid grid-cols-5 gap-2">
+            <Button
+              color="green"
+              type="submit"
+              className="col-start-5 col-span-2"
+            >
+              Create
+            </Button>
+          </div>
         </Form>
       )}
     </Formik>
