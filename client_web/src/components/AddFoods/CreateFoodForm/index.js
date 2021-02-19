@@ -14,14 +14,14 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
   const addUserFoodMutation = useAddUserFood();
 
   function handleSubmit(values) {
-    const valuesCopy = { ...values };
-    if (valuesCopy.isCal) {
+    const valuesCopy = JSON.parse(JSON.stringify(values));
+    if (valuesCopy.isCal === "true") {
       valuesCopy.macrosPerServe.EnergyKJ = toKJ(
         valuesCopy.macrosPerServe.EnergyKJ
       );
     }
 
-    const { isCal, ...removedIsCal } = valuesCopy;
+    const { isCal, ...removedIsCal } = values;
 
     addUserFoodMutation.mutate(removedIsCal);
   }
@@ -50,7 +50,7 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
         servingOptions: [],
         country: user.country,
       }}
-      onSubmit={(values) => handleSubmit(values)}
+      onSubmit={handleSubmit}
     >
       {({ values, setFieldValue }) => (
         <Form className="relative">
@@ -137,15 +137,10 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
                       if (values.isCal === "true") {
                         setFieldValue(
                           "macrosPerServe.EnergyKJ",
-                          toKJ(values.macrosPerServe.EnergyKJ),
-                          {
-                            shouldValidate: false,
-                          }
+                          toKJ(values.macrosPerServe.EnergyKJ)
                         );
                       }
-                      setFieldValue("isCal", "false", {
-                        shouldValidate: false,
-                      });
+                      setFieldValue("isCal", "false");
                     }}
                   />{" "}
                   KJ
@@ -159,15 +154,10 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
                       if (values.isCal === "false") {
                         setFieldValue(
                           "macrosPerServe.EnergyKJ",
-                          toCal(values.macrosPerServe.EnergyKJ),
-                          {
-                            shouldValidate: false,
-                          }
+                          toCal(values.macrosPerServe.EnergyKJ)
                         );
                       }
-                      setFieldValue("isCal", "true", {
-                        shouldValidate: false,
-                      });
+                      setFieldValue("isCal", "true");
                     }}
                   />{" "}
                   Cal
