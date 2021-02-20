@@ -8,7 +8,7 @@ import CreateFoodForm from "./CreateFoodForm";
 
 export default function MyFoodsTab({ setSelectedFood }) {
   const { data, isLoading } = useGetUsersFoods();
-  const [showCreateFoodForm, setShowCreateFoodForm] = useState(true);
+  const [showCreateFoodForm, setShowCreateFoodForm] = useState(false);
 
   return (
     <div>

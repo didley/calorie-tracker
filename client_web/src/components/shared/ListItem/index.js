@@ -23,10 +23,10 @@ export default function ListItem({
     setSelected(false);
   }, [showSelectBtn]);
 
-  let chosenOptionsSting;
+  let chosenOptionsString;
   if (chosenOptions) {
     const { chosenAmount, serving } = chosenOptions;
-    chosenOptionsSting = `
+    chosenOptionsString = `
     ${chosenAmount} x
     ${serving.servingName}${chosenAmount > 1 ? "s" : ""} 
     (${serving.servingSize * chosenAmount}${food.isLiquid ? "mL" : "g"})`;
@@ -58,7 +58,7 @@ export default function ListItem({
           <div className="flex justify-between">
             <span>{food.name}</span>
             <span className="text-gray-600 text-xs">
-              {chosenOptions && chosenOptionsSting}
+              {chosenOptions && chosenOptionsString}
             </span>
           </div>
           <div className="flex justify-between">

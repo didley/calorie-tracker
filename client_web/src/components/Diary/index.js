@@ -2,17 +2,17 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDiaryEntry } from "hooks/useDiary";
 import { Link, useParams, useHistory } from "react-router-dom";
 
+import DatePickerContainer from "./DatePickerContainer";
+import SummaryMenu from "./SummaryMenu";
+import NoteField from "./NoteField";
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
 import EditMenu from "components/shared/EditMenu";
-import DatePickerContainer from "./DatePickerContainer";
 import { Button } from "components/shared/styling";
 
 import { useMutation, useQueryClient } from "react-query";
 import { updateDiaryEntry } from "api/diary";
 import { useDebounce } from "hooks/useDebounce";
-
-import NoteField from "./NoteField";
 import dateOnly from "utils/dateOnly";
 
 export default function Diary() {
@@ -28,7 +28,7 @@ export default function Diary() {
   const { data = {}, isLoading, isSuccess, error } = useDiaryEntry(
     selectedDate
   );
-  const { eaten = [], toEat = [] } = data;
+  const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
 
   const updateNoteMutation = useMutation(updateDiaryEntry, {
     onMutate: async (newData) => {
@@ -130,6 +130,7 @@ export default function Diary() {
               />
             )}
           </div>
+          <SummaryMenu totalEatenKJ={totalEatenKJ} />
           <div className="space-y-6">
             <div>
               <div className="border-b flex justify-between pb-1">

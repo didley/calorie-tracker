@@ -31,4 +31,11 @@ const diarySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+diarySchema.set("toJSON", { virtuals: true });
+diarySchema.virtual("totalEatenKJ").get(function () {
+  const eatenKJ = this.eaten.map(
+    (food) => food.chosenOptions.chosenMacros.EnergyKJ
+  );
+  return eatenKJ.reduce((a, b) => a + b, 0).toFixed();
+});
 export const Diary = mongoose.model("diary", diarySchema);

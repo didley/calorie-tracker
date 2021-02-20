@@ -6,6 +6,7 @@ export default function Weight() {
     <Page>
       <Container>
         <h1>Weight</h1>
+        <p>Coming soon!</p>
       </Container>
     </Page>
   );
