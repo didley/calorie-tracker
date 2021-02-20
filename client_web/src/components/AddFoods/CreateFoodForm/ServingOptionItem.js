@@ -1,7 +1,7 @@
 import React from "react";
 import { Field } from "formik";
 
-export default function ServingOptionItem({ index, remove, option, isLiquid }) {
+export default function ServingOptionItem({ index, remove, isLiquid }) {
   return (
     <li className="flex">
       <button
@@ -38,7 +38,7 @@ export default function ServingOptionItem({ index, remove, option, isLiquid }) {
             type="number"
             step=".1"
             min=".1"
-            max="50"
+            max="10000"
             required
           />
         </label>

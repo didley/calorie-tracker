@@ -8,22 +8,32 @@ import ServingOptionItem from "./ServingOptionItem";
 import ServingOptionsAddBtn from "./ServingOptionsAddBtn";
 import { toCal, toKJ } from "utils/foodEnegy";
 import { Button } from "components/shared/styling";
+import { parseBoolString } from "utils/parseBoolString";
 
-export default function CreateFoodForm({ setShowCreateFoodForm }) {
+export default function CreateFoodForm({
+  setShowCreateFoodForm,
+  setSelectedFood,
+}) {
   const { user } = useAuth();
   const addUserFoodMutation = useAddUserFood();
 
-  function handleSubmit(values) {
+  async function handleSubmit(values) {
     const valuesCopy = JSON.parse(JSON.stringify(values));
+    valuesCopy.isLiquid = parseBoolString(valuesCopy.isLiquid, false);
     if (valuesCopy.isCal === "true") {
       valuesCopy.macrosPerServe.EnergyKJ = toKJ(
         valuesCopy.macrosPerServe.EnergyKJ
       );
     }
+    const { isCal, ...removedIsCal } = valuesCopy;
 
-    const { isCal, ...removedIsCal } = values;
-
-    addUserFoodMutation.mutate(removedIsCal);
+    try {
+      const res = await addUserFoodMutation.mutateAsync(removedIsCal);
+      setSelectedFood(res.data);
+      setShowCreateFoodForm(false);
+    } catch (err) {
+      return;
+    }
   }
 
   return (
@@ -209,6 +219,7 @@ export default function CreateFoodForm({ setShowCreateFoodForm }) {
               color="green"
               type="submit"
               className="col-start-5 col-span-2"
+              loading={addUserFoodMutation.isLoading}
             >
               Create
             </Button>

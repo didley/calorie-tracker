@@ -13,7 +13,10 @@ export default function MyFoodsTab({ setSelectedFood }) {
   return (
     <div>
       {showCreateFoodForm ? (
-        <CreateFoodForm setShowCreateFoodForm={setShowCreateFoodForm} />
+        <CreateFoodForm
+          setShowCreateFoodForm={setShowCreateFoodForm}
+          setSelectedFood={setSelectedFood}
+        />
       ) : (
         <>
           <div className="grid grid-cols-5 gap-2">

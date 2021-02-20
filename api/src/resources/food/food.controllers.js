@@ -22,16 +22,16 @@ export default {
   },
   addDBFood: async (req, res) => {
     try {
-      const food = await Food.create({ ...req.body, createdBy: "admin" });
-      res.json({ msg: `${food.name} Added to foods database` });
+      const data = await Food.create({ ...req.body, createdBy: "admin" });
+      res.json({ data, msg: `${data.name} Added to foods database` });
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
     }
   },
   addUserFood: async (req, res) => {
     try {
-      const food = await Food.create({ ...req.body, createdBy: req.user._id });
-      res.json({ msg: `${food.name} Added to your foods` });
+      const data = await Food.create({ ...req.body, createdBy: req.user._id });
+      res.json({ data, msg: `${data.name} Added to your foods` });
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
     }
