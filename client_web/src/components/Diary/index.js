@@ -21,6 +21,7 @@ export default function Diary() {
   const selectedDate = dateOnly(params.date);
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
+  const [viewAsCal, setViewAsCal] = useState(false);
 
   const [note, setNote] = useState(null);
 
@@ -117,6 +118,18 @@ export default function Diary() {
           <div className="flex items-baseline">
             <h2>Diary</h2>
             <button
+              onClick={() => setViewAsCal(!viewAsCal)}
+              className="text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:border-gray-500 hover:text-red-500 hover:border-1 hover:bg-white bg-gray-200"
+            >
+              <small className={!viewAsCal ? "text-red-500" : "text-gray-500"}>
+                KJ
+              </small>
+              {" / "}
+              <small className={viewAsCal ? "text-red-500" : "text-gray-500"}>
+                Cal
+              </small>
+            </button>
+            <button
               onClick={toggleShowSelectBtn}
               className="text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
@@ -130,7 +143,7 @@ export default function Diary() {
               />
             )}
           </div>
-          <SummaryMenu totalEatenKJ={totalEatenKJ} />
+          <SummaryMenu totalEatenKJ={totalEatenKJ} viewAsCal={viewAsCal} />
           <div className="space-y-6">
             <div>
               <div className="border-b flex justify-between pb-1">
@@ -159,6 +172,7 @@ export default function Diary() {
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
                       onClickFn={() => handleSelectFood(food)}
+                      viewAsCal={viewAsCal}
                     />
                   ))}
               </ul>
@@ -180,6 +194,7 @@ export default function Diary() {
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
                       onClickFn={() => handleSelectFood(food)}
+                      viewAsCal={viewAsCal}
                     />
                   ))}
               </ul>

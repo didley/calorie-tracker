@@ -1,9 +1,14 @@
 import React from "react";
 import { useAuth } from "hooks/useAuth";
+import { toCal } from "utils/foodEnegy";
 
-export default function SummaryMenu({ totalEatenKJ }) {
+export default function SummaryMenu({ totalEatenKJ, viewAsCal }) {
   const { user } = useAuth();
-  const goal = user.goals.energyGoalKJ;
+  let goal = user.goals.energyGoalKJ;
+  if (viewAsCal) {
+    goal = toCal(goal);
+    totalEatenKJ = toCal(totalEatenKJ);
+  }
 
   const remaining = {
     value: goal - totalEatenKJ,
@@ -11,7 +16,6 @@ export default function SummaryMenu({ totalEatenKJ }) {
     percent: ((totalEatenKJ / goal) * 100).toFixed(),
   };
 
-  console.log({ remaining });
   return (
     <div className="inline-grid grid-cols-4 divide-x text-center items-center w-64">
       <div>

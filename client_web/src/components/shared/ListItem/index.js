@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
+import { toCal } from "utils/foodEnegy";
 
 import SelectBtn from "./SelectBtn";
 
@@ -8,6 +9,7 @@ const propTypes = {
   chosenOptions: PropTypes.object,
   onClickFn: PropTypes.func,
   showSelectBtn: PropTypes.bool,
+  viewAsCal: PropTypes.bool,
 };
 
 export default function ListItem({
@@ -15,6 +17,7 @@ export default function ListItem({
   chosenOptions,
   onClickFn,
   showSelectBtn = false,
+  viewAsCal,
 }) {
   const [hovered, setHovered] = useState(false);
   const [selected, setSelected] = useState(false);
@@ -31,6 +34,13 @@ export default function ListItem({
     ${serving.servingName}${chosenAmount > 1 ? "s" : ""} 
     (${serving.servingSize * chosenAmount}${food.isLiquid ? "mL" : "g"})`;
   }
+
+  const chosenEnergy = viewAsCal
+    ? toCal(chosenOptions.chosenMacros.EnergyKJ)
+    : chosenOptions.chosenMacros.EnergyKJ;
+  const foodEnergy = viewAsCal
+    ? toCal(food.macrosPerServe.EnergyKJ)
+    : food.macrosPerServe.EnergyKJ;
 
   function handleClick() {
     if (showSelectBtn) {
@@ -66,10 +76,8 @@ export default function ListItem({
               {food.brand && food.brand}
             </span>
             <span className="text-xs">
-              {chosenOptions
-                ? `${chosenOptions.chosenMacros.EnergyKJ}`
-                : food.macrosPerServe.EnergyKJ}
-              kJ
+              {chosenOptions ? chosenEnergy : foodEnergy}
+              {viewAsCal ? " Cal" : " KJ"}
             </span>
           </div>
         </div>
