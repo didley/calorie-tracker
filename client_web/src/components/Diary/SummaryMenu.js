@@ -19,7 +19,7 @@ export default function SummaryMenu({ totalEatenKJ, viewAsCal }) {
   return (
     <div className="inline-grid grid-cols-4 divide-x text-center items-center w-64">
       <div>
-        <h6 className={remaining.isOver && "text-red-500"}>
+        <h6 className={remaining.isOver ? "text-red-500" : undefined}>
           {remaining.percent}%
         </h6>
       </div>
@@ -29,11 +29,15 @@ export default function SummaryMenu({ totalEatenKJ, viewAsCal }) {
       </div>
       <div>
         <small className="text-gray-600">Eaten</small>
-        <p className={remaining.isOver && "text-red-500"}>{totalEatenKJ}</p>
+        <p className={remaining.isOver ? "text-red-500" : undefined}>
+          {totalEatenKJ}
+        </p>
       </div>
       <div>
         <small className="text-gray-600">Left</small>
-        <p className={remaining.isOver && "text-red-500"}>{remaining.value}</p>
+        <p className={remaining.isOver ? "text-red-500" : undefined}>
+          {remaining.value}
+        </p>
       </div>
     </div>
   );
