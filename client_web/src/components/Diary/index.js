@@ -126,7 +126,7 @@ export default function Diary() {
             </button>
           </div>
 
-          <div className="flex justify-center m-1">
+          <div className="flex justify-center m-2">
             {showSelectBtn && (
               <EditMenu
                 className="self-center"

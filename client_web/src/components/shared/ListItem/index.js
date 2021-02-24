@@ -27,17 +27,19 @@ export default function ListItem({
   }, [showSelectBtn]);
 
   let chosenOptionsString;
+  let chosenEnergy;
   if (chosenOptions) {
     const { chosenAmount, serving } = chosenOptions;
     chosenOptionsString = `
     ${chosenAmount} x
     ${serving.servingName}${chosenAmount > 1 ? "s" : ""} 
     (${serving.servingSize * chosenAmount}${food.isLiquid ? "mL" : "g"})`;
+
+    chosenEnergy = viewAsCal
+      ? (chosenEnergy = toCal(chosenOptions.chosenMacros.EnergyKJ))
+      : (chosenEnergy = chosenOptions.chosenMacros.EnergyKJ);
   }
 
-  const chosenEnergy = viewAsCal
-    ? toCal(chosenOptions.chosenMacros.EnergyKJ)
-    : chosenOptions.chosenMacros.EnergyKJ;
   const foodEnergy = viewAsCal
     ? toCal(food.macrosPerServe.EnergyKJ)
     : food.macrosPerServe.EnergyKJ;
