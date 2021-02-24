@@ -7,7 +7,7 @@ import SelectBtn from "./SelectBtn";
 const propTypes = {
   food: PropTypes.object.isRequired,
   chosenOptions: PropTypes.object,
-  onClickFn: PropTypes.func,
+  onClick: PropTypes.func,
   showSelectBtn: PropTypes.bool,
   viewAsCal: PropTypes.bool,
 };
@@ -15,7 +15,7 @@ const propTypes = {
 export default function ListItem({
   food,
   chosenOptions,
-  onClickFn,
+  onClick,
   showSelectBtn = false,
   viewAsCal,
 }) {
@@ -45,9 +45,9 @@ export default function ListItem({
   function handleClick() {
     if (showSelectBtn) {
       setSelected(!selected);
-      onClickFn();
+      onClick();
     } else {
-      onClickFn();
+      onClick();
     }
   }
 

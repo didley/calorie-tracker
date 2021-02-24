@@ -10,6 +10,7 @@ const propTypes = {
   selectedDate: PropTypes.string.isRequired,
 };
 export default function EditMenu({
+  className,
   selectedItems,
   selectedDate,
   setShowSelectBtn,
@@ -115,7 +116,7 @@ export default function EditMenu({
 
   return (
     <div
-      className={`inline-flex shadow-md ${
+      className={`${className} flex shadow-md ${
         selectedItems.length === 0 ? "opacity-50" : null
       }`}
     >
@@ -132,7 +133,7 @@ export default function EditMenu({
         </div>
       )}
       {state.showSelected && (
-        <div className="bg-gray-700 text-gray-100 text-sm py-2 px-2 rounded-l">
+        <div className="bg-gray-700 text-gray-100 text-sm py-2 px-2 rounded-l whitespace-no-wrap">
           {selectedItems.length} Selected
         </div>
       )}

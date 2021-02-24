@@ -7,6 +7,7 @@ import SummaryMenu from "./SummaryMenu";
 import NoteField from "./NoteField";
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
+import ViewAsCalToggle from "./ViewAsCalToggle";
 import EditMenu from "components/shared/EditMenu";
 import { Button } from "components/shared/styling";
 
@@ -115,35 +116,39 @@ export default function Diary() {
           />
         </div>
         <div className="bg-white p-3 mx-1 mb-3 rounded-lg shadow-lg">
-          <div className="flex items-baseline">
+          <div className="flex justify-between items-stretch">
             <h2>Diary</h2>
             <button
-              onClick={() => setViewAsCal(!viewAsCal)}
-              className="text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:border-gray-500 hover:text-red-500 hover:border-1 hover:bg-white bg-gray-200"
-            >
-              <small className={!viewAsCal ? "text-red-500" : "text-gray-500"}>
-                KJ
-              </small>
-              {" / "}
-              <small className={viewAsCal ? "text-red-500" : "text-gray-500"}>
-                Cal
-              </small>
-            </button>
-            <button
               onClick={toggleShowSelectBtn}
-              className="text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
+              className="self-center text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
               {showSelectBtn ? "Clear" : "Edit"}
             </button>
+          </div>
+
+          <div className="flex justify-center m-1">
             {showSelectBtn && (
               <EditMenu
+                className="self-center"
                 selectedItems={selectedFoods}
                 selectedDate={selectedDate}
                 setShowSelectBtn={setShowSelectBtn}
               />
             )}
+            {showSelectBtn || (
+              <div className="self-center flex items-stretch">
+                <ViewAsCalToggle
+                  className="self-center"
+                  onClick={() => setViewAsCal(!viewAsCal)}
+                  viewAsCal={viewAsCal}
+                />
+                <SummaryMenu
+                  totalEatenKJ={totalEatenKJ}
+                  viewAsCal={viewAsCal}
+                />
+              </div>
+            )}
           </div>
-          <SummaryMenu totalEatenKJ={totalEatenKJ} viewAsCal={viewAsCal} />
           <div className="space-y-6">
             <div>
               <div className="border-b flex justify-between pb-1">
@@ -171,7 +176,7 @@ export default function Diary() {
                       food={food.chosenFood}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
-                      onClickFn={() => handleSelectFood(food)}
+                      onClick={() => handleSelectFood(food)}
                       viewAsCal={viewAsCal}
                     />
                   ))}
@@ -193,7 +198,7 @@ export default function Diary() {
                       food={food.chosenFood}
                       chosenOptions={food.chosenOptions}
                       showSelectBtn={showSelectBtn}
-                      onClickFn={() => handleSelectFood(food)}
+                      onClick={() => handleSelectFood(food)}
                       viewAsCal={viewAsCal}
                     />
                   ))}

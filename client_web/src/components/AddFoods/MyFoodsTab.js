@@ -40,7 +40,7 @@ export default function MyFoodsTab({ setSelectedFood }) {
                 <ListItem
                   key={food._id}
                   food={food}
-                  onClickFn={() => setSelectedFood(food)}
+                  onClick={() => setSelectedFood(food)}
                 />
               ))}
           </ul>
