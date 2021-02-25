@@ -89,7 +89,7 @@ export default function Diary() {
 
   function toggleShowSelectBtn() {
     setSelectedFoods([]);
-    setShowSelectBtn(!showSelectBtn);
+    setShowSelectBtn((prevState) => !prevState);
   }
 
   function handleSelectFood(selectedFood) {

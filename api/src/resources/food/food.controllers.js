@@ -10,12 +10,19 @@ export default {
     }
   },
   getUsersFoods: async (req, res) => {
+    const LIMIT = 20;
+    const pageQuery = req.query.page || 1;
+
     try {
-      const usersFoods = await Food.find({
-        createdBy: req.user._id,
-        isDeleted: false,
-      }).lean();
-      res.json(usersFoods);
+      const { docs, hasNextPage, page } = await Food.paginate(
+        {
+          createdBy: req.user._id,
+          isDeleted: false,
+        },
+        { page: pageQuery, limit: LIMIT, lean: true }
+      );
+
+      res.json({ data: docs, hasNextPage, page });
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
     }

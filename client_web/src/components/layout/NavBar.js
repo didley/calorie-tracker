@@ -28,7 +28,7 @@ export default function NavBar() {
       <div className="block md:hidden">
         <button
           onClick={() => {
-            setHidden(!hidden);
+            setHidden((prevState) => !prevState);
           }}
           className="flex items-center px-3 py-2 rounded text-white hover:bg-red-400"
         >

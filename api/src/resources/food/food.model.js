@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import mongoosePaginate from "mongoose-paginate-v2";
 import validator from "validator";
 
 const FoodSchema = new mongoose.Schema(
@@ -42,5 +43,7 @@ const FoodSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+FoodSchema.plugin(mongoosePaginate);
 
 export const Food = mongoose.model("food", FoodSchema);

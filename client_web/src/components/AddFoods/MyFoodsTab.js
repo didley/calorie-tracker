@@ -7,9 +7,32 @@ import SearchBar from "./SearchBar";
 import CreateFoodForm from "./CreateFoodForm";
 
 export default function MyFoodsTab({ setSelectedFood }) {
-  const { data, isLoading } = useGetUsersFoods();
   const [showCreateFoodForm, setShowCreateFoodForm] = useState(false);
+  const {
+    data,
+    isLoading,
+    fetchNextPage,
+    isFetchingNextPage,
+  } = useGetUsersFoods();
 
+  const loader = React.useRef(null);
+
+  React.useEffect(() => {
+    const handleObserver = (entities) => {
+      const target = entities[0];
+      if (target.isIntersecting) fetchNextPage();
+    };
+
+    const options = {
+      root: null,
+      rootMargin: "20px",
+      threshold: 0,
+    };
+    const observer = new IntersectionObserver(handleObserver, options);
+    if (loader.current) observer.observe(loader.current);
+  }, [fetchNextPage]);
+
+  console.log({ data });
   return (
     <div>
       {showCreateFoodForm ? (
@@ -36,13 +59,28 @@ export default function MyFoodsTab({ setSelectedFood }) {
           <ul>
             {isLoading && <PlaceholderListItem amount={5} />}
             {data &&
-              data.map((food) => (
-                <ListItem
-                  key={food._id}
-                  food={food}
-                  onClick={() => setSelectedFood(food)}
-                />
+              data.pages.map((foods, index) => (
+                <React.Fragment key={index}>
+                  {foods.data.map((food) => (
+                    <ListItem
+                      key={food._id}
+                      food={food}
+                      onClick={() => setSelectedFood(food)}
+                    />
+                  ))}
+                </React.Fragment>
               ))}
+            <div className="text-center" ref={loader}>
+              {!isLoading && (
+                <small className="text-gray-600">
+                  {data
+                    ? isFetchingNextPage
+                      ? "Loading more..."
+                      : "Showing all"
+                    : "No foods"}
+                </small>
+              )}
+            </div>
           </ul>
         </>
       )}

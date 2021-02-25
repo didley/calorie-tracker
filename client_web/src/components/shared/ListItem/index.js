@@ -46,7 +46,7 @@ export default function ListItem({
 
   function handleClick() {
     if (showSelectBtn) {
-      setSelected(!selected);
+      setSelected((prevState) => !prevState);
       onClick();
     } else {
       onClick();

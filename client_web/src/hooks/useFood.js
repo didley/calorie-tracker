@@ -1,4 +1,9 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import {
+  useQuery,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "react-query";
 
 import {
   getDBFoods,
@@ -15,7 +20,16 @@ function useGetDBFoods(params) {
   // TODO
 }
 function useGetUsersFoods() {
-  return useQuery("userFoods", getUsersFoods);
+  return useInfiniteQuery(
+    "userFoods",
+    ({ pageParam = 1 }) => getUsersFoods(pageParam),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        if (!lastPage.hasNextPage) return;
+        return lastPage.page + 1;
+      },
+    }
+  );
 }
 function useAddDBFood(params) {}
 function useAddUserFood() {
