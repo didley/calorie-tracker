@@ -15,6 +15,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { updateDiaryEntry } from "api/diary";
 import { useDebounce } from "hooks/useDebounce";
 import dateOnly from "utils/dateOnly";
+import { ReactSortable } from "react-sortablejs";
 
 export default function Diary() {
   const history = useHistory();
@@ -23,13 +24,12 @@ export default function Diary() {
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(false);
-
   const [note, setNote] = useState(null);
 
   const queryClient = useQueryClient();
-  const { data = {}, isLoading, isSuccess, error } = useDiaryEntry(
-    selectedDate
-  );
+  const [diaryQuery, listState] = useDiaryEntry(selectedDate);
+  const { eatenList, setEatenList, toEatList, setToEatList } = listState;
+  const { data = {}, isLoading, isSuccess, error } = diaryQuery;
   const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
 
   const updateNoteMutation = useMutation(updateDiaryEntry, {
@@ -136,16 +136,18 @@ export default function Diary() {
               />
             )}
             {showSelectBtn || (
-              <div className="self-center flex items-stretch">
-                <ViewAsCalToggle
-                  className="self-center"
-                  onClick={() => setViewAsCal(!viewAsCal)}
-                  viewAsCal={viewAsCal}
-                />
-                <SummaryMenu
-                  totalEatenKJ={totalEatenKJ}
-                  viewAsCal={viewAsCal}
-                />
+              <div className="p-1 rounded-lg border-2 border-gray-200">
+                <div className="self-center flex items-stretch">
+                  <ViewAsCalToggle
+                    className="self-center"
+                    onClick={() => setViewAsCal(!viewAsCal)}
+                    viewAsCal={viewAsCal}
+                  />
+                  <SummaryMenu
+                    totalEatenKJ={totalEatenKJ}
+                    viewAsCal={viewAsCal}
+                  />
+                </div>
               </div>
             )}
           </div>
@@ -204,6 +206,31 @@ export default function Diary() {
                   ))}
               </ul>
             </div>
+            <div>
+              <div className="border-b flex justify-between pb-1">
+                <h4 className="my-auto">Test list</h4>
+              </div>
+              <ul className="inline-block w-full h-32">
+                <ReactSortable
+                  list={eatenList}
+                  setList={setEatenList}
+                  animation={100}
+                >
+                  {eatenList &&
+                    eatenList.map((food) => (
+                      <ListItem
+                        key={food._id}
+                        food={food.chosenFood}
+                        chosenOptions={food.chosenOptions}
+                        showSelectBtn={showSelectBtn}
+                        onClick={() => handleSelectFood(food)}
+                        viewAsCal={viewAsCal}
+                      />
+                    ))}
+                </ReactSortable>
+              </ul>
+            </div>
+
             <NoteField
               onChange={(e) => {
                 setNote(e.target.value);
