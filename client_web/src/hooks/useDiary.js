@@ -32,7 +32,35 @@ function useAddFood() {
 }
 
 function useUpdateEntry() {
-  // To move from Diary component
+  const queryClient = useQueryClient();
+  return useMutation(updateDiaryEntry, {
+    onMutate: async (newData) => {
+      await queryClient.cancelQueries(["entry", newData.date]);
+
+      const rollback = queryClient.getQueryData(["entry", newData.date]);
+
+      const { eaten, toEat, note } = newData.updates;
+      let updates;
+      if (note !== undefined) {
+        updates = { note };
+      } else {
+        updates = { eaten, toEat };
+      }
+
+      queryClient.setQueryData(["entry", newData.date], (prev) => ({
+        ...prev,
+        ...updates,
+      }));
+
+      return rollback;
+    },
+    onError: (_err, newData, rollback) => {
+      queryClient.setQueryData(["entry", newData.date], rollback);
+    },
+    onSettled: (newData, _err) => {
+      queryClient.invalidateQueries(["entry", newData.date]);
+    },
+  });
 }
 
 function useRemoveFoods() {

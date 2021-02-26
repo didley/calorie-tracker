@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDiaryEntry } from "hooks/useDiary";
+import { useDiaryEntry, useUpdateEntry } from "hooks/useDiary";
 import { Link, useParams, useHistory } from "react-router-dom";
 
 import DatePickerContainer from "./DatePickerContainer";
@@ -11,8 +11,6 @@ import ViewAsCalToggle from "./ViewAsCalToggle";
 import EditMenu from "components/shared/EditMenu";
 import { Button } from "components/shared/styling";
 
-import { useMutation, useQueryClient } from "react-query";
-import { updateDiaryEntry } from "api/diary";
 import { useDebounce } from "hooks/useDebounce";
 import dateOnly from "utils/dateOnly";
 import { ReactSortable } from "react-sortablejs";
@@ -26,31 +24,13 @@ export default function Diary() {
   const [viewAsCal, setViewAsCal] = useState(false);
   const [note, setNote] = useState(null);
 
-  const queryClient = useQueryClient();
   const [diaryQuery, listState] = useDiaryEntry(selectedDate);
   const { eatenList, setEatenList, toEatList, setToEatList } = listState;
   const { data = {}, isLoading, isSuccess, error } = diaryQuery;
   const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
+  const updateMutation = useUpdateEntry();
 
-  const updateNoteMutation = useMutation(updateDiaryEntry, {
-    onMutate: async (newData) => {
-      await queryClient.cancelQueries(["entry", selectedDate]);
-
-      const previousEntry = queryClient.getQueryData(["entry", selectedDate]);
-
-      queryClient.setQueryData(["entry", selectedDate], (prev) => ({
-        ...prev,
-        note: newData.updates.note,
-      }));
-
-      return { previousEntry };
-    },
-    onError: (err, newData, rollback) => {
-      queryClient.setQueryData(["entry", selectedDate], rollback.previousEntry);
-    },
-    onSettled: () => queryClient.invalidateQueries(["entry", selectedDate]),
-  });
-
+  // !clean mess
   useEffect(() => {
     if (data.note) {
       setNote(data.note);
@@ -75,12 +55,13 @@ export default function Diary() {
         return;
       }
 
-      updateNoteMutation.mutate({
+      updateMutation.mutate({
         date: selectedDate,
         updates: { note: debouncedNote },
       });
     }
   }, [debouncedNote]);
+  // !end of mess
 
   function handleDateChange(date) {
     history.push(`/diary/${dateOnly(date)}`);
@@ -104,6 +85,13 @@ export default function Diary() {
       }
       setSelectedFoods([...selectedFoods, selectedFood]);
     }
+  }
+
+  function handleSorting() {
+    updateMutation.mutate({
+      date: selectedDate,
+      updates: { eaten: eatenList, toEat: toEatList },
+    });
   }
 
   return (
@@ -151,8 +139,8 @@ export default function Diary() {
               </div>
             )}
           </div>
-          <div className="space-y-6">
-            <div>
+          <div>
+            <div className="mb-6">
               <div className="border-b flex justify-between pb-1">
                 <h4 className="my-auto">Eaten</h4>
                 <Link
@@ -171,50 +159,14 @@ export default function Diary() {
                     <small>No food added yet</small>
                   </div>
                 )}
-                {eaten &&
-                  eaten.map((food) => (
-                    <ListItem
-                      key={food._id}
-                      food={food.chosenFood}
-                      chosenOptions={food.chosenOptions}
-                      showSelectBtn={showSelectBtn}
-                      onClick={() => handleSelectFood(food)}
-                      viewAsCal={viewAsCal}
-                    />
-                  ))}
-              </ul>
-            </div>
-            <div>
-              <div className="border-b flex justify-between pb-1">
-                <h4 className="my-auto">To Eat</h4>
-                <Link to={`/addFoods?date=${selectedDate}&list=toEat`}>
-                  <Button color="green">+</Button>
-                </Link>
-              </div>
-              <ul className="inline-block w-full h-32">
-                {isLoading && <PlaceholderListItem amount={2} />}
-                {toEat &&
-                  toEat.map((food) => (
-                    <ListItem
-                      key={food._id}
-                      food={food.chosenFood}
-                      chosenOptions={food.chosenOptions}
-                      showSelectBtn={showSelectBtn}
-                      onClick={() => handleSelectFood(food)}
-                      viewAsCal={viewAsCal}
-                    />
-                  ))}
-              </ul>
-            </div>
-            <div>
-              <div className="border-b flex justify-between pb-1">
-                <h4 className="my-auto">Test list</h4>
-              </div>
-              <ul className="inline-block w-full h-32">
+
                 <ReactSortable
+                  group="diaryGroup"
+                  onUpdate={handleSorting}
                   list={eatenList}
                   setList={setEatenList}
                   animation={100}
+                  className="h-full"
                 >
                   {eatenList &&
                     eatenList.map((food) => (
@@ -230,13 +182,43 @@ export default function Diary() {
                 </ReactSortable>
               </ul>
             </div>
-
+            <div className="mb-6">
+              <div className="border-b flex justify-between pb-1">
+                <h4 className="my-auto">To Eat</h4>
+                <Link to={`/addFoods?date=${selectedDate}&list=toEat`}>
+                  <Button color="green">+</Button>
+                </Link>
+              </div>
+              <ul className="inline-block w-full h-32">
+                {isLoading && <PlaceholderListItem amount={2} />}
+                <ReactSortable
+                  group="diaryGroup"
+                  onSort={handleSorting}
+                  list={toEatList}
+                  setList={setToEatList}
+                  animation={100}
+                  className="h-full"
+                >
+                  {toEatList &&
+                    toEatList.map((food) => (
+                      <ListItem
+                        key={food._id}
+                        food={food.chosenFood}
+                        chosenOptions={food.chosenOptions}
+                        showSelectBtn={showSelectBtn}
+                        onClick={() => handleSelectFood(food)}
+                        viewAsCal={viewAsCal}
+                      />
+                    ))}
+                </ReactSortable>
+              </ul>
+            </div>
             <NoteField
               onChange={(e) => {
                 setNote(e.target.value);
               }}
               value={note || ""}
-              loading={updateNoteMutation.isLoading}
+              loading={updateMutation.isLoading}
               disabled={isLoading}
             />
           </div>

@@ -5,7 +5,7 @@ const propTypes = {
   amount: PropTypes.number,
 };
 
-export default function PlaceholderListItem({ amount }) {
+export default function PlaceholderListItem({ amount = 3 }) {
   const Placeholder = () => (
     <li className="animate-pulse border-b">
       <div className="flex-auto">
