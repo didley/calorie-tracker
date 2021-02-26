@@ -162,7 +162,7 @@ export default function Diary() {
 
                 <ReactSortable
                   group="diaryGroup"
-                  onUpdate={handleSorting}
+                  onSort={handleSorting}
                   list={eatenList}
                   setList={setEatenList}
                   animation={100}
