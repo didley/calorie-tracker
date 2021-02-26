@@ -32,7 +32,6 @@ export default function MyFoodsTab({ setSelectedFood }) {
     if (loader.current) observer.observe(loader.current);
   }, [fetchNextPage]);
 
-  console.log({ data });
   return (
     <div>
       {showCreateFoodForm ? (

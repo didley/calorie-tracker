@@ -10,10 +10,7 @@ export default function ViewAsCalToggle({ onClick, viewAsCal, className }) {
   return (
     <button
       onClick={onClick}
-      className={
-        "text-gray-500 mx-1 rounded leading-tight focus:outline-none focus:border-gray-500 hover:text-red-500 hover:border-1 hover:bg-white bg-gray-200 " +
-        className
-      }
+      className={`text-gray-500 mx-1 rounded leading-tight focus:outline-none focus:border-gray-500 hover:text-red-500 hover:border-1 hover:bg-white bg-gray-200 ${className}`}
     >
       <div className="grid py-1 px-2">
         <small
