@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDiaryEntry, useUpdateEntry } from "hooks/useDiary";
+import { useAuth } from "hooks/useAuth";
 import { Link, useParams, useHistory } from "react-router-dom";
 
 import DatePickerContainer from "./DatePickerContainer";
@@ -16,19 +17,20 @@ import dateOnly from "utils/dateOnly";
 import { ReactSortable } from "react-sortablejs";
 
 export default function Diary() {
+  const auth = useAuth();
   const history = useHistory();
   const params = useParams();
   const selectedDate = dateOnly(params.date);
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
-  const [viewAsCal, setViewAsCal] = useState(false);
+  const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences.useKJ);
   const [note, setNote] = useState(null);
 
+  const updateMutation = useUpdateEntry();
   const [diaryQuery, listState] = useDiaryEntry(selectedDate);
   const { eatenList, setEatenList, toEatList, setToEatList } = listState;
   const { data = {}, isLoading, isSuccess, error } = diaryQuery;
   const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
-  const updateMutation = useUpdateEntry();
 
   // !clean mess
   useEffect(() => {
@@ -128,7 +130,7 @@ export default function Diary() {
                 <div className="self-center flex items-stretch">
                   <ViewAsCalToggle
                     className="self-center"
-                    onClick={() => setViewAsCal(!viewAsCal)}
+                    onClick={() => setViewAsCal((prev) => !prev)}
                     viewAsCal={viewAsCal}
                   />
                   <SummaryMenu
