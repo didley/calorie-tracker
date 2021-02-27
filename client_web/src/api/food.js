@@ -3,8 +3,10 @@ import { client } from "./client";
 function getDBFoods(params) {
   // TODO
 }
-function getUsersFoods(page = 1) {
-  return client.get("/foods/my-foods?page=" + page);
+function getUsersFoods(page = 1, searchQuery) {
+  return client.get(
+    `/foods/my-foods?page=${page}${searchQuery ? "&q=" + searchQuery : ""}`
+  );
 }
 function addDBFood(params) {
   // TODO

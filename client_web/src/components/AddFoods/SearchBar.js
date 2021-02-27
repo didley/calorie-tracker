@@ -8,7 +8,7 @@ export default function SearchBar({ onSubmit, value, onChange }) {
     >
       <span className="absolute inset-y-0 left-0 flex items-center pl-2">
         <button
-          type="submit"
+          type={onSubmit ? "submit" : "button"}
           className="p-1 focus:outline-none focus:shadow-outline"
         >
           <svg

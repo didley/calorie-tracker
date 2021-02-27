@@ -10,16 +10,32 @@ export default {
     }
   },
   getUsersFoods: async (req, res) => {
-    const LIMIT = 20;
+    const PAGE_LIMIT = 20;
     const pageQuery = req.query.page || 1;
+
+    const MAX_QS_LENGTH = 25;
+    const queryString = req.query.q;
+    const trimmedQS = queryString?.substring(0, MAX_QS_LENGTH);
 
     try {
       const { docs, hasNextPage, page } = await Food.paginate(
         {
           createdBy: req.user._id,
           isDeleted: false,
+          ...(queryString
+            ? {
+                $and: [
+                  {
+                    $or: [
+                      { name: { $regex: trimmedQS, $options: "i" } },
+                      { brand: { $regex: trimmedQS, $options: "i" } },
+                    ],
+                  },
+                ],
+              }
+            : {}),
         },
-        { page: pageQuery, limit: LIMIT, lean: true }
+        { page: pageQuery, limit: PAGE_LIMIT, lean: true }
       );
 
       res.json({ data: docs, hasNextPage, page });

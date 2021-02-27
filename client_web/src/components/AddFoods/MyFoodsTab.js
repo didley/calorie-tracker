@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "components/shared/styling";
 import { useGetUsersFoods } from "hooks/useFood";
+import { useDebounce } from "hooks/useDebounce";
 import ListItem from "components/shared/ListItem";
 import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem";
 import SearchBar from "./SearchBar";
@@ -8,21 +9,23 @@ import CreateFoodForm from "./CreateFoodForm";
 
 export default function MyFoodsTab({ setSelectedFood }) {
   const [showCreateFoodForm, setShowCreateFoodForm] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
+  const debouncedSearchValue = useDebounce(searchValue);
+
   const {
     data,
     isLoading,
     fetchNextPage,
     isFetchingNextPage,
-  } = useGetUsersFoods();
+  } = useGetUsersFoods(debouncedSearchValue);
 
   const loader = React.useRef(null);
-
-  React.useEffect(() => {
+  useEffect(() => {
     const handleObserver = (entities) => {
       const target = entities[0];
       if (target.isIntersecting) fetchNextPage();
     };
-
     const options = {
       root: null,
       rootMargin: "20px",
@@ -42,7 +45,10 @@ export default function MyFoodsTab({ setSelectedFood }) {
       ) : (
         <>
           <div className="grid grid-cols-5 gap-2">
-            <SearchBar />
+            <SearchBar
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
             <Button
               color="green"
               onClick={() => {

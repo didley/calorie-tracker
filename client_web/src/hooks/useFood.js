@@ -19,12 +19,12 @@ import {
 function useGetDBFoods(params) {
   // TODO
 }
-function useGetUsersFoods() {
+function useGetUsersFoods(searchQuery) {
   return useInfiniteQuery(
-    "userFoods",
-    ({ pageParam = 1 }) => getUsersFoods(pageParam),
+    ["userFoods", searchQuery],
+    ({ pageParam = 1 }) => getUsersFoods(pageParam, searchQuery),
     {
-      getNextPageParam: (lastPage, allPages) => {
+      getNextPageParam: (lastPage, _allPages) => {
         if (!lastPage.hasNextPage) return;
         return lastPage.page + 1;
       },

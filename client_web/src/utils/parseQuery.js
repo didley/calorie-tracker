@@ -14,7 +14,7 @@ export const parseQuery = (queryString) => {
       .split("&")
       .map((q) => {
         const [key, value] = q.split("=");
-        const parsedSpaces = value.split("%20").join(" ").split("+").join(" ");
+        const parsedSpaces = value?.split("%20").join(" ").split("+").join(" ");
         return [key, parsedSpaces];
       })
   );
