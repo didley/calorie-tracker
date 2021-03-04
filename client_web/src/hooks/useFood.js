@@ -35,15 +35,29 @@ function useAddDBFood(params) {}
 function useAddUserFood() {
   const queryClient = useQueryClient();
   return useMutation(addUserFood, {
-    onSuccess: (_response, variables) => {
-      queryClient.invalidateQueries(["userFoods", variables.date]);
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userFoods"]);
     },
   });
 }
 function useUpdateDBFood(params) {}
-function useUpdateUserFood(params) {}
+function useUpdateUserFood() {
+  const queryClient = useQueryClient();
+  return useMutation(updateUserFood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userFoods"]);
+    },
+  });
+}
 function useDeleteDBFood(params) {}
-function useDeleteUserFood(params) {}
+function useDeleteUserFood() {
+  const queryClient = useQueryClient();
+  return useMutation(deleteUserFood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["userFoods"]);
+    },
+  });
+}
 
 export {
   useGetDBFoods,

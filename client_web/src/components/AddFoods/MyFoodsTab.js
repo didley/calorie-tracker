@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button } from "components/shared/styling";
 import { useGetUsersFoods } from "hooks/useFood";
 import { useDebounce } from "hooks/useDebounce";
@@ -7,7 +7,11 @@ import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem"
 import SearchBar from "./SearchBar";
 import CreateFoodForm from "./CreateFoodForm";
 
-export default function MyFoodsTab({ setSelectedFood }) {
+export default function MyFoodsTab({
+  setSelectedFood,
+  foodToEdit,
+  setFoodToEdit,
+}) {
   const [showCreateFoodForm, setShowCreateFoodForm] = useState(false);
   const [searchValue, setSearchValue] = useState("");
 
@@ -20,8 +24,8 @@ export default function MyFoodsTab({ setSelectedFood }) {
     isFetchingNextPage,
   } = useGetUsersFoods(debouncedSearchValue);
 
-  const loader = React.useRef(null);
-  useEffect(() => {
+  const infiniteScrollLoader = React.useRef(null);
+  React.useEffect(() => {
     const handleObserver = (entities) => {
       const target = entities[0];
       if (target.isIntersecting) fetchNextPage();
@@ -32,15 +36,18 @@ export default function MyFoodsTab({ setSelectedFood }) {
       threshold: 0,
     };
     const observer = new IntersectionObserver(handleObserver, options);
-    if (loader.current) observer.observe(loader.current);
+    if (infiniteScrollLoader.current)
+      observer.observe(infiniteScrollLoader.current);
   }, [fetchNextPage]);
 
   return (
     <div>
-      {showCreateFoodForm ? (
+      {foodToEdit !== null || showCreateFoodForm ? (
         <CreateFoodForm
           setShowCreateFoodForm={setShowCreateFoodForm}
           setSelectedFood={setSelectedFood}
+          foodToEdit={foodToEdit}
+          setFoodToEdit={setFoodToEdit}
         />
       ) : (
         <>
@@ -53,7 +60,7 @@ export default function MyFoodsTab({ setSelectedFood }) {
               color="green"
               onClick={() => {
                 setShowCreateFoodForm(true);
-                setSelectedFood([]);
+                setSelectedFood({});
               }}
               className="col-start-5 col-span-2"
             >
@@ -75,7 +82,7 @@ export default function MyFoodsTab({ setSelectedFood }) {
                   ))}
                 </React.Fragment>
               ))}
-            <div className="text-center" ref={loader}>
+            <div className="text-center" ref={infiniteScrollLoader}>
               {!isLoading && (
                 <small className="text-gray-600">
                   {data

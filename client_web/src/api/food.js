@@ -17,14 +17,14 @@ function addUserFood(food) {
 function updateDBFood(params) {
   // TODO
 }
-function updateUserFood(id, food) {
+function updateUserFood({ id, food }) {
   return client.put(`/foods/my-foods/${id}`, { body: food });
 }
 function deleteDBFood(params) {
   // TODO
 }
-function deleteUserFood(id) {
-  return client.delete(`/foods/my-foods/${id}`);
+function deleteUserFood(ids) {
+  return client.delete(`/foods/my-foods/${ids}`);
 }
 
 export {

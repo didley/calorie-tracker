@@ -1,7 +1,11 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useAuth } from "hooks/useAuth";
-import { useAddUserFood } from "hooks/useFood";
+import {
+  useAddUserFood,
+  useDeleteUserFood,
+  useUpdateUserFood,
+} from "hooks/useFood";
 import CountryDropdown from "components/shared/CountryDropdown";
 import MacrosSection from "./MacrosSection";
 import ServingOptionItem from "./ServingOptionItem";
@@ -13,9 +17,15 @@ import { parseBoolString } from "utils/parseBoolString";
 export default function CreateFoodForm({
   setShowCreateFoodForm,
   setSelectedFood,
+  foodToEdit,
+  setFoodToEdit,
 }) {
   const { user } = useAuth();
   const addUserFoodMutation = useAddUserFood();
+  const updateUserFoodMutation = useUpdateUserFood();
+  const deleteUserFoodMutation = useDeleteUserFood();
+
+  const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
 
   async function handleSubmit(values) {
     const valuesCopy = JSON.parse(JSON.stringify(values));
@@ -28,52 +38,81 @@ export default function CreateFoodForm({
     const { isCal, ...removedIsCal } = valuesCopy;
 
     try {
-      const res = await addUserFoodMutation.mutateAsync(removedIsCal);
+      const res = viewAsEditForm
+        ? await updateUserFoodMutation.mutateAsync({
+            id: valuesCopy._id,
+            food: removedIsCal,
+          })
+        : await addUserFoodMutation.mutateAsync(removedIsCal);
+
       setSelectedFood(res.data);
       setShowCreateFoodForm(false);
+      setFoodToEdit(null);
     } catch (err) {
       return;
     }
   }
 
+  async function handleDelete() {
+    try {
+      await deleteUserFoodMutation.mutateAsync(foodToEdit._id);
+      setFoodToEdit(null);
+    } catch (err) {
+      return;
+    }
+  }
+
+  const isLiquidToString = foodToEdit?.isLiquid ? "true" : "false";
+
+  foodToEdit = { ...foodToEdit, isLiquid: isLiquidToString, isCal: "false" };
+
+  console.log({ foodToEdit });
+
+  const blankFormValues = {
+    name: "",
+    brand: "",
+    perServeSize: "",
+    isLiquid: "false",
+    barcode: "",
+    macrosPerServe: {
+      EnergyKJ: "",
+      ProteinG: "",
+      FatTotalG: "",
+      saturatedG: "",
+      CarbohydrateG: "",
+      sugarsG: "",
+      fibreG: "",
+      SodiumMg: "",
+      calciumMg: "",
+      glutenG: "",
+    },
+    isCal: "false",
+    servingOptions: [],
+    country: user.country,
+  };
+
   return (
     <Formik
-      initialValues={{
-        name: "",
-        brand: "",
-        perServeSize: "",
-        isLiquid: "false",
-        barcode: "",
-        macrosPerServe: {
-          EnergyKJ: "",
-          ProteinG: "",
-          FatTotalG: "",
-          saturatedG: "",
-          CarbohydrateG: "",
-          sugarsG: "",
-          fibreG: "",
-          SodiumMg: "",
-          calciumMg: "",
-          glutenG: "",
-        },
-        isCal: "false",
-        servingOptions: [],
-        country: user.country,
-      }}
+      initialValues={viewAsEditForm ? foodToEdit : blankFormValues}
       onSubmit={handleSubmit}
     >
-      {({ values, setFieldValue }) => (
+      {({ values, setFieldValue, dirty, isSubmitting }) => (
         <Form className="relative">
           <fieldset>
             <button
               className="absolute top-0 right-0 text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
-              onClick={() => setShowCreateFoodForm(false)}
+              onClick={() => {
+                setShowCreateFoodForm(false);
+                setFoodToEdit(null);
+              }}
             >
               Cancel
             </button>
 
             <legend>
-              <h6 className="text-gray-700">Create Food</h6>
+              <h6 className="text-gray-700">
+                {viewAsEditForm ? "Edit" : "Create"} Food
+              </h6>
             </legend>
             <label htmlFor="name">Name</label>
             <Field
@@ -185,7 +224,7 @@ export default function CreateFoodForm({
               name="servingOptions"
               render={({ remove, push }) => (
                 <ul>
-                  {values.servingOptions.map((_option, index) => (
+                  {values.servingOptions?.map((_option, index) => (
                     <ServingOptionItem
                       key={index}
                       index={index}
@@ -193,11 +232,11 @@ export default function CreateFoodForm({
                       isLiquid={values.isLiquid === "true" ? true : false}
                     />
                   ))}
-                  {values.servingOptions.length === 0 && (
+                  {values.servingOptions?.length === 0 && (
                     <p>Eg. Slice, Large cup, Small Bowl</p>
                   )}
                   <ServingOptionsAddBtn
-                    servingOptionsLength={values.servingOptions.length}
+                    servingOptionsLength={values.servingOptions?.length}
                     push={push}
                   />
                 </ul>
@@ -214,14 +253,37 @@ export default function CreateFoodForm({
             />
           </label>
           <br />
-          <div className="grid grid-cols-5 gap-2">
+          <div className="grid grid-cols-5">
+            {viewAsEditForm && (
+              <button
+                className="justify-self-start col-start-1"
+                onClick={handleDelete}
+                disabled={deleteUserFoodMutation.isLoading}
+              >
+                <small className="text-red-600">
+                  {deleteUserFoodMutation.isLoading
+                    ? "Deleting..."
+                    : "Delete Food"}
+                </small>
+              </button>
+            )}
+            {viewAsEditForm && dirty && !isSubmitting && (
+              <Button
+                color="gray"
+                type="reset"
+                className="col-start-4 col-span-1 mr-2"
+                loading={isSubmitting}
+              >
+                Reset
+              </Button>
+            )}
             <Button
               color="green"
               type="submit"
-              className="col-start-5 col-span-2"
-              loading={addUserFoodMutation.isLoading}
+              className="col-start-5 col-span-1"
+              loading={isSubmitting}
             >
-              Create
+              {viewAsEditForm ? "Update" : "Create"}
             </Button>
           </div>
         </Form>

@@ -8,8 +8,13 @@ import SelectedFood from "components/SelectedFood";
 
 export default function AddFoods() {
   const [selectedFood, setSelectedFood] = useState({});
+  const [foodToEdit, setFoodToEdit] = useState(null);
   const [tabIndex, setTabIndex] = useState(0);
 
+  function handleSetFoodToEdit() {
+    setFoodToEdit(selectedFood);
+    setSelectedFood({});
+  }
   const location = useLocation();
   const params = parseQuery(location.search);
 
@@ -20,7 +25,10 @@ export default function AddFoods() {
 
   return (
     <div className="flex items-start justify-center flex-wrap mt-2">
-      <SelectedFood selectedFood={selectedFood} />
+      <SelectedFood
+        selectedFood={selectedFood}
+        editBtnOnClick={handleSetFoodToEdit}
+      />
       <div className="bg-white p-2 pt-0 rounded-lg shadow-lg max-w-sm mb-4 w-full">
         <div className="flex items-stretch">
           <Link
@@ -51,7 +59,11 @@ export default function AddFoods() {
             <p>TODO</p>
           </TabPanel>
           <TabPanel>
-            <MyFoodsTab setSelectedFood={setSelectedFood} />
+            <MyFoodsTab
+              setSelectedFood={setSelectedFood}
+              foodToEdit={foodToEdit}
+              setFoodToEdit={setFoodToEdit}
+            />
           </TabPanel>
         </Tabs>
       </div>

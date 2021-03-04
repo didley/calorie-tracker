@@ -66,13 +66,13 @@ export default {
     const { id } = req.params;
 
     try {
-      await Food.findOneAndUpdate(
+      const data = await Food.findOneAndUpdate(
         { createdBy: req.user._id, _id: id },
         req.body,
         { runValidators: true }
       );
 
-      res.status(200).json({ msg: "Food updated" });
+      res.json({ data, msg: `${data.name} updated` });
     } catch (err) {
       res.json({ err });
     }

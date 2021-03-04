@@ -6,7 +6,7 @@ import AmountInput from "./AmountInput";
 import { Button } from "components/shared/styling";
 import { useAddFood } from "hooks/useDiary";
 
-export default function SelectedFood({ selectedFood }) {
+export default function SelectedFood({ selectedFood, editBtnOnClick }) {
   const {
     isLiquid,
     servingOptions = [],
@@ -20,6 +20,8 @@ export default function SelectedFood({ selectedFood }) {
   const location = useLocation();
   const params = parseQuery(location.search);
   const addFoodMutation = useAddFood();
+
+  const showEditBtn = selectedFood.createdBy ? true : false; // TODO: replace with if role has access to edit
 
   useEffect(() => {
     setChosenServing({
@@ -106,14 +108,24 @@ export default function SelectedFood({ selectedFood }) {
     <div className="border border-blue-600 shadow-outline flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2">
       <div className="flex justify-between mb-1">
         <h6 className="my-auto">Selected Food</h6>
-        <Button
-          color="green"
-          loading={addFoodMutation.isLoading}
-          onClick={handleSubmit}
-          className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
-        >
-          Add
-        </Button>
+        <div>
+          {showEditBtn && (
+            <button
+              onClick={editBtnOnClick}
+              className="self-center text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
+            >
+              Edit
+            </button>
+          )}
+          <Button
+            color="green"
+            loading={addFoodMutation.isLoading}
+            onClick={handleSubmit}
+            className="bg-green-500 hover:bg-green-400 text-white font-bold py-1 px-4 border-b-4 border-green-700 hover:border-green-500 rounded m-1"
+          >
+            Add
+          </Button>
+        </div>
       </div>
       <hr />
       <h5>{name && name}</h5>
