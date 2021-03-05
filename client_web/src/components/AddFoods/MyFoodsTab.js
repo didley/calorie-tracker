@@ -25,9 +25,11 @@ export default function MyFoodsTab({
   } = useGetUsersFoods(debouncedSearchValue);
 
   const infiniteScrollLoader = React.useRef(null);
+  const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
   React.useEffect(() => {
     const handleObserver = (entities) => {
       const target = entities[0];
+      console.log({ target });
       if (target.isIntersecting) fetchNextPage();
     };
     const options = {
@@ -38,7 +40,7 @@ export default function MyFoodsTab({
     const observer = new IntersectionObserver(handleObserver, options);
     if (infiniteScrollLoader.current)
       observer.observe(infiniteScrollLoader.current);
-  }, [fetchNextPage]);
+  }, [fetchNextPage, showCreateFoodForm, viewAsEditForm]);
 
   return (
     <div>
