@@ -1,4 +1,5 @@
 # calorie-tracker
+This is the first larger project I’ve created, I’d love any feedback or input. It started as what I thought would be a small learning project and it turned into something a bit bigger than expected!
 
 ## Installing
 
