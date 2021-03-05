@@ -13,6 +13,7 @@ import ServingOptionsAddBtn from "./ServingOptionsAddBtn";
 import { toCal, toKJ } from "utils/foodEnegy";
 import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
+import { replaceNull } from "utils/replaceNull";
 
 export default function CreateFoodForm({
   setShowCreateFoodForm,
@@ -62,17 +63,13 @@ export default function CreateFoodForm({
     }
   }
 
-  const isLiquidToString = foodToEdit?.isLiquid ? "true" : "false";
-
-  // TODO: working on
-  const setNullValues = Object.keys(foodToEdit)?.forEach((key) => {
-    if (foodToEdit[key] === null) foodToEdit[key] = "";
-  });
-  console.log({ setNullValues });
-
-  foodToEdit = { ...foodToEdit, isLiquid: isLiquidToString, isCal: "false" };
-
-  console.log({ foodToEdit });
+  const adjustedFoodToEdit = foodToEdit
+    ? replaceNull({
+        ...foodToEdit,
+        isLiquid: foodToEdit?.isLiquid ? "true" : "false",
+        isCal: "false",
+      })
+    : undefined;
 
   const blankFormValues = {
     name: "",
@@ -99,7 +96,7 @@ export default function CreateFoodForm({
 
   return (
     <Formik
-      initialValues={viewAsEditForm ? foodToEdit : blankFormValues}
+      initialValues={viewAsEditForm ? adjustedFoodToEdit : blankFormValues}
       onSubmit={handleSubmit}
     >
       {({ values, setFieldValue, dirty, isSubmitting }) => (
