@@ -64,6 +64,12 @@ export default function CreateFoodForm({
 
   const isLiquidToString = foodToEdit?.isLiquid ? "true" : "false";
 
+  // TODO: working on
+  const setNullValues = Object.keys(foodToEdit)?.forEach((key) => {
+    if (foodToEdit[key] === null) foodToEdit[key] = "";
+  });
+  console.log({ setNullValues });
+
   foodToEdit = { ...foodToEdit, isLiquid: isLiquidToString, isCal: "false" };
 
   console.log({ foodToEdit });
