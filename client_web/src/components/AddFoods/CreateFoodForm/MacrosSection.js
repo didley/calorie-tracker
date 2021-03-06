@@ -11,6 +11,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
@@ -21,6 +22,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
@@ -31,6 +33,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
@@ -41,6 +44,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
@@ -51,12 +55,19 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
       <label htmlFor="macrosPerServe.fibreG">
         fibre (g)
-        <Field name="macrosPerServe.fibreG" type="number" min="0" max="10000" />
+        <Field
+          name="macrosPerServe.fibreG"
+          type="number"
+          min="0"
+          max="10000"
+          step=".1"
+        />
       </label>
 
       <label htmlFor="macrosPerServe.SodiumMg">
@@ -76,6 +87,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
 
@@ -86,6 +98,7 @@ export default function MacrosSection() {
           type="number"
           min="0"
           max="10000"
+          step=".1"
         />
       </label>
     </div>
