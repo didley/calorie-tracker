@@ -1,5 +1,10 @@
 # calorie-tracker
-This is the first larger project I’ve created, I’d love any feedback or input. It started as what I thought would be a small learning project and it turned into something a bit bigger than expected!
+This is the first larger project I’ve created, I’d love any feedback or input. It started as what I thought would be a small weekend project and turned into something a bit bigger! 
+
+The frontend is using React with react-query for the server state management, the backend is built with node, express and mongoose with passportJS for authentication. It's still a work in progress and there's still some work to do before it can be deployed.
+
+## Demo
+![Diary page demo](demo/diary.gif) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding food demo](demo/addFood.gif)
 
 ## Installing
 
@@ -7,12 +12,13 @@ Since moving to react v17 error corrupts npm installs so yarn is required for no
 
 ```console
 $ cd calorie-tracker
-$ npm i
+$ yarn install
 $ cd client_web
 $ yarn install 
 $ cd ..
 $ cd api
-$ npm i
+$ yarn install
+$ cd ..
 ```
 ### /api/.env Example
 

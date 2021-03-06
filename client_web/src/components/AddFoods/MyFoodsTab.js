@@ -29,7 +29,6 @@ export default function MyFoodsTab({
   React.useEffect(() => {
     const handleObserver = (entities) => {
       const target = entities[0];
-      console.log({ target });
       if (target.isIntersecting) fetchNextPage();
     };
     const options = {
