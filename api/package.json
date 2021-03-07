@@ -2,6 +2,7 @@
   "type": "module",
   "name": "calorie-tracker-api",
   "author": "DoneDidley",
+  "license": "MIT",
   "version": "1.0.0",
   "main": "src/index.js",
   "engines": {
@@ -11,6 +12,7 @@
     "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js"
   },
   "dependencies": {
+    "accesscontrol": "^2.2.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "connect-mongo": "^3.2.0",
@@ -19,7 +21,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.1",
     "helmet": "^4.3.1",
-    "mongoose": "^5.11.8",
+    "mongoose": "^5.11.19",
     "mongoose-paginate-v2": "^1.3.16",
     "morgan": "^1.10.0",
     "passport": "^0.4.1",

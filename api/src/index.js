@@ -5,7 +5,7 @@ import session from "express-session";
 import connectMongo from "connect-mongo";
 import passport from "passport";
 import router from "./resources/router";
-import { connect } from "./utils/db";
+import { connect, disconnect } from "./utils/db";
 import morgan from "morgan";
 import helmet from "helmet";
 
@@ -34,12 +34,12 @@ const initializeApp = async () => {
   try {
     await connect();
     const PORT = process.env.PORT || 5000;
-    app.listen(PORT, () => {
-      console.log(`🚀   Server running on PORT ${PORT}`);
-    });
+    app.listen(PORT, () => console.log(`🚀   Server running on PORT ${PORT}`));
   } catch (err) {
     console.error(err);
   }
 };
+
+app.on("close", () => disconnect());
 
 initializeApp();
