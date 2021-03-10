@@ -1,12 +1,18 @@
 import { Router } from "express";
 const router = Router();
 import controllers from "./food.controllers";
+import { roleAuth } from "../../utils/roleAuth";
+import { minAdminRoles, minBasicRoles } from "../../utils/roleAuth/ROLES";
 
 // /api/food/
-router.route("/").get(controllers.getDBFoods).post(controllers.addDBFood);
+router
+  .route("/")
+  .get(roleAuth(minBasicRoles), controllers.getDBFoods)
+  .post(roleAuth(minAdminRoles), controllers.addDBFood);
 
 // /api/food/my-foods
 router
+  .all(roleAuth(minBasicRoles))
   .route("/my-foods")
   .get(controllers.getUsersFoods)
   .post(controllers.addUserFood);

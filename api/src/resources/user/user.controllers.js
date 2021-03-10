@@ -1,6 +1,5 @@
 import passport from "../../utils/passport";
 import { User } from "./user.model";
-import validator from "validator";
 
 export default {
   getUserDetails: (req, res) => {
