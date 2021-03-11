@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import validator from "validator";
 import { Diary } from "../diary/diary.model";
-import { Food } from "../food/food.model";
+import { UserFood } from "../food/food.model";
 import { ROLES } from "../../utils/roleAuth/ROLES";
 
 const userSchema = new mongoose.Schema(
@@ -60,7 +60,7 @@ userSchema.pre("deleteOne", async function (next) {
 
   try {
     await Diary.deleteMany({ userId: userId });
-    await Food.deleteMany({ createdBy: userId });
+    await UserFood.deleteMany({ createdBy: userId });
   } catch (err) {
     return next(err);
   }

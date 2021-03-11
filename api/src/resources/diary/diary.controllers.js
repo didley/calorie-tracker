@@ -68,7 +68,7 @@ export default {
 
       res.status(200).json({ msg: "Diary updated" });
     } catch (err) {
-      res.json({ err });
+      res.status(400).json({ err });
     }
   },
   removeFoodsByIds: async (req, res) => {
