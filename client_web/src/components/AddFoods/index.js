@@ -2,9 +2,32 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { parseQuery } from "utils/parseQuery";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useGetDBFoods, useGetUsersFoods } from "hooks/useFood";
 
-import MyFoodsTab from "./MyFoodsTab";
+import {
+  useAddDBFood,
+  useUpdateDBFood,
+  useDeleteDBFood,
+  useAddUserFood,
+  useUpdateUserFood,
+  useDeleteUserFood,
+} from "hooks/useFood";
+
+import FoodTab from "./FoodTab";
 import SelectedFood from "components/SelectedFood";
+
+const dbHooks = {
+  getFoods: useGetDBFoods,
+  addFood: useAddDBFood,
+  updateFood: useUpdateDBFood,
+  deleteFood: useDeleteDBFood,
+};
+const userHooks = {
+  getFoods: useGetUsersFoods,
+  addFood: useAddUserFood,
+  updateFood: useUpdateUserFood,
+  deleteFood: useDeleteUserFood,
+};
 
 export default function AddFoods() {
   const [selectedFood, setSelectedFood] = useState({});
@@ -53,16 +76,23 @@ export default function AddFoods() {
           </TabList>
           <hr className="my-2" />
           <TabPanel>
-            <p>TODO</p>
-          </TabPanel>
-          <TabPanel>
-            <p>TODO</p>
-          </TabPanel>
-          <TabPanel>
-            <MyFoodsTab
+            <FoodTab
+              hideCreateBtn
               setSelectedFood={setSelectedFood}
               foodToEdit={foodToEdit}
               setFoodToEdit={setFoodToEdit}
+              hooks={dbHooks}
+            />
+          </TabPanel>
+          <TabPanel>
+            <p>TODO</p>
+          </TabPanel>
+          <TabPanel>
+            <FoodTab
+              setSelectedFood={setSelectedFood}
+              foodToEdit={foodToEdit}
+              setFoodToEdit={setFoodToEdit}
+              hooks={userHooks}
             />
           </TabPanel>
         </Tabs>

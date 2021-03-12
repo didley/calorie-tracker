@@ -1,11 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useAuth } from "hooks/useAuth";
-import {
-  useAddUserFood,
-  useDeleteUserFood,
-  useUpdateUserFood,
-} from "hooks/useFood";
+
 import CountryDropdown from "components/shared/CountryDropdown";
 import MacrosSection from "./MacrosSection";
 import ServingOptionItem from "./ServingOptionItem";
@@ -16,15 +12,16 @@ import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
 export default function CreateFoodForm({
+  hooks,
   setShowCreateFoodForm,
   setSelectedFood,
   foodToEdit,
   setFoodToEdit,
 }) {
   const { user } = useAuth();
-  const addUserFoodMutation = useAddUserFood();
-  const updateUserFoodMutation = useUpdateUserFood();
-  const deleteUserFoodMutation = useDeleteUserFood();
+  const addFoodMutation = hooks.addFood();
+  const updateFoodMutation = hooks.updateFood();
+  const deleteFoodMutation = hooks.deleteFood();
 
   const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
 
@@ -40,11 +37,11 @@ export default function CreateFoodForm({
 
     try {
       const res = viewAsEditForm
-        ? await updateUserFoodMutation.mutateAsync({
+        ? await updateFoodMutation.mutateAsync({
             id: valuesCopy._id,
             food: removedIsCal,
           })
-        : await addUserFoodMutation.mutateAsync(removedIsCal);
+        : await addFoodMutation.mutateAsync(removedIsCal);
 
       setSelectedFood(res.data);
       setShowCreateFoodForm(false);
@@ -56,7 +53,7 @@ export default function CreateFoodForm({
 
   async function handleDelete() {
     try {
-      await deleteUserFoodMutation.mutateAsync(foodToEdit._id);
+      await deleteFoodMutation.mutateAsync(foodToEdit._id);
       setFoodToEdit(null);
     } catch (err) {
       return;
@@ -261,12 +258,10 @@ export default function CreateFoodForm({
               <button
                 className="justify-self-start col-start-1"
                 onClick={handleDelete}
-                disabled={deleteUserFoodMutation.isLoading}
+                disabled={deleteFoodMutation.isLoading}
               >
                 <small className="text-red-600">
-                  {deleteUserFoodMutation.isLoading
-                    ? "Deleting..."
-                    : "Delete Food"}
+                  {deleteFoodMutation.isLoading ? "Deleting..." : "Delete Food"}
                 </small>
               </button>
             )}

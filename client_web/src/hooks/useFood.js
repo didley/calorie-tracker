@@ -1,9 +1,4 @@
-import {
-  useQuery,
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient,
-} from "react-query";
+import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
 
 import {
   getDBFoods,
@@ -16,8 +11,17 @@ import {
   deleteUserFood,
 } from "api/food";
 
-function useGetDBFoods(params) {
-  // TODO
+function useGetDBFoods(searchQuery) {
+  return useInfiniteQuery(
+    ["dbFoods", searchQuery],
+    ({ pageParam = 1 }) => getDBFoods(pageParam, searchQuery),
+    {
+      getNextPageParam: (lastPage, _allPages) => {
+        if (!lastPage.hasNextPage) return;
+        return lastPage.page + 1;
+      },
+    }
+  );
 }
 function useGetUsersFoods(searchQuery) {
   return useInfiniteQuery(
@@ -31,7 +35,14 @@ function useGetUsersFoods(searchQuery) {
     }
   );
 }
-function useAddDBFood(params) {}
+function useAddDBFood() {
+  const queryClient = useQueryClient();
+  return useMutation(addDBFood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["dbFoods"]);
+    },
+  });
+}
 function useAddUserFood() {
   const queryClient = useQueryClient();
   return useMutation(addUserFood, {
@@ -40,7 +51,14 @@ function useAddUserFood() {
     },
   });
 }
-function useUpdateDBFood(params) {}
+function useUpdateDBFood() {
+  const queryClient = useQueryClient();
+  return useMutation(updateDBFood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["dbFoods"]);
+    },
+  });
+}
 function useUpdateUserFood() {
   const queryClient = useQueryClient();
   return useMutation(updateUserFood, {
@@ -49,7 +67,14 @@ function useUpdateUserFood() {
     },
   });
 }
-function useDeleteDBFood(params) {}
+function useDeleteDBFood() {
+  const queryClient = useQueryClient();
+  return useMutation(deleteDBFood, {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["dbFoods"]);
+    },
+  });
+}
 function useDeleteUserFood() {
   const queryClient = useQueryClient();
   return useMutation(deleteUserFood, {
