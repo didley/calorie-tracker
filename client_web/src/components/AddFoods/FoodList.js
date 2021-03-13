@@ -6,7 +6,7 @@ import PlaceholderListItem from "components/shared/ListItem/PlaceholderListItem"
 export default function FoodList({
   isLoading,
   data,
-  setSelectedFood,
+  onClickFn,
   scrollRef,
   isFetchingNextPage,
 }) {
@@ -20,7 +20,7 @@ export default function FoodList({
               <ListItem
                 key={food._id}
                 food={food}
-                onClick={() => setSelectedFood(food)}
+                onClick={() => onClickFn(food)}
               />
             ))}
           </React.Fragment>

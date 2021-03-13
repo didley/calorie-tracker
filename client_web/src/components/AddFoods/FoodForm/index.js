@@ -11,12 +11,14 @@ import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
-export default function CreateFoodForm({
+export default function FoodForm({
+  state,
+  dispatch,
   hooks,
-  setShowCreateFoodForm,
-  setSelectedFood,
+  // setShowFoodForm,
+  // setSelectedFood,
   foodToEdit,
-  setFoodToEdit,
+  // setFoodToEdit,
 }) {
   const { user } = useAuth();
   const addFoodMutation = hooks.addFood();
@@ -43,9 +45,11 @@ export default function CreateFoodForm({
           })
         : await addFoodMutation.mutateAsync(removedIsCal);
 
-      setSelectedFood(res.data);
-      setShowCreateFoodForm(false);
-      setFoodToEdit(null);
+      // setSelectedFood(res.data);
+      dispatch({ type: "SET_SELECTED", payload: res.data });
+      dispatch({ type: "CLEAR_EDITABLE" });
+      // setShowFoodForm(false);
+      // setFoodToEdit(null);
     } catch (err) {
       return;
     }
@@ -54,7 +58,8 @@ export default function CreateFoodForm({
   async function handleDelete() {
     try {
       await deleteFoodMutation.mutateAsync(foodToEdit._id);
-      setFoodToEdit(null);
+      dispatch({ type: "CLEAR_EDITABLE" });
+      // setFoodToEdit(null);
     } catch (err) {
       return;
     }
@@ -102,8 +107,9 @@ export default function CreateFoodForm({
             <button
               className="absolute top-0 right-0 text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
               onClick={() => {
-                setShowCreateFoodForm(false);
-                setFoodToEdit(null);
+                dispatch({ type: "CLEAR_EDITABLE" });
+                // setShowFoodForm(false);
+                // setFoodToEdit(null);
               }}
             >
               Cancel
