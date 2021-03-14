@@ -8,7 +8,6 @@ import useInfiniteScroll from "hooks/useInfiniteScroll";
 export default function FoodTab({
   dispatch,
   hideCreateBtn = false,
-  // setSelectedFood,
   foodToEdit,
   setShowFoodForm,
   hooks,
@@ -38,8 +37,9 @@ export default function FoodTab({
           <Button
             color="green"
             onClick={() => {
-              setShowFoodForm(true);
-              dispatch({ type: "CLEAR_SELECTED" });
+              dispatch({ type: "SHOW_CREATE" });
+              // setShowFoodForm(true);
+              // dispatch({ type: "CLEAR_SELECTED" });
             }}
             className="col-start-5 col-span-2"
           >
@@ -52,7 +52,6 @@ export default function FoodTab({
         isLoading={isLoading}
         data={data}
         onClickFn={(item) => dispatch({ type: "SET_SELECTED", payload: item })}
-        // setSelectedFood={setSelectedFood}
         scrollRef={infiniteScrollLoader}
         isFetchingNextPage={isFetchingNextPage}
       />

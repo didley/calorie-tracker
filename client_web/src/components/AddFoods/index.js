@@ -44,9 +44,13 @@ export default function AddFoods() {
 
       case "SET_SELECTED":
         return { ...state, selectedFood: action.payload };
-      // case "CLEAR_SELECTED":
-      //   return { ...state, selectedFood: {} };
 
+      case "SHOW_CREATE":
+        return {
+          ...state,
+          selectedFood: {},
+          showFoodForm: true,
+        };
       case "SET_EDITABLE":
         return {
           ...state,
@@ -54,7 +58,7 @@ export default function AddFoods() {
           showFoodForm: true,
           selectedFood: {},
         };
-      case "CLEAR_EDITABLE":
+      case "CLEAR_FOOD_FORM":
         return { ...state, foodToEdit: null, showFoodForm: false };
 
       default:
@@ -64,16 +68,7 @@ export default function AddFoods() {
 
   const [state, dispatch] = React.useReducer(reducer, initialState);
   const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
-  // const [tabIndex, setTabIndex] = useState(0);
-  // const [selectedFood, setSelectedFood] = useState({});
-  // const [foodToEdit, setFoodToEdit] = useState(null);
-  // const [showFoodForm, setShowFoodForm] = useState(false);
 
-  // function handleSetFoodToEdit() {
-  //   setFoodToEdit(selectedFood);
-  //   dispatch({ type: "CLEAR_SELECTED" });
-  //   setSelectedFood({});
-  // }
   const location = useLocation();
   const params = parseQuery(location.search);
 
@@ -117,13 +112,9 @@ export default function AddFoods() {
           <TabPanel>
             {showFoodForm ? (
               <FoodForm
-                state={state}
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
                 hooks={dbHooks}
-                // setShowFoodForm={setShowFoodForm}
-                // setSelectedFood={setSelectedFood}
-                // setFoodToEdit={setFoodToEdit}
               />
             ) : (
               <FoodTab
@@ -131,9 +122,6 @@ export default function AddFoods() {
                 hideCreateBtn
                 foodToEdit={foodToEdit}
                 hooks={dbHooks}
-                // setSelectedFood={setSelectedFood}
-                // setFoodToEdit={setFoodToEdit}
-                // setShowFoodForm={setShowFoodForm}
               ></FoodTab>
             )}
           </TabPanel>
@@ -143,22 +131,15 @@ export default function AddFoods() {
           <TabPanel>
             {showFoodForm ? (
               <FoodForm
-                state={state}
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
                 hooks={userHooks}
-                // setShowFoodForm={setShowFoodForm}
-                // setSelectedFood={setSelectedFood}
-                // setFoodToEdit={setFoodToEdit}
               />
             ) : (
               <FoodTab
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
                 hooks={userHooks}
-                // setSelectedFood={setSelectedFood}
-                // setFoodToEdit={setFoodToEdit}
-                // setShowFoodForm={setShowFoodForm}
               ></FoodTab>
             )}
           </TabPanel>

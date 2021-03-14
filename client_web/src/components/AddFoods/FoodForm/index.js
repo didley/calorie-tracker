@@ -11,15 +11,7 @@ import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
-export default function FoodForm({
-  state,
-  dispatch,
-  hooks,
-  // setShowFoodForm,
-  // setSelectedFood,
-  foodToEdit,
-  // setFoodToEdit,
-}) {
+export default function FoodForm({ dispatch, foodToEdit, hooks }) {
   const { user } = useAuth();
   const addFoodMutation = hooks.addFood();
   const updateFoodMutation = hooks.updateFood();
@@ -45,11 +37,8 @@ export default function FoodForm({
           })
         : await addFoodMutation.mutateAsync(removedIsCal);
 
-      // setSelectedFood(res.data);
       dispatch({ type: "SET_SELECTED", payload: res.data });
-      dispatch({ type: "CLEAR_EDITABLE" });
-      // setShowFoodForm(false);
-      // setFoodToEdit(null);
+      dispatch({ type: "CLEAR_FOOD_FORM" });
     } catch (err) {
       return;
     }
@@ -58,8 +47,7 @@ export default function FoodForm({
   async function handleDelete() {
     try {
       await deleteFoodMutation.mutateAsync(foodToEdit._id);
-      dispatch({ type: "CLEAR_EDITABLE" });
-      // setFoodToEdit(null);
+      dispatch({ type: "CLEAR_FOOD_FORM" });
     } catch (err) {
       return;
     }
@@ -106,11 +94,7 @@ export default function FoodForm({
           <fieldset>
             <button
               className="absolute top-0 right-0 text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
-              onClick={() => {
-                dispatch({ type: "CLEAR_EDITABLE" });
-                // setShowFoodForm(false);
-                // setFoodToEdit(null);
-              }}
+              onClick={() => dispatch({ type: "CLEAR_FOOD_FORM" })}
             >
               Cancel
             </button>
