@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { parseQuery } from "utils/parseQuery";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
-import { useGetDBFoods, useGetUsersFoods } from "hooks/useFood";
+
 import FoodForm from "./FoodForm";
 import FoodTab from "./FoodTab";
 import SelectedFood from "components/SelectedFood";
@@ -15,59 +15,22 @@ import {
   useUpdateUserFood,
   useDeleteUserFood,
 } from "hooks/useFood";
+import useAddFoodReducer from "./useAddFoodReducer";
 
 export default function AddFoods() {
-  const dbHooks = {
-    getFoods: useGetDBFoods,
+  const [state, dispatch] = useAddFoodReducer();
+  const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
+
+  const dbMutationFns = {
     addFood: useAddDBFood,
     updateFood: useUpdateDBFood,
     deleteFood: useDeleteDBFood,
   };
-  const userHooks = {
-    getFoods: useGetUsersFoods,
+  const userMutationFns = {
     addFood: useAddUserFood,
     updateFood: useUpdateUserFood,
     deleteFood: useDeleteUserFood,
   };
-
-  const initialState = {
-    tabIndex: 0,
-    selectedFood: {},
-    foodToEdit: null,
-    showFoodForm: false,
-  };
-
-  function reducer(state, action) {
-    switch (action.type) {
-      case "CHANGE_TAB":
-        return { ...state, tabIndex: action.payload };
-
-      case "SET_SELECTED":
-        return { ...state, selectedFood: action.payload };
-
-      case "SHOW_CREATE":
-        return {
-          ...state,
-          selectedFood: {},
-          showFoodForm: true,
-        };
-      case "SET_EDITABLE":
-        return {
-          ...state,
-          foodToEdit: state.selectedFood,
-          showFoodForm: true,
-          selectedFood: {},
-        };
-      case "CLEAR_FOOD_FORM":
-        return { ...state, foodToEdit: null, showFoodForm: false };
-
-      default:
-        throw new Error();
-    }
-  }
-
-  const [state, dispatch] = React.useReducer(reducer, initialState);
-  const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
 
   const location = useLocation();
   const params = parseQuery(location.search);
@@ -114,15 +77,10 @@ export default function AddFoods() {
               <FoodForm
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
-                hooks={dbHooks}
+                mutationFns={dbMutationFns}
               />
             ) : (
-              <FoodTab
-                dispatch={dispatch}
-                hideCreateBtn
-                foodToEdit={foodToEdit}
-                hooks={dbHooks}
-              ></FoodTab>
+              <FoodTab dispatch={dispatch} hideCreateBtn />
             )}
           </TabPanel>
           <TabPanel>
@@ -133,14 +91,10 @@ export default function AddFoods() {
               <FoodForm
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
-                hooks={userHooks}
+                mutationFns={userMutationFns}
               />
             ) : (
-              <FoodTab
-                dispatch={dispatch}
-                foodToEdit={foodToEdit}
-                hooks={userHooks}
-              ></FoodTab>
+              <FoodTab dispatch={dispatch} asUserFood />
             )}
           </TabPanel>
         </Tabs>

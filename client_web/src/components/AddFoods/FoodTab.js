@@ -4,43 +4,36 @@ import { useDebounce } from "hooks/useDebounce";
 import SearchBar from "./SearchBar";
 import FoodList from "./FoodList";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
+import { useGetDBFoods, useGetUsersFoods } from "hooks/useFood";
 
 export default function FoodTab({
   dispatch,
   hideCreateBtn = false,
-  foodToEdit,
-  setShowFoodForm,
-  hooks,
+  asUserFood = false,
 }) {
   const [searchValue, setSearchValue] = useState("");
 
-  const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
-
   const debouncedSearchValue = useDebounce(searchValue);
 
-  const { data, isLoading, fetchNextPage, isFetchingNextPage } = hooks.getFoods(
-    debouncedSearchValue
-  );
+  const dbFood = useGetDBFoods(debouncedSearchValue);
+  const userFood = useGetUsersFoods(debouncedSearchValue);
 
-  const infiniteScrollLoader = useInfiniteScroll(fetchNextPage, [
-    viewAsEditForm,
+  const dbScrollLoader = useInfiniteScroll(dbFood.fetchNextPage, [asUserFood]);
+  const userScrollLoader = useInfiniteScroll(userFood.fetchNextPage, [
+    asUserFood,
   ]);
 
   return (
     <div>
       <div className="grid grid-cols-5 gap-2">
         <SearchBar
-          value={searchValue}
+          searchValue={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
         />
         {!hideCreateBtn && (
           <Button
             color="green"
-            onClick={() => {
-              dispatch({ type: "SHOW_CREATE" });
-              // setShowFoodForm(true);
-              // dispatch({ type: "CLEAR_SELECTED" });
-            }}
+            onClick={() => dispatch({ type: "SHOW_CREATE" })}
             className="col-start-5 col-span-2"
           >
             Create
@@ -49,11 +42,13 @@ export default function FoodTab({
       </div>
       <hr className="my-2" />
       <FoodList
-        isLoading={isLoading}
-        data={data}
+        isLoading={dbFood.isLoading || userFood.isLoading}
+        data={asUserFood ? userFood.data : dbFood.data}
         onClickFn={(item) => dispatch({ type: "SET_SELECTED", payload: item })}
-        scrollRef={infiniteScrollLoader}
-        isFetchingNextPage={isFetchingNextPage}
+        scrollRef={asUserFood ? userScrollLoader : dbScrollLoader}
+        isFetchingNextPage={
+          dbFood.isFetchingNextPage || userFood.isFetchingNextPage
+        }
       />
     </div>
   );

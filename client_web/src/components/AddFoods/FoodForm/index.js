@@ -11,13 +11,13 @@ import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
-export default function FoodForm({ dispatch, foodToEdit, hooks }) {
+export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
   const { user } = useAuth();
-  const addFoodMutation = hooks.addFood();
-  const updateFoodMutation = hooks.updateFood();
-  const deleteFoodMutation = hooks.deleteFood();
+  const addFoodMutation = mutationFns.addFood();
+  const updateFoodMutation = mutationFns.updateFood();
+  const deleteFoodMutation = mutationFns.deleteFood();
 
-  const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
+  const viewAsEditForm = foodToEdit !== null;
 
   async function handleSubmit(values) {
     const valuesCopy = JSON.parse(JSON.stringify(values));
