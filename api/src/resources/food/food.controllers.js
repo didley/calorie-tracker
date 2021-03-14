@@ -1,4 +1,4 @@
-import { UserFood, DbFood } from "./food.model";
+import { Food } from "./food.model";
 
 export default {
   getDBFoods: async (req, res) => {
@@ -10,9 +10,10 @@ export default {
     const trimmedQS = queryString?.substring(0, MAX_QS_LENGTH);
 
     try {
-      const { docs, hasNextPage, page } = await DbFood.paginate(
+      const { docs, hasNextPage, page } = await Food.paginate(
         {
           isDeleted: false,
+          isUserFood: false,
           ...(queryString
             ? {
                 $and: [
@@ -43,10 +44,11 @@ export default {
     const trimmedQS = queryString?.substring(0, MAX_QS_LENGTH);
 
     try {
-      const { docs, hasNextPage, page } = await UserFood.paginate(
+      const { docs, hasNextPage, page } = await Food.paginate(
         {
           createdBy: req.user._id,
           isDeleted: false,
+          isUserFood: true,
           ...(queryString
             ? {
                 $and: [
@@ -70,7 +72,7 @@ export default {
   },
   addDBFood: async (req, res) => {
     try {
-      const data = await DbFood.create({ ...req.body });
+      const data = await Food.create({ ...req.body, isUserFood: false });
       res.json({ data, msg: `${data.name} Added to foods database` });
     } catch (err) {
       res.status(400).json({ msg: "Something went wrong", err });
@@ -78,8 +80,9 @@ export default {
   },
   addUserFood: async (req, res) => {
     try {
-      const data = await UserFood.create({
+      const data = await Food.create({
         ...req.body,
+        isUserFood: true,
         createdBy: req.user._id,
       });
       res.json({ data, msg: `${data.name} Added to your foods` });
@@ -91,10 +94,14 @@ export default {
     const { id } = req.params;
 
     try {
-      const data = await DbFood.findOneAndUpdate({ _id: id }, req.body, {
-        runValidators: true,
-        new: true,
-      });
+      const data = await Food.findOneAndUpdate(
+        { _id: id },
+        { ...req.body, isUserFood: false },
+        {
+          runValidators: true,
+          new: true,
+        }
+      );
 
       res.json({ data, msg: `${data.name} updated` });
     } catch (err) {
@@ -105,9 +112,9 @@ export default {
     const { id } = req.params;
 
     try {
-      const data = await UserFood.findOneAndUpdate(
+      const data = await Food.findOneAndUpdate(
         { createdBy: req.user._id, _id: id },
-        req.body,
+        { ...req.body, isUserFood: true },
         { runValidators: true, new: true }
       );
 
@@ -121,9 +128,10 @@ export default {
 
     try {
       const idsArray = ids.split(",");
-      await DbFood.updateMany(
+      await Food.updateMany(
         {
           _id: { $in: idsArray },
+          isUserFood: false,
         },
         { isDeleted: true }
       );
@@ -138,10 +146,11 @@ export default {
 
     try {
       const idsArray = ids.split(",");
-      await UserFood.updateMany(
+      await Food.updateMany(
         {
           createdBy: req.user._id,
           _id: { $in: idsArray },
+          isUserFood: true,
         },
         { isDeleted: true }
       );

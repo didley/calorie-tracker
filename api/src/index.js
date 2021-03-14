@@ -9,6 +9,9 @@ import { connect, disconnect } from "./utils/db";
 import morgan from "morgan";
 import helmet from "helmet";
 
+import mongoose from "mongoose";
+mongoose.set("debug", true);
+
 const app = express();
 const MongoStore = connectMongo(session);
 app.use(cookieParser());
