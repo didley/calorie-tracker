@@ -10,7 +10,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 
 import mongoose from "mongoose";
-mongoose.set("debug", true);
+mongoose.set("debug", process.env.MONGOOSE_DEBUG === "true" || false);
 
 const app = express();
 const MongoStore = connectMongo(session);
