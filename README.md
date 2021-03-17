@@ -26,6 +26,7 @@ $ cd ..
 PORT=5000
 DB_URI=
 APP_SECRET=shhhhhhhh
+MONGOOSE_DEBUG=false
 ```
 
 ## Running

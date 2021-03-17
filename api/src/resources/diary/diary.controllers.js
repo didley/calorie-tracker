@@ -10,7 +10,7 @@ export default {
       }).populate(["toEat.chosenFood", "eaten.chosenFood"]);
 
       if (!diaryEntry) {
-        return res.json({ eaten: [], toEat: [], notes: "" });
+        return res.status(200).json({ eaten: [], toEat: [], notes: "" });
       }
 
       res.status(200).json(diaryEntry);
@@ -68,7 +68,7 @@ export default {
 
       res.status(200).json({ msg: "Diary updated" });
     } catch (err) {
-      res.json({ err });
+      res.status(400).json({ err });
     }
   },
   removeFoodsByIds: async (req, res) => {

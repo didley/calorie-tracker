@@ -1,11 +1,7 @@
 import React from "react";
 import { Formik, Form, Field, FieldArray } from "formik";
 import { useAuth } from "hooks/useAuth";
-import {
-  useAddUserFood,
-  useDeleteUserFood,
-  useUpdateUserFood,
-} from "hooks/useFood";
+
 import CountryDropdown from "components/shared/CountryDropdown";
 import MacrosSection from "./MacrosSection";
 import ServingOptionItem from "./ServingOptionItem";
@@ -15,18 +11,18 @@ import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
-export default function CreateFoodForm({
-  setShowCreateFoodForm,
-  setSelectedFood,
+export default function FoodForm({
+  dispatch,
   foodToEdit,
-  setFoodToEdit,
+  mutationFns,
+  dbForm,
 }) {
   const { user } = useAuth();
-  const addUserFoodMutation = useAddUserFood();
-  const updateUserFoodMutation = useUpdateUserFood();
-  const deleteUserFoodMutation = useDeleteUserFood();
+  const addFoodMutation = mutationFns.addFood();
+  const updateFoodMutation = mutationFns.updateFood();
+  const deleteFoodMutation = mutationFns.deleteFood();
 
-  const viewAsEditForm = foodToEdit && Object.keys(foodToEdit).length > 0;
+  const viewAsEditForm = foodToEdit !== null;
 
   async function handleSubmit(values) {
     const valuesCopy = JSON.parse(JSON.stringify(values));
@@ -40,15 +36,14 @@ export default function CreateFoodForm({
 
     try {
       const res = viewAsEditForm
-        ? await updateUserFoodMutation.mutateAsync({
+        ? await updateFoodMutation.mutateAsync({
             id: valuesCopy._id,
             food: removedIsCal,
           })
-        : await addUserFoodMutation.mutateAsync(removedIsCal);
+        : await addFoodMutation.mutateAsync(removedIsCal);
 
-      setSelectedFood(res.data);
-      setShowCreateFoodForm(false);
-      setFoodToEdit(null);
+      dispatch({ type: "SET_SELECTED", payload: res.data });
+      dispatch({ type: "CLEAR_FOOD_FORM" });
     } catch (err) {
       return;
     }
@@ -56,8 +51,8 @@ export default function CreateFoodForm({
 
   async function handleDelete() {
     try {
-      await deleteUserFoodMutation.mutateAsync(foodToEdit._id);
-      setFoodToEdit(null);
+      await deleteFoodMutation.mutateAsync(foodToEdit._id);
+      dispatch({ type: "CLEAR_FOOD_FORM" });
     } catch (err) {
       return;
     }
@@ -104,10 +99,7 @@ export default function CreateFoodForm({
           <fieldset>
             <button
               className="absolute top-0 right-0 text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
-              onClick={() => {
-                setShowCreateFoodForm(false);
-                setFoodToEdit(null);
-              }}
+              onClick={() => dispatch({ type: "CLEAR_FOOD_FORM" })}
             >
               Cancel
             </button>
@@ -117,6 +109,12 @@ export default function CreateFoodForm({
                 {viewAsEditForm ? "Edit" : "Create"} Food
               </h6>
             </legend>
+            {dbForm && !foodToEdit?.isUserFood && (
+              <div className="bg-red-600 rounded text-center p-3 m-2">
+                <h4 className="text-white">WARNING!</h4>
+                <p className="text-white">This is a Database food</p>
+              </div>
+            )}
             <label htmlFor="name">Name</label>
             <Field
               name="name"
@@ -256,17 +254,20 @@ export default function CreateFoodForm({
             />
           </label>
           <br />
+          {dbForm && !foodToEdit?.isUserFood && (
+            <div className="text-right">
+              <small className="text-red-600">* DB Food *</small>
+            </div>
+          )}
           <div className="grid grid-cols-5">
             {viewAsEditForm && (
               <button
                 className="justify-self-start col-start-1"
                 onClick={handleDelete}
-                disabled={deleteUserFoodMutation.isLoading}
+                disabled={deleteFoodMutation.isLoading}
               >
                 <small className="text-red-600">
-                  {deleteUserFoodMutation.isLoading
-                    ? "Deleting..."
-                    : "Delete Food"}
+                  {deleteFoodMutation.isLoading ? "Deleting..." : "Delete Food"}
                 </small>
               </button>
             )}
@@ -280,6 +281,7 @@ export default function CreateFoodForm({
                 Reset
               </Button>
             )}
+
             <Button
               color="green"
               type="submit"

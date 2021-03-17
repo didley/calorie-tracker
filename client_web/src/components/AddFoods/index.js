@@ -1,20 +1,43 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { parseQuery } from "utils/parseQuery";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useAuth } from "hooks/useAuth";
 
-import MyFoodsTab from "./MyFoodsTab";
+import FoodForm from "./FoodForm";
+import FoodTab from "./FoodTab";
 import SelectedFood from "components/SelectedFood";
 
-export default function AddFoods() {
-  const [selectedFood, setSelectedFood] = useState({});
-  const [foodToEdit, setFoodToEdit] = useState(null);
-  const [tabIndex, setTabIndex] = useState(0);
+import {
+  useAddDBFood,
+  useUpdateDBFood,
+  useDeleteDBFood,
+  useAddUserFood,
+  useUpdateUserFood,
+  useDeleteUserFood,
+} from "hooks/useFood";
+import useAddFoodReducer from "./useAddFoodReducer";
 
-  function handleSetFoodToEdit() {
-    setFoodToEdit(selectedFood);
-    setSelectedFood({});
-  }
+export default function AddFoods() {
+  const { user } = useAuth();
+  const [state, dispatch] = useAddFoodReducer();
+  const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
+
+  const showEditBtnWhenAdmin = selectedFood?.isUserFood
+    ? true
+    : ["admin", "superAdmin"].includes(user.role);
+
+  const dbMutationFns = {
+    addFood: useAddDBFood,
+    updateFood: useUpdateDBFood,
+    deleteFood: useDeleteDBFood,
+  };
+  const userMutationFns = {
+    addFood: useAddUserFood,
+    updateFood: useUpdateUserFood,
+    deleteFood: useDeleteUserFood,
+  };
+
   const location = useLocation();
   const params = parseQuery(location.search);
 
@@ -27,7 +50,8 @@ export default function AddFoods() {
     <div className="flex items-start justify-center flex-wrap mt-2">
       <SelectedFood
         selectedFood={selectedFood}
-        editBtnOnClick={handleSetFoodToEdit}
+        editBtnOnClick={() => dispatch({ type: "SET_EDITABLE" })}
+        showEditBtn={showEditBtnWhenAdmin}
       />
       <div className="bg-white p-2 pt-0 rounded-lg shadow-lg max-w-sm mb-4 w-full">
         <div className="flex items-stretch">
@@ -39,7 +63,10 @@ export default function AddFoods() {
           </Link>
           <h3>Add Food</h3>
         </div>
-        <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+        <Tabs
+          selectedIndex={tabIndex}
+          onSelect={(index) => dispatch({ type: "CHANGE_TAB", payload: index })}
+        >
           <TabList className="flex justify-between">
             <Tab className={tabIndex === 0 ? btnStyleSelected : btnStyle}>
               Foods
@@ -53,17 +80,33 @@ export default function AddFoods() {
           </TabList>
           <hr className="my-2" />
           <TabPanel>
-            <p>TODO</p>
+            {showFoodForm ? (
+              <FoodForm
+                dispatch={dispatch}
+                foodToEdit={foodToEdit}
+                mutationFns={dbMutationFns}
+                dbForm
+              />
+            ) : (
+              <FoodTab
+                dispatch={dispatch}
+                hideCreateBtn={!["admin", "superAdmin"].includes(user.role)}
+              />
+            )}
           </TabPanel>
           <TabPanel>
             <p>TODO</p>
           </TabPanel>
           <TabPanel>
-            <MyFoodsTab
-              setSelectedFood={setSelectedFood}
-              foodToEdit={foodToEdit}
-              setFoodToEdit={setFoodToEdit}
-            />
+            {showFoodForm ? (
+              <FoodForm
+                dispatch={dispatch}
+                foodToEdit={foodToEdit}
+                mutationFns={userMutationFns}
+              />
+            ) : (
+              <FoodTab dispatch={dispatch} asUserFood />
+            )}
           </TabPanel>
         </Tabs>
       </div>

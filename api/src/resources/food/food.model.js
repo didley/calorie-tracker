@@ -9,11 +9,7 @@ const FoodSchema = new mongoose.Schema(
     perServeSize: { type: Number, required: true },
     isLiquid: { type: Boolean, required: true },
     barcode: Number,
-    createdBy: {
-      type: mongoose.SchemaTypes.ObjectId,
-      required: true,
-      ref: "user",
-    },
+
     macrosPerServe: {
       EnergyKJ: { type: Number, required: true },
       ProteinG: { type: Number, default: 0 },
@@ -40,10 +36,17 @@ const FoodSchema = new mongoose.Schema(
       required: [true, "Country is required"],
     },
     isDeleted: { type: Boolean, default: false },
+    isUserFood: { type: Boolean, required: true },
+    createdBy: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "user",
+    },
   },
   { timestamps: true }
 );
 
 FoodSchema.plugin(mongoosePaginate);
 
-export const Food = mongoose.model("food", FoodSchema);
+const Food = mongoose.model("food", FoodSchema);
+
+export { Food };

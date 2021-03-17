@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import validator from "validator";
 import { Diary } from "../diary/diary.model";
 import { Food } from "../food/food.model";
+import { ROLES } from "../../utils/roleAuth/ROLES";
 
 const userSchema = new mongoose.Schema(
   {
@@ -32,6 +33,11 @@ const userSchema = new mongoose.Schema(
       trim: true,
       uppercase: true,
       required: [true, "Country is required"],
+    },
+    role: {
+      type: String,
+      enum: ROLES,
+      default: "basic",
     },
   },
   { timestamps: true }

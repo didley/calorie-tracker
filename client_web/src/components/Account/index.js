@@ -49,9 +49,15 @@ export default function Account() {
           }) => (
             <Form>
               <fieldset>
-                <legend>
-                  <h6 className="text-gray-700">Your details</h6>
-                </legend>
+                <div className="flex justify-between">
+                  <legend>
+                    <h6 className="text-gray-700">Your details</h6>
+                  </legend>
+                  <small className="text-gray-500">
+                    Account type: {user.role}
+                  </small>
+                </div>
+
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                   <label htmlFor="name" className="col-span-2">
                     Name
@@ -221,6 +227,7 @@ export default function Account() {
                 </div>
               </fieldset>
               <br />
+
               <fieldset className="flex justify-between">
                 <button>
                   <small className="text-red-600">Delete Account</small>

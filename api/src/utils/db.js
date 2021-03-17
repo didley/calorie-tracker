@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-export const connect = () => {
-  mongoose.connect(process.env.DB_URI, {
+export const connect = async () => {
+  await mongoose.connect(process.env.DB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
@@ -9,3 +9,5 @@ export const connect = () => {
   });
   console.log("🚀   Connected to DB successfully!");
 };
+
+export const disconnect = () => mongoose.disconnect();
