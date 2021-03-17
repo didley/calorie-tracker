@@ -6,7 +6,11 @@ import AmountInput from "./AmountInput";
 import { Button } from "components/shared/styling";
 import { useAddFood } from "hooks/useDiary";
 
-export default function SelectedFood({ selectedFood, editBtnOnClick }) {
+export default function SelectedFood({
+  selectedFood,
+  editBtnOnClick,
+  showEditBtn = true,
+}) {
   const {
     isLiquid,
     servingOptions = [],
@@ -20,8 +24,6 @@ export default function SelectedFood({ selectedFood, editBtnOnClick }) {
   const location = useLocation();
   const params = parseQuery(location.search);
   const addFoodMutation = useAddFood();
-
-  const showEditBtn = selectedFood.createdBy ? true : false; // TODO: replace with if role has access to edit
 
   useEffect(() => {
     setChosenServing({

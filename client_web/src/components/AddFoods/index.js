@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { parseQuery } from "utils/parseQuery";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import { useAuth } from "hooks/useAuth";
 
 import FoodForm from "./FoodForm";
 import FoodTab from "./FoodTab";
@@ -18,8 +19,13 @@ import {
 import useAddFoodReducer from "./useAddFoodReducer";
 
 export default function AddFoods() {
+  const { user } = useAuth();
   const [state, dispatch] = useAddFoodReducer();
   const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
+
+  const showEditBtnWhenAdmin = selectedFood?.isUserFood
+    ? true
+    : ["admin", "superAdmin"].includes(user.role);
 
   const dbMutationFns = {
     addFood: useAddDBFood,
@@ -45,6 +51,7 @@ export default function AddFoods() {
       <SelectedFood
         selectedFood={selectedFood}
         editBtnOnClick={() => dispatch({ type: "SET_EDITABLE" })}
+        showEditBtn={showEditBtnWhenAdmin}
       />
       <div className="bg-white p-2 pt-0 rounded-lg shadow-lg max-w-sm mb-4 w-full">
         <div className="flex items-stretch">

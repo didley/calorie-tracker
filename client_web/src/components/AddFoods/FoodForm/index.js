@@ -104,6 +104,12 @@ export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
                 {viewAsEditForm ? "Edit" : "Create"} Food
               </h6>
             </legend>
+            {!foodToEdit.isUserFood && (
+              <div className="bg-red-600 rounded text-center p-3 m-2">
+                <h4 className="text-white">WARNING!</h4>
+                <p className="text-white">This is a Database food</p>
+              </div>
+            )}
             <label htmlFor="name">Name</label>
             <Field
               name="name"
@@ -243,6 +249,11 @@ export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
             />
           </label>
           <br />
+          {!foodToEdit.isUserFood && (
+            <div className="text-right">
+              <small className="text-red-600">* DB Food *</small>
+            </div>
+          )}
           <div className="grid grid-cols-5">
             {viewAsEditForm && (
               <button
@@ -265,6 +276,7 @@ export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
                 Reset
               </Button>
             )}
+
             <Button
               color="green"
               type="submit"
