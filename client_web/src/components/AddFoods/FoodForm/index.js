@@ -11,7 +11,12 @@ import { Button } from "components/shared/styling";
 import { parseBoolString } from "utils/parseBoolString";
 import { replaceNull } from "utils/replaceNull";
 
-export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
+export default function FoodForm({
+  dispatch,
+  foodToEdit,
+  mutationFns,
+  dbForm,
+}) {
   const { user } = useAuth();
   const addFoodMutation = mutationFns.addFood();
   const updateFoodMutation = mutationFns.updateFood();
@@ -104,7 +109,7 @@ export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
                 {viewAsEditForm ? "Edit" : "Create"} Food
               </h6>
             </legend>
-            {!foodToEdit.isUserFood && (
+            {dbForm && !foodToEdit?.isUserFood && (
               <div className="bg-red-600 rounded text-center p-3 m-2">
                 <h4 className="text-white">WARNING!</h4>
                 <p className="text-white">This is a Database food</p>
@@ -249,7 +254,7 @@ export default function FoodForm({ dispatch, foodToEdit, mutationFns }) {
             />
           </label>
           <br />
-          {!foodToEdit.isUserFood && (
+          {dbForm && !foodToEdit?.isUserFood && (
             <div className="text-right">
               <small className="text-red-600">* DB Food *</small>
             </div>

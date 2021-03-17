@@ -85,9 +85,13 @@ export default function AddFoods() {
                 dispatch={dispatch}
                 foodToEdit={foodToEdit}
                 mutationFns={dbMutationFns}
+                dbForm
               />
             ) : (
-              <FoodTab dispatch={dispatch} hideCreateBtn />
+              <FoodTab
+                dispatch={dispatch}
+                hideCreateBtn={!["admin", "superAdmin"].includes(user.role)}
+              />
             )}
           </TabPanel>
           <TabPanel>
