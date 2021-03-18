@@ -5,9 +5,10 @@ import session from "express-session";
 import connectMongo from "connect-mongo";
 import passport from "passport";
 import router from "./resources/router";
-import { connect, disconnect } from "./utils/db";
+import db from "./utils/db";
 import morgan from "morgan";
 import helmet from "helmet";
+import { dbURI } from "./utils/getDbURI";
 
 import mongoose from "mongoose";
 mongoose.set("debug", process.env.MONGOOSE_DEBUG === "true" || false);
@@ -22,7 +23,7 @@ app.use(helmet());
 app.use(
   session({
     secret: process.env.APP_SECRET,
-    store: new MongoStore({ url: process.env.DB_URI }),
+    store: new MongoStore({ url: dbURI, dbName: db.name }),
     resave: false,
     saveUninitialized: false,
   })
@@ -35,7 +36,7 @@ app.use("/api", router);
 
 const initializeApp = async () => {
   try {
-    await connect();
+    await db.connect();
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => console.log(`🚀   Server running on PORT ${PORT}`));
   } catch (err) {
@@ -43,6 +44,6 @@ const initializeApp = async () => {
   }
 };
 
-app.on("close", () => disconnect());
+app.on("close", () => db.disconnect());
 
 initializeApp();

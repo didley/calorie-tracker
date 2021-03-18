@@ -33,7 +33,6 @@
     "prestart": "npm run build:tailwind",
     "prebuild": "npm run build:tailwind",
     "start": "react-scripts start",
-    "start:mockServer": "json-server --watch server/mockData.json --port 5000 --routes server/routes.json",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -9,11 +9,14 @@
     "node": ">=15.3.0"
   },
   "scripts": {
-    "start": "nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js"
+    "start": "NODE_ENV=development nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
+    "test": "NODE_ENV=test nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
+    "production": "NODE_ENV=production pm2 --experimental-specifier-resolution=node -r dotenv/config src/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "chalk": "^4.1.0",
     "connect-mongo": "^3.2.0",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
@@ -26,6 +29,7 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
+    "pm2": "^4.5.5",
     "validator": "^13.5.2"
   },
   "devDependencies": {

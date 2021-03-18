@@ -1,13 +1,19 @@
 import mongoose from "mongoose";
+const dbName = "calorie-tracker";
 
-export const connect = async () => {
-  await mongoose.connect(process.env.DB_URI, {
+import { dbURI } from "../utils/getDbURI";
+
+const connect = async () => {
+  await mongoose.connect(dbURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useFindAndModify: false,
     autoIndex: false,
+    dbName: dbName,
   });
   console.log("🚀   Connected to DB successfully!");
 };
 
-export const disconnect = () => mongoose.disconnect();
+const disconnect = () => mongoose.disconnect();
+
+export default { connect, disconnect, name: dbName };

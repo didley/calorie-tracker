@@ -23,15 +23,34 @@ $ cd ..
 ### /api/.env Example
 
 ```console
-PORT=5000
-DB_URI=
-APP_SECRET=shhhhhhhh
 MONGOOSE_DEBUG=false
+
+PORT=5000
+
+DB_DEV_URI=
+DB_TEST_URI=
+DB_PROD_URI=
+
+APP_SECRET=shhhhhhhh
 ```
 
 ## Running
-
+### Client & API
 ```console
 $ cd calorie-tracker
 $ npm start
+// runs prestart then client and api in development environment in parallel
+``` 
+### Client only
+```console
+$ cd calorie-tracker
+$ npm run client
+// runs client only with prestart
+``` 
+
+### API only
+```console
+$ cd calorie-tracker
+$ npm run api
+// runs api only in development environment
 ``` 
