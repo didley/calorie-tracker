@@ -8,13 +8,19 @@ if (!process.env.NODE_ENV) {
 
 let dbURI;
 
-if (process.env.NODE_ENV === "development") dbURI = process.env.DB_DEV_URI;
+if (process.env.NODE_ENV === "development") {
+  dbURI = process.env.DB_DEV_URI;
+  console.log(chalk.white.bgCyan.bold("  DEV ENVIRONMENT  "));
+}
 
-if (process.env.NODE_ENV === "test") dbURI = process.env.DB_TEST_URI;
+if (process.env.NODE_ENV === "test") {
+  dbURI = process.env.DB_TEST_URI;
+  console.log(chalk.white.bgYellow.bold("  TEST ENVIRONMENT  "));
+}
 
 if (process.env.NODE_ENV === "production") {
   dbURI = process.env.DB_PROD_URI;
-  console.log(chalk.bgRed.white.bold("  IN PRODUCTION ENVIRONMENT!  "));
+  console.log(chalk.white.bgRed.bold("  PRODUCTION ENVIRONMENT!  "));
 }
 
 export { dbURI };
