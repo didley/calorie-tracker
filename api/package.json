@@ -11,7 +11,8 @@
   "scripts": {
     "start": "NODE_ENV=development nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
     "test": "NODE_ENV=test nodemon --experimental-specifier-resolution=node -r dotenv/config src/index.js",
-    "production": "NODE_ENV=production pm2 --experimental-specifier-resolution=node -r dotenv/config src/index.js"
+    "production": "NODE_ENV=production pm2 --experimental-specifier-resolution=node -r dotenv/config src/index.js",
+    "seed:dev": "NODE_ENV=development node --experimental-specifier-resolution=node -r dotenv/config src/utils/seeder/index.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -38,6 +39,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-security": "^1.4.0",
     "nodemon": "^2.0.6",
-    "prettier": "2.2.1"
+    "prettier": "2.2.1",
+    "shelljs": "^0.8.4"
   }
 }

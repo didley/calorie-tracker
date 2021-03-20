@@ -4,27 +4,27 @@ import validator from "validator";
 
 const FoodSchema = new mongoose.Schema(
   {
-    name: { type: String, required: true },
-    brand: String,
+    name: { type: String, required: true, trim: true },
+    brand: { type: String, trim: true },
     perServeSize: { type: Number, required: true },
     isLiquid: { type: Boolean, required: true },
-    barcode: Number,
+    barcode: { type: Number },
 
     macrosPerServe: {
       EnergyKJ: { type: Number, required: true },
-      ProteinG: { type: Number, default: 0 },
-      FatTotalG: { type: Number, default: 0 },
-      saturatedG: { type: Number, default: 0 },
-      CarbohydrateG: { type: Number, default: 0 },
-      sugarsG: { type: Number, default: 0 },
-      fibreG: { type: Number, default: 0 },
-      SodiumMg: { type: Number, default: 0 },
-      calciumMg: { type: Number, default: 0 },
-      glutenG: { type: Number, default: 0 },
+      ProteinG: { type: Number },
+      FatTotalG: { type: Number },
+      saturatedG: { type: Number },
+      CarbohydrateG: { type: Number },
+      sugarsG: { type: Number },
+      fibreG: { type: Number },
+      SodiumMg: { type: Number },
+      calciumMg: { type: Number },
+      glutenG: { type: Number },
     },
     servingOptions: [
       {
-        servingName: { type: String, required: true },
+        servingName: { type: String, required: true, trim: true },
         servingSize: { type: Number, required: true },
       },
     ],

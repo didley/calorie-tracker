@@ -1,0 +1,35 @@
+[
+  {
+    "name": "Seeded admin",
+    "sex": "",
+    "email": "admin.seed@gmail.com",
+    "password": "$2a$10$IQ0lYeN4b7gCm8Uc4z3Nt.6tQqWLOgnoL2LvHo3QaLFq/tyc4Z2fW",
+    "preferences": { "metricSystem": true, "useKJ": true },
+    "country": "AUS",
+    "role": "admin"
+  },
+  {
+    "name": "Seeded basic no required",
+    "sex": "",
+    "email": "basic.seed@gmail.com",
+    "password": "$2a$10$IQ0lYeN4b7gCm8Uc4z3Nt.6tQqWLOgnoL2LvHo3QaLFq/tyc4Z2fW",
+    "preferences": { "metricSystem": true, "useKJ": true },
+    "country": "AUS",
+    "role": "admin"
+  },
+  {
+    "name": "Seeded basic all required",
+    "dateOfBirth": "1999-01-01",
+    "sex": "male",
+    "email": "basic.seed.all@gmail.com",
+    "password": "$2a$10$IQ0lYeN4b7gCm8Uc4z3Nt.6tQqWLOgnoL2LvHo3QaLFq/tyc4Z2fW",
+    "measurements": { "heightCm": 200, "currentWeightKg": 100 },
+    "goals": {
+      "weightGoalKg": 90,
+      "energyGoalKJ": 1500
+    },
+    "preferences": { "metricSystem": false, "useKJ": false },
+    "country": "AUS",
+    "role": "basic"
+  }
+]
