@@ -5,11 +5,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm-run-all client:prestart -p client api:start",
+    "start": "npm-run-all client:prestart -p client api:dev",
     "client": "npm-run-all client:prestart client:start",
     "client:prestart": "npm run prestart --prefix client_web/",
     "client:start": "npm start -prefix client_web/",
-    "api": "npm-run-all seed:dev api:start",
     "api:dev": "npm start --prefix api/",
     "seed:dev": "npm run seed:dev --prefix api/"
   },

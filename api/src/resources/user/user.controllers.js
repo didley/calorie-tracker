@@ -1,5 +1,5 @@
 import passport from "../../utils/passport";
-import { User } from "./user.model";
+import { User, Guest } from "./user.model";
 
 export default {
   getUserDetails: (req, res) => {
@@ -37,8 +37,27 @@ export default {
       res.json({ msg: "No user to log out" });
     }
   },
+  createGuestUser: async (req, res) => {
+    const guest = {
+      name: "Guest",
+      country: "AUS",
+      goals: {
+        weightGoalKg: 80,
+        energyGoalKJ: 2000,
+      },
+      preferences: { metricSystem: true, useKJ: true },
+      role: "guest",
+    };
+
+    try {
+      await Guest.create(guest);
+
+      res.json({ user: guest, msg: `Welcome ${guest.name}` });
+    } catch (err) {
+      res.status(400).json(err);
+    }
+  },
   registerUser: async (req, res) => {
-    //TODO - Add validation
     try {
       const { name, email, password, country } = req.body;
       const alreadyUser = await User.findOne({ email });
@@ -46,14 +65,16 @@ export default {
         return res.status(401).json({ msg: "Email already in use" });
       }
 
-      await User.create({ name, email, password, country }).then((user) => {
-        req.login(user, (err) => {
-          if (err) throw err;
+      await User.create({ name, email, password, country, role: "basic" }).then(
+        (user) => {
+          req.login(user, (err) => {
+            if (err) throw err;
 
-          const { password, ...cleanUser } = user._doc;
-          res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
-        });
-      });
+            const { password, ...cleanUser } = user._doc;
+            res.json({ user: cleanUser, msg: `Welcome ${req.user.name}` });
+          });
+        }
+      );
     } catch (err) {
       res.status(400).json(err);
     }

@@ -12,5 +12,6 @@ router
 router.post("/login", controllers.loginUser);
 router.post("/logout", controllers.logoutUser);
 router.post("/register", controllers.registerUser);
+router.post("/guest", controllers.createGuestUser);
 
 export default router;

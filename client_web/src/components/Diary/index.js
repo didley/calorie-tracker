@@ -112,7 +112,7 @@ export default function Diary() {
               onClick={toggleShowSelectBtn}
               className="self-center text-center text-xs appearance-none text-gray-500 py-1 px-2 mx-1 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 hover:text-red-500 hover:bg-gray-200"
             >
-              {showSelectBtn ? "Clear" : "Edit"}
+              {showSelectBtn ? "Cancel" : "Edit"}
             </button>
           </div>
 
