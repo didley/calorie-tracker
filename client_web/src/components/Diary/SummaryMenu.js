@@ -4,7 +4,7 @@ import { toCal } from "utils/foodEnegy";
 
 export default function SummaryMenu({ totalEatenKJ, viewAsCal }) {
   const { user } = useAuth();
-  let goal = user.goals.energyGoalKJ;
+  let goal = user.goals?.energyGoalKJ;
 
   if (viewAsCal) {
     goal = toCal(goal);

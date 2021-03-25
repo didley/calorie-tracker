@@ -23,7 +23,7 @@ export default function Diary() {
   const selectedDate = dateOnly(params.date);
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
-  const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences.useKJ);
+  const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
   const [note, setNote] = useState(null);
 
   const updateMutation = useUpdateEntry();

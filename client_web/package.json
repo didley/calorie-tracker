@@ -10,8 +10,8 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/react-fontawesome": "^0.1.12",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.5",
     "@testing-library/user-event": "^12.1.10",
     "date-fns": "^2.16.1",
     "formik": "^2.2.6",
@@ -58,6 +58,10 @@
   "proxy": "http://localhost:5000",
   "devDependencies": {
     "eslint-config-prettier": "^7.0.0",
+    "msw": "^0.27.2",
     "prettier": "2.2.1"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

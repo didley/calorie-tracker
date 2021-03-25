@@ -9,6 +9,11 @@ import { ProvideAlert } from "hooks/useAlert";
 import { ProvideAuth } from "hooks/useAuth";
 import { BrowserRouter as Router } from "react-router-dom";
 
+if (process.env.NODE_ENV === "development") {
+  const { worker } = require("./mocks/browser");
+  worker.start();
+}
+
 const queryClient = new QueryClient();
 
 ReactDOM.render(

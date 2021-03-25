@@ -1,0 +1,137 @@
+{
+  "_id": "605bfecdf8b82fc4d8af7bc0",
+  "entryDate": "2021-02-23",
+  "userId": "605abe428f534cdeeb76de2f",
+  "__v": 0,
+  "createdAt": "2021-03-25T03:09:01.566Z",
+  "eaten": [
+    {
+      "chosenOptions": {
+        "serving": {
+          "servingName": "serving",
+          "servingSize": 113
+        },
+        "chosenAmount": 1,
+        "chosenMacros": {
+          "EnergyKJ": 694.96,
+          "ProteinG": 7,
+          "FatTotalG": 7,
+          "saturatedG": 4,
+          "CarbohydrateG": 26,
+          "sugarsG": 1,
+          "fibreG": 0,
+          "SodiumMg": 830,
+          "calciumMg": 0,
+          "glutenG": 0
+        }
+      },
+      "_id": "605bfecd00bsh6bddefdedc2d0",
+      "chosenFood": {
+        "name": "Greek Yoghurt",
+        "brand": "Jalna",
+        "perServeSize": 100,
+        "isLiquid": false,
+
+        "macrosPerServe": {
+          "EnergyKJ": 540,
+          "ProteinG": 3.8,
+          "FatTotalG": 10,
+          "saturatedG": 7.1,
+          "CarbohydrateG": 6.1,
+          "sugarsG": 4.8,
+          "SodiumMg": 78
+        },
+        "country": "AUS",
+        "isDeleted": false,
+        "isUserFood": false
+      }
+    },
+    {
+      "chosenOptions": {
+        "serving": {
+          "servingName": "serving",
+          "servingSize": 113
+        },
+        "chosenAmount": 1,
+        "chosenMacros": {
+          "EnergyKJ": 694.96,
+          "ProteinG": 7,
+          "FatTotalG": 7,
+          "saturatedG": 4,
+          "CarbohydrateG": 26,
+          "sugarsG": 1,
+          "fibreG": 0,
+          "SodiumMg": 830,
+          "calciumMg": 0,
+          "glutenG": 0
+        }
+      },
+      "_id": "605bfecd00bfs6bddefdedc2d0",
+      "chosenFood": {
+        "name": "Greek Yoghurt",
+        "brand": "Jalna",
+        "perServeSize": 100,
+        "isLiquid": false,
+
+        "macrosPerServe": {
+          "EnergyKJ": 540,
+          "ProteinG": 3.8,
+          "FatTotalG": 10,
+          "saturatedG": 7.1,
+          "CarbohydrateG": 6.1,
+          "sugarsG": 4.8,
+          "SodiumMg": 78
+        },
+        "country": "AUS",
+        "isDeleted": false,
+        "isUserFood": false
+      }
+    }
+  ],
+  "updatedAt": "2021-03-25T03:09:01.566Z",
+  "toEat": [
+    {
+      "chosenOptions": {
+        "serving": {
+          "servingName": "serving",
+          "servingSize": 113
+        },
+        "chosenAmount": 1,
+        "chosenMacros": {
+          "EnergyKJ": 694.96,
+          "ProteinG": 7,
+          "FatTotalG": 7,
+          "saturatedG": 4,
+          "CarbohydrateG": 26,
+          "sugarsG": 1,
+          "fibreG": 0,
+          "SodiumMg": 830,
+          "calciumMg": 0,
+          "glutenG": 0
+        }
+      },
+      "_id": "605bfecd00b6bdhdefdedc2d0",
+      "chosenFood": {
+        "name": "Greek Yoghurt",
+        "brand": "Jalna",
+        "perServeSize": 100,
+        "isLiquid": false,
+
+        "macrosPerServe": {
+          "EnergyKJ": 540,
+          "ProteinG": 3.8,
+          "FatTotalG": 10,
+          "saturatedG": 7.1,
+          "CarbohydrateG": 6.1,
+          "sugarsG": 4.8,
+          "SodiumMg": 78
+        },
+        "country": "AUS",
+        "isDeleted": false,
+        "isUserFood": false
+      }
+    }
+  ],
+  "totalEatenKJ": "695",
+  "id": "605bfecdf8b82fc4d8af7bc0"
+}
