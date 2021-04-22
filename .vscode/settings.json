@@ -1,4 +1,7 @@
 {
   "eslint.workingDirectories": ["./api", "./client_web"],
-  "cSpell.words": ["upsert"]
+  "cSpell.words": [
+    "upsert"
+  ],
+  "todo-tree.tree.showBadges": true
 }
