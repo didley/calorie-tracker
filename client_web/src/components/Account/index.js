@@ -88,7 +88,7 @@ export default function Account() {
                     <Field
                       type="number"
                       onChange={handleChange}
-                      value={values.measurements.currentWeightKg}
+                      value={values.measurements?.currentWeightKg}
                       name="measurements.currentWeightKg"
                       min="1"
                       max="1000"
@@ -100,7 +100,7 @@ export default function Account() {
                     <Field
                       type="number"
                       onChange={handleChange}
-                      value={values.measurements.heightCm}
+                      value={values.measurements?.heightCm}
                       name="measurements.heightCm"
                       min="1"
                       max="1000"
@@ -136,7 +136,7 @@ export default function Account() {
                       <Field
                         type="number"
                         onChange={handleChange}
-                        value={values.goals.weightGoalKg || 1}
+                        value={values.goals?.weightGoalKg || 1}
                         name="goals.weightGoalKg"
                         min="1"
                         max="1000"
@@ -148,7 +148,7 @@ export default function Account() {
                       <Field
                         type="number"
                         onChange={handleChange}
-                        value={values.goals.energyGoalKJ}
+                        value={values.goals?.energyGoalKJ}
                         name="goals.energyGoalKJ"
                         min="1"
                         max="1000000"

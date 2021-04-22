@@ -1,6 +1,7 @@
 import { rest } from "msw";
 import foods from "./data/foods.seed.json";
 import diary from "./data/diary.seed.json";
+import users from "./data/users.seed.json";
 
 export const handlers = [
   rest.post("/api/user/login", (req, res, ctx) => {
@@ -16,21 +17,10 @@ export const handlers = [
   }),
 
   rest.get("/api/user", (req, res, ctx) => {
-    const isAuthenticated = sessionStorage.getItem("is-authenticated");
-
-    if (!isAuthenticated) {
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: "Not authorized",
-        })
-      );
-    }
-
     return res(
       ctx.status(200),
       ctx.json({
-        user: { name: "admin mocked", role: "admin", country: "AUS" },
+        user: users[0],
       })
     );
   }),
