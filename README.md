@@ -34,6 +34,13 @@ DB_PROD_URI=
 APP_SECRET=shhhhhhhh
 ```
 
+### /client_web/.env Example
+If REACT_APP_USE_LOCAL_DB not set client_web app will use Mock Service Worker (MSW) handlers
+
+```console
+REACT_APP_USE_LOCAL_DB=true
+```
+
 ## Running
 ### Client & API
 ```console

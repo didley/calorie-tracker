@@ -9,7 +9,10 @@ import { ProvideAlert } from "hooks/useAlert";
 import { ProvideAuth } from "hooks/useAuth";
 import { BrowserRouter as Router } from "react-router-dom";
 
-if (process.env.NODE_ENV === "development") {
+if (
+  process.env.NODE_ENV === "development" &&
+  process.env.REACT_APP_USE_LOCAL_DB !== "true"
+) {
   const { worker } = require("./mocks/browser");
   worker.start();
 }
