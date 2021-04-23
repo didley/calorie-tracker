@@ -5,6 +5,7 @@ import { Page, Container, Button } from "components/shared/styling";
 import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 import EmailRegisterForm from "./EmailRegisterForm";
+import LineWithText from "./LineWithText";
 
 export default function Register() {
   const [viewEmailForm, setViewEmailForm] = useState(false);
@@ -23,47 +24,36 @@ export default function Register() {
             </p>
           )}
         </h1>
+
         {viewEmailForm ? (
           <EmailRegisterForm />
         ) : (
           <div className="flex justify-center">
             <div className="flex flex-col place-content-center gap-4">
+              <Button
+                noBottomBorder
+                className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400"
+              >
+                Try as Guest
+              </Button>
+
+              <LineWithText text="Or" width="70%" />
+
               <Button onClick={() => setViewEmailForm(true)}>Email</Button>
-              <Button disabled>
+              <Button disabled noBottomBorder>
                 Sign up with Gmail
                 <small className="text-gray-100 font-normal">
                   {" "}
                   (Coming soon)
                 </small>
               </Button>
-              <Button disabled>
+              <Button disabled noBottomBorder>
                 Sign up with Apple
                 <small className="text-gray-100 font-normal">
                   {" "}
                   (Coming soon)
                 </small>
               </Button>
-
-              <div
-                style={{
-                  width: "100%",
-                  textAlign: "center",
-                  borderBottom: "1px solid #e3e5e7",
-                  lineHeight: "0.1em",
-                  margin: "15px 0 15px",
-                }}
-              >
-                <small
-                  style={{
-                    background: "#fff",
-                    padding: "0 10px",
-                    fontWeight: "bold",
-                  }}
-                >
-                  Or
-                </small>
-              </div>
-              <Button>Try as Guest</Button>
             </div>
           </div>
         )}

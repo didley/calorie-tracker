@@ -3,6 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Page, Container, Button } from "components/shared/styling";
 
 import { useAuth } from "hooks/useAuth";
+import LineWithText from "./Register/LineWithText";
 
 export default function Login() {
   const history = useHistory();
@@ -26,9 +27,20 @@ export default function Login() {
 
   return (
     <Page>
-      <Container>
+      <Container className="p-5">
         <form onSubmit={handleSubmit}>
-          <h1>Login</h1>
+          <h1 className="mb-10">
+            Login <hr />
+          </h1>
+          <div className="flex justify-center pb-4">
+            <Button
+              noBottomBorder
+              className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400 px-8"
+            >
+              Try as Guest
+            </Button>
+          </div>
+          <LineWithText width="60%" text="Or" />
           <label htmlFor="email">
             Email
             <input
@@ -53,7 +65,9 @@ export default function Login() {
             />
           </label>
           <br />
-          <Button type="submit">Login</Button>
+          <div className="flex justify-end">
+            <Button type="submit">Login</Button>
+          </div>
         </form>
       </Container>
     </Page>

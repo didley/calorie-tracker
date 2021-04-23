@@ -97,7 +97,9 @@ export default function EmailRegisterForm() {
           />
         </label>
         <br />
-        <Button type="submit">Register</Button>
+        <div className="flex justify-end">
+          <Button type="submit">Register</Button>
+        </div>
       </form>
     </>
   );

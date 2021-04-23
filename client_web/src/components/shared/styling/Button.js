@@ -9,6 +9,7 @@ export default function Button({
   disabled,
   type = "button",
   children,
+  noBottomBorder,
   ...otherProps
 }) {
   return (
@@ -17,9 +18,11 @@ export default function Button({
       onClick={onClick}
       type={type}
       disabled={disabled || loading}
-      className={`text-sm bg-${
+      className={`select-none text-sm bg-${
         disabled || loading ? "gray-400" : color + "-500"
-      } rounded text-white font-bold py-1 px-3 border-b-4 border-${
+      } rounded text-white font-bold py-1 px-3 ${
+        noBottomBorder ? "py-2" : "border-b-4"
+      } border-${
         disabled || loading ? "gray" : color
       }-700 hover:bg-opacity-75 text-center ${className}`}
     >
