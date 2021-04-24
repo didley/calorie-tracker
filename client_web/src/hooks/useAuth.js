@@ -33,6 +33,8 @@ function useProvideAuth() {
     }
   };
 
+  const loginGuest = async () => {};
+
   const login = async (email, password) => {
     setIsLoading(true);
     try {
@@ -83,6 +85,7 @@ function useProvideAuth() {
     checkingLoggedIn,
     isUserLoggedIn,
     user,
+    loginGuest,
     login,
     register,
     logout,
