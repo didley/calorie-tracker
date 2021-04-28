@@ -6,12 +6,12 @@ import "./Home.css";
 import heroImage from "assets/heroImage.jpeg";
 import diaryImg from "assets/diary.png";
 import addFoodImg from "assets/addFood.png";
+import LoginGuestBtn from "components/shared/LoginGuestBtn";
 
 export default function Home() {
   const history = useHistory();
   return (
     <>
-      {/* <div className="h-screen grid grid-rows-6"> */}
       <div
         className="row-start-2 flex justify-center relative text-center"
         id="hero"
@@ -36,12 +36,8 @@ export default function Home() {
           </p>
 
           <div className="flex justify-center gap-5 md:gap-10 pt-10 pb-10 mb-2">
-            <Button
-              noBottomBorder
-              className="bg-gradient-to-r from-pink-400 to-orange-400 hover:from-teal-300 hover:to-blue-600 w-40 ml-2"
-            >
-              Try as Guest
-            </Button>
+            <LoginGuestBtn className="bg-gradient-to-r from-pink-400 to-orange-400 hover:from-teal-300 hover:to-blue-600 w-40 ml-2" />
+
             <Button
               noBottomBorder
               className="w-40 mr-2"
@@ -86,7 +82,6 @@ export default function Home() {
         </span>
         in Melbourne
       </small>
-      {/* </div> */}
     </>
   );
 }

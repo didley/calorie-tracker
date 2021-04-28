@@ -1,7 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDiaryEntry, useUpdateEntry } from "hooks/useDiary";
+import {
+  useDiaryEntry,
+  useSessionDiaryEntry,
+  useSessionUpdateEntry,
+  useUpdateEntry,
+} from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
 import { Link, useParams, useHistory } from "react-router-dom";
+import { useSessionStorage } from "hooks/useSessionStorage";
 
 import DatePickerContainer from "./DatePickerContainer";
 import SummaryMenu from "./SummaryMenu";
@@ -25,12 +31,29 @@ export default function Diary() {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
   const [note, setNote] = useState(null);
+  const [asGuest] = useSessionStorage("guest");
 
-  const updateMutation = useUpdateEntry();
-  const [diaryQuery, listState] = useDiaryEntry(selectedDate);
-  const { eatenList, setEatenList, toEatList, setToEatList } = listState;
+  const serverUpdateMutation = useUpdateEntry();
+  const sessionUpdateMutation = useSessionUpdateEntry(selectedDate);
+  // const [diaryQuery, listState] = useDiaryEntry(selectedDate);
+  const serverDiaryEntry = useDiaryEntry(selectedDate);
+  const sessionDiaryEntry = useSessionDiaryEntry(selectedDate);
+
+  let diaryState;
+  let updateMutation;
+  if (asGuest) {
+    diaryState = sessionDiaryEntry;
+    updateMutation = sessionUpdateMutation;
+  } else {
+    diaryState = serverDiaryEntry;
+    updateMutation = serverUpdateMutation;
+  }
+  const [diaryQuery, listState] = diaryState;
+
+  console.log({ diaryData: diaryQuery.data });
   const { data = {}, isLoading, isSuccess, error } = diaryQuery;
   const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
+  const { eatenList, setEatenList, toEatList, setToEatList } = listState;
 
   // !clean mess
   useEffect(() => {

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { Page, Container, Button } from "components/shared/styling";
+import LoginGuestBtn from "components/shared/LoginGuestBtn";
 
 import { useAuth } from "hooks/useAuth";
 import LineWithText from "./Register/LineWithText";
@@ -33,12 +34,7 @@ export default function Login() {
             Login <hr />
           </h1>
           <div className="flex justify-center pb-4">
-            <Button
-              noBottomBorder
-              className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400 px-8"
-            >
-              Try as Guest
-            </Button>
+            <LoginGuestBtn className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400 px-8" />
           </div>
           <LineWithText width="60%" text="Or" />
           <label htmlFor="email">

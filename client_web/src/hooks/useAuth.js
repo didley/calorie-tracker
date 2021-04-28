@@ -1,6 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 
 import { useAlert } from "hooks/useAlert";
+import { useSessionStorage } from "hooks/useSessionStorage";
 
 import { client } from "api/client";
 
@@ -19,6 +20,7 @@ function useProvideAuth() {
   const { setIsLoading, setTimedAlert, clearAlerts } = useAlert();
   const [user, setUser] = useState(null);
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
+  const [guest, setGuest, clearSession] = useSessionStorage("guest", false);
 
   const isUserLoggedIn = async () => {
     setCheckingLoggedIn(true);
@@ -26,14 +28,26 @@ function useProvideAuth() {
     const loggedInUser = data.user;
     if (loggedInUser !== null) {
       setUser(loggedInUser);
+      clearSession();
       setCheckingLoggedIn(false);
     } else {
       setUser(null);
+      if (guest) {
+        setUser({ isGuest: true });
+      }
       setCheckingLoggedIn(false);
     }
   };
 
-  const loginGuest = async () => {};
+  const loginGuest = async () => {
+    setIsLoading(true);
+    try {
+      setGuest(true);
+      setTimedAlert("alert", "Welcome Guest");
+    } catch (err) {
+      setTimedAlert("error", err);
+    }
+  };
 
   const login = async (email, password) => {
     setIsLoading(true);

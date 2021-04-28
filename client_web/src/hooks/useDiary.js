@@ -1,5 +1,6 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useSessionStorage } from "hooks/useSessionStorage";
 
 import {
   getDiaryEntryByDate,
@@ -20,6 +21,34 @@ function useDiaryEntry(date) {
   });
 
   return [query, { eatenList, setEatenList, toEatList, setToEatList }];
+}
+
+function useSessionDiaryEntry(date) {
+  const [sessionDiary, setSessionDiary] = useSessionStorage(`entries`, {
+    [date]: { eatenList: [], toEatList: [], note: "" },
+  });
+
+  const setEatenList = (listData) => {
+    sessionDiary[date].eatenList = listData;
+    setSessionDiary(sessionDiary);
+  };
+
+  const setToEatList = (listData) => {
+    sessionDiary[date].toEatList = listData;
+    setSessionDiary(sessionDiary);
+  };
+
+  const query = { data: { date: date, note: sessionDiary[date].note } };
+
+  return [
+    query,
+    {
+      eatenList: sessionDiary?.eatenList ?? [],
+      setEatenList: setEatenList,
+      toEatList: sessionDiary?.toEatList ?? [],
+      setToEatList: setToEatList,
+    },
+  ];
 }
 
 function useAddFood() {
@@ -63,6 +92,17 @@ function useUpdateEntry() {
   });
 }
 
+function useSessionUpdateEntry(date) {
+  const [sessionDiary, setSessionDiary] = useSessionStorage(`entries`);
+
+  const mutate = ({ date, updates }) => {
+    sessionDiary[date].note = updates.note;
+    setSessionDiary(sessionDiary);
+  };
+
+  return { mutate, isLoading: false };
+}
+
 function useRemoveFoods() {
   const queryClient = useQueryClient();
   return useMutation(removeFoodsByIds, {
@@ -71,4 +111,11 @@ function useRemoveFoods() {
     },
   });
 }
-export { useDiaryEntry, useAddFood, useUpdateEntry, useRemoveFoods };
+export {
+  useDiaryEntry,
+  useSessionDiaryEntry,
+  useAddFood,
+  useUpdateEntry,
+  useSessionUpdateEntry,
+  useRemoveFoods,
+};

@@ -6,6 +6,7 @@ import { useAlert } from "hooks/useAlert";
 import { useAuth } from "hooks/useAuth";
 import EmailRegisterForm from "./EmailRegisterForm";
 import LineWithText from "./LineWithText";
+import LoginGuestBtn from "components/shared/LoginGuestBtn";
 
 export default function Register() {
   const [viewEmailForm, setViewEmailForm] = useState(false);
@@ -30,12 +31,7 @@ export default function Register() {
         ) : (
           <div className="flex justify-center">
             <div className="flex flex-col place-content-center gap-4">
-              <Button
-                noBottomBorder
-                className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400"
-              >
-                Try as Guest
-              </Button>
+              <LoginGuestBtn className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400" />
 
               <LineWithText text="Or" width="70%" />
 
