@@ -107,7 +107,7 @@ export default function SelectedFood({
     );
   }
   return (
-    <div className="border border-blue-600 shadow-outline flex-col bg-white p-3 mb-2 rounded-lg shadow-lg max-w-xs w-full sm:mx-2">
+    <div className="border border-blue-600 shadow-outline flex-col bg-white p-3 mb-2 mx-3 rounded-lg shadow-lg max-w-xs w-full sm:mx-2">
       <div className="flex justify-between mb-1">
         <h6 className="my-auto">Selected Food</h6>
         <div>

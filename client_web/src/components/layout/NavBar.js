@@ -11,17 +11,22 @@ export default function NavBar() {
     setHidden(true);
   }
 
+  const linkStyle =
+    "block md:inline-block md:mt-0 md:my-0 md:py-2 text-white hover:bg-red-400 mx-1 my-2 py-3 px-3 rounded text-center md:text-right";
+
   return (
-    <header className="flex items-center justify-between flex-wrap bg-red-500 p-5">
+    <header className="flex items-center justify-between flex-wrap bg-red-500 p-1 md:p-2">
       <Link
         to={auth.user ? "/diary" : "/"}
-        className="flex items-center flex-shrink-0 text-white mr-6"
+        className="flex items-center flex-shrink-0 text-white ml-2 mr-6 "
       >
         <div className="leading-tight">
-          <div className="font-semibold text-2xl tracking-tight">
+          <div className="font-semibold text-xl md:text-2xl tracking-tight">
             foodNRG.io
           </div>
-          <div className="text-sm tracking-tight">Calorie Tracker</div>
+          <div className="text-sm tracking-tight hidden md:block">
+            Calorie Tracker
+          </div>
         </div>
       </Link>
       {/* mobile menu button show/hide */}
@@ -49,7 +54,7 @@ export default function NavBar() {
       >
         <nav className="text-sm md:flex-grow">
           {auth.user ? (
-            <div className="flex justify-between">
+            <div className="grid grid-cols-2 justify-items-center md:flex md:justify-between">
               <div>
                 <Link
                   to="/diary"
@@ -102,6 +107,3 @@ export default function NavBar() {
     </header>
   );
 }
-
-const linkStyle =
-  "block md:inline-block md:mt-0 md:my-0 md:py-2 text-white hover:bg-red-400 mx-1 my-2 py-3 px-3 rounded";

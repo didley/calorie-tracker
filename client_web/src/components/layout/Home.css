@@ -1,0 +1,6 @@
+/* Medium (md) */
+@media (min-width: 768px) {
+  #hero {
+    margin-top: 20vh;
+  }
+}
