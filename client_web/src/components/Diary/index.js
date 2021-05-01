@@ -1,13 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  useDiaryEntry,
-  useSessionDiaryEntry,
-  useSessionUpdateEntry,
-  useUpdateEntry,
-} from "hooks/useDiary";
+import { useDiaryEntry, useUpdateEntry } from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
 import { Link, useParams, useHistory } from "react-router-dom";
-import { useSessionStorage } from "hooks/useSessionStorage";
 
 import DatePickerContainer from "./DatePickerContainer";
 import SummaryMenu from "./SummaryMenu";
@@ -30,53 +24,33 @@ export default function Diary() {
   const [showSelectBtn, setShowSelectBtn] = useState(false);
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
+
+  const updateMutation = useUpdateEntry(selectedDate);
+  const [
+    { data = {}, isLoading, isSuccess, error },
+    { eatenList = [], setEatenList, toEatList = [], setToEatList },
+  ] = useDiaryEntry(selectedDate);
+  const { totalEatenKJ = 0 } = data;
+
   const [note, setNote] = useState(null);
-  const [asGuest] = useSessionStorage("guest");
-
-  const serverUpdateMutation = useUpdateEntry();
-  const sessionUpdateMutation = useSessionUpdateEntry(selectedDate);
-  // const [diaryQuery, listState] = useDiaryEntry(selectedDate);
-  const serverDiaryEntry = useDiaryEntry(selectedDate);
-  const sessionDiaryEntry = useSessionDiaryEntry(selectedDate);
-
-  let diaryState;
-  let updateMutation;
-  if (asGuest) {
-    diaryState = sessionDiaryEntry;
-    updateMutation = sessionUpdateMutation;
-  } else {
-    diaryState = serverDiaryEntry;
-    updateMutation = serverUpdateMutation;
-  }
-  const [diaryQuery, listState] = diaryState;
-
-  console.log({ diaryData: diaryQuery.data });
-  const { data = {}, isLoading, isSuccess, error } = diaryQuery;
-  const { eaten = [], toEat = [], totalEatenKJ = 0 } = data;
-  const { eatenList, setEatenList, toEatList, setToEatList } = listState;
 
   // !clean mess
   useEffect(() => {
-    if (data.note) {
-      setNote(data.note);
-    } else {
-      setNote("");
-    }
+    data.note ? setNote(data.note) : setNote("");
   }, [data.note]);
 
-  const debouncedNote = useDebounce(note, 1000);
+  const debouncedNote = useDebounce(note, { delay: 1000 });
 
-  const debounceHookSet = useRef(false);
-
+  const skipEffect = useRef(true);
   useEffect(() => {
-    debounceHookSet.current = false;
+    skipEffect.current = true;
   }, [selectedDate]);
   useEffect(() => {
     if (debouncedNote !== null) {
-      // Skips mutation on initial component render
-      if (!debounceHookSet.current) {
-        // Skips mutation on note state being set
-        debounceHookSet.current = true;
+      // Skips mutation on note state being set
+      if (skipEffect.current) {
+        // Skips mutation on initial component render or date change
+        skipEffect.current = false;
         return;
       }
 
@@ -179,7 +153,7 @@ export default function Diary() {
               </div>
               <ul className="inline-block w-full h-32">
                 {isLoading && <PlaceholderListItem amount={3} />}
-                {isSuccess && eaten.length === 0 && toEat.length === 0 && (
+                {isSuccess && eatenList.length === 0 && toEatList.length === 0 && (
                   <div className="text-center">
                     <small>No food added yet</small>
                   </div>
@@ -239,10 +213,8 @@ export default function Diary() {
               </ul>
             </div>
             <NoteField
-              onChange={(e) => {
-                setNote(e.target.value);
-              }}
-              value={note || ""}
+              onChange={(e) => setNote(e.target.value)}
+              value={note}
               loading={updateMutation.isLoading}
               disabled={isLoading}
             />

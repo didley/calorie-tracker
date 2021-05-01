@@ -5,23 +5,6 @@ import CountryDropdown from "components/shared/CountryDropdown";
 
 import { useAuth } from "hooks/useAuth";
 
-// Name
-// Date of birth
-// Sex
-// Height
-// Country
-
-// Current Weight
-// Weight Goal
-// Energy Goal
-
-// metricSystem (feet)(inches) / (Pounds) || (centimeters) / 	(kilograms)
-// KJ/Cal
-
-// Email
-// Password
-// Delete Account
-
 export default function Account() {
   const { user, updateUser } = useAuth();
 

@@ -7,6 +7,25 @@ import { client } from "api/client";
 
 const authContext = createContext();
 
+const defaultGuest = {
+  measurements: {
+    currentWeightKg: 60,
+    heightCm: 80,
+  },
+  goals: {
+    energyGoalKJ: 8000,
+  },
+  preferences: {
+    metricSystem: true,
+    useKJ: false,
+  },
+  sex: "",
+  role: "guest",
+  name: "Guest",
+  email: "Guest@guest.com",
+  country: "AUS",
+};
+
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();
   return <authContext.Provider value={auth}>{children}</authContext.Provider>;
@@ -23,28 +42,33 @@ function useProvideAuth() {
   const [guest, setGuest, clearSession] = useSessionStorage("guest", false);
 
   const isUserLoggedIn = async () => {
-    setCheckingLoggedIn(true);
     const data = await client.get("/user");
     const loggedInUser = data.user;
+
+    setCheckingLoggedIn(true);
     if (loggedInUser !== null) {
-      setUser(loggedInUser);
       clearSession();
+      setUser(loggedInUser);
+      setCheckingLoggedIn(false);
+    } else if (guest) {
+      setUser(defaultGuest);
       setCheckingLoggedIn(false);
     } else {
       setUser(null);
-      if (guest) {
-        setUser({ isGuest: true });
-      }
+      setGuest(false);
       setCheckingLoggedIn(false);
     }
   };
 
   const loginGuest = async () => {
-    setIsLoading(true);
+    setCheckingLoggedIn(true);
     try {
       setGuest(true);
+      setUser(defaultGuest);
       setTimedAlert("alert", "Welcome Guest");
+      setCheckingLoggedIn(false);
     } catch (err) {
+      setCheckingLoggedIn(false);
       setTimedAlert("error", err);
     }
   };
