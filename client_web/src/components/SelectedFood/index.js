@@ -5,6 +5,7 @@ import Table from "./Table";
 import AmountInput from "./AmountInput";
 import { Button } from "components/shared/styling";
 import { useAddFood } from "hooks/useDiary";
+import { useAuth } from "hooks/useAuth";
 
 export default function SelectedFood({
   selectedFood,
@@ -23,7 +24,9 @@ export default function SelectedFood({
   const [chosenServing, setChosenServing] = useState({});
   const location = useLocation();
   const params = parseQuery(location.search);
-  const addFoodMutation = useAddFood();
+  const addFoodMutation = useAddFood(params.date);
+  const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
 
   useEffect(() => {
     setChosenServing({
@@ -77,7 +80,7 @@ export default function SelectedFood({
 
   function handleSubmit() {
     const foodItem = {
-      chosenFood: selectedFood._id,
+      chosenFood: isGuestUser ? selectedFood : selectedFood._id,
       chosenOptions: {
         serving: chosenServing.servingChoice,
         chosenAmount: chosenServing.chosenAmount,

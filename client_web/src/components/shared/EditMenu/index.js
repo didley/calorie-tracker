@@ -27,7 +27,7 @@ export default function EditMenu({
 
   const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
-  const addFoodsMutation = useAddFood();
+  const addFoodsMutation = useAddFood(selectedEditDate);
   const removeFoodsMutation = useRemoveFoods();
 
   function handleMove() {

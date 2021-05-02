@@ -1,4 +1,7 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
+import { useAuth } from "hooks/useAuth";
+
+import { defaultUserFood } from "./defaultSessionData";
 
 import {
   getDBFoods,
@@ -12,10 +15,14 @@ import {
 } from "api/food";
 
 function useGetDBFoods(searchQuery) {
+  const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
+
   return useInfiniteQuery(
     ["dbFoods", searchQuery],
     ({ pageParam = 1 }) => getDBFoods(pageParam, searchQuery),
     {
+      enabled: !isGuestUser,
       getNextPageParam: (lastPage, _allPages) => {
         if (!lastPage.hasNextPage) return;
         return lastPage.page + 1;
@@ -23,18 +30,46 @@ function useGetDBFoods(searchQuery) {
     }
   );
 }
+
 function useGetUsersFoods(searchQuery) {
-  return useInfiniteQuery(
+  const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
+
+  // replicates react-query {useInfiniteQuery} API
+  const useSessionQuery = () => {
+    const fetchNextPage = () => {
+      return;
+    };
+
+    return {
+      fetchNextPage,
+      data: { pages: [{ data: defaultUserFood, hasNextPage: false, page: 1 }] },
+      isLoading: false,
+      isFetchingNextPage: false,
+    };
+  };
+
+  const sessionQuery = useSessionQuery();
+
+  const serverQuery = useInfiniteQuery(
     ["userFoods", searchQuery],
     ({ pageParam = 1 }) => getUsersFoods(pageParam, searchQuery),
     {
+      enabled: !isGuestUser,
       getNextPageParam: (lastPage, _allPages) => {
         if (!lastPage.hasNextPage) return;
         return lastPage.page + 1;
       },
     }
   );
+
+  let query;
+  if (isGuestUser) query = sessionQuery;
+  else query = serverQuery;
+
+  return query;
 }
+
 function useAddDBFood() {
   const queryClient = useQueryClient();
   return useMutation(addDBFood, {
@@ -43,6 +78,7 @@ function useAddDBFood() {
     },
   });
 }
+
 function useAddUserFood() {
   const queryClient = useQueryClient();
   return useMutation(addUserFood, {
@@ -51,6 +87,7 @@ function useAddUserFood() {
     },
   });
 }
+
 function useUpdateDBFood() {
   const queryClient = useQueryClient();
   return useMutation(updateDBFood, {
@@ -59,6 +96,7 @@ function useUpdateDBFood() {
     },
   });
 }
+
 function useUpdateUserFood() {
   const queryClient = useQueryClient();
   return useMutation(updateUserFood, {
@@ -67,6 +105,7 @@ function useUpdateUserFood() {
     },
   });
 }
+
 function useDeleteDBFood() {
   const queryClient = useQueryClient();
   return useMutation(deleteDBFood, {
@@ -75,6 +114,7 @@ function useDeleteDBFood() {
     },
   });
 }
+
 function useDeleteUserFood() {
   const queryClient = useQueryClient();
   return useMutation(deleteUserFood, {

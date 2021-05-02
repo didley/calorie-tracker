@@ -5,26 +5,9 @@ import { useSessionStorage } from "hooks/useSessionStorage";
 
 import { client } from "api/client";
 
-const authContext = createContext();
+import { defaultGuest } from "./defaultSessionData";
 
-const defaultGuest = {
-  measurements: {
-    currentWeightKg: 60,
-    heightCm: 80,
-  },
-  goals: {
-    energyGoalKJ: 8000,
-  },
-  preferences: {
-    metricSystem: true,
-    useKJ: false,
-  },
-  sex: "",
-  role: "guest",
-  name: "Guest",
-  email: "Guest@guest.com",
-  country: "AUS",
-};
+const authContext = createContext();
 
 export function ProvideAuth({ children }) {
   const auth = useProvideAuth();

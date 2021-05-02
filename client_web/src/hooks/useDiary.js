@@ -12,17 +12,33 @@ import {
 
 function useDiaryEntry(date) {
   const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
   // Local state used for react sortable as does not work with react-query state
   const [eatenList, setEatenList] = React.useState([]);
   const [toEatList, setToEatList] = React.useState([]);
 
-  const [sessionEntry, setSessionEntry] = useSessionStorage(`entry-${date}`, {
-    eaten: [],
-    toEat: [],
-    note: "",
-  });
+  // replicates return value of react-query useQuery
+  const useSessionQuery = () => {
+    const [sessionEntry, setSessionEntry] = useSessionStorage(`entry-${date}`, {
+      eaten: [],
+      toEat: [],
+      note: "",
+    });
 
-  const isGuestUser = user.role === "guest" ? true : false;
+    React.useEffect(() => {
+      if (isGuestUser) {
+        setEatenList(sessionEntry.eaten);
+        setToEatList(sessionEntry.toEat);
+      }
+    }, [sessionEntry.eaten, sessionEntry.toEat]);
+
+    return {
+      data: sessionEntry,
+      isLoading: false,
+      isSuccess: true,
+    };
+  };
+  const sessionQuery = useSessionQuery();
 
   const serverQuery = useQuery(
     ["entry", date],
@@ -36,30 +52,54 @@ function useDiaryEntry(date) {
     }
   );
 
-  // replicates return value of react-query useQuery
-  const sessionQuery = { data: sessionEntry, isLoading: false };
+  console.log({ sessionQuery, serverQuery });
 
   let query;
-  if (user.role === "guest") {
-    query = sessionQuery;
-  } else {
-    query = serverQuery;
-  }
+  if (isGuestUser) query = sessionQuery;
+  else query = serverQuery;
 
   return [query, { eatenList, setEatenList, toEatList, setToEatList }];
 }
 
-function useAddFood() {
+function useAddFood(date) {
+  const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
+
+  const useSessionMutation = (date) => {
+    const [sessionEntry, setSessionEntry] = useSessionStorage(`entry-${date}`, {
+      eaten: [],
+      toEat: [],
+      note: "",
+    });
+
+    const mutate = (params) => {
+      const { listName, items } = params;
+      console.log({ params });
+      sessionEntry[listName] = [...sessionEntry[listName], items];
+
+      setSessionEntry({ ...sessionEntry });
+    };
+    return { mutate };
+  };
+  const sessionMutator = useSessionMutation(date);
+
   const queryClient = useQueryClient();
-  return useMutation(addFoodToEntryList, {
+  const serverMutator = useMutation(addFoodToEntryList, {
+    enabled: !isGuestUser,
     onSuccess: (_response, variables) => {
       queryClient.invalidateQueries(["entry", variables.date]);
     },
   });
+
+  let mutator;
+  isGuestUser ? (mutator = sessionMutator) : (mutator = serverMutator);
+
+  return mutator;
 }
 
 function useUpdateEntry(date) {
   const { user } = useAuth();
+  const isGuestUser = user.role === "guest" ? true : false;
 
   const queryClient = useQueryClient();
   const serverMutator = useMutation(updateDiaryEntry, {
@@ -69,12 +109,10 @@ function useUpdateEntry(date) {
       const rollback = queryClient.getQueryData(["entry", newData.date]);
 
       const { eaten, toEat, note } = newData.updates;
+
       let updates;
-      if (note !== undefined) {
-        updates = { note };
-      } else {
-        updates = { eaten, toEat };
-      }
+      if (note !== undefined) updates = { note };
+      else updates = { eaten, toEat };
 
       queryClient.setQueryData(["entry", newData.date], (prev) => ({
         ...prev,
@@ -98,22 +136,17 @@ function useUpdateEntry(date) {
       note: "",
     });
 
-    // !working on : below not working (mutate not a fn), and newSessionEntries not spreading correctly
-
-    const mutate = ({ date, updates }) => {
+    const mutate = ({ updates }) => {
       sessionEntry.note = updates.note;
+
       setSessionEntry({ ...sessionEntry });
     };
-
     return { mutate };
   };
-
   const sessionMutator = useSessionMutation();
 
   let mutator;
-  user.role === "guest"
-    ? (mutator = sessionMutator)
-    : (mutator = serverMutator);
+  isGuestUser ? (mutator = sessionMutator) : (mutator = serverMutator);
 
   return mutator;
 }
