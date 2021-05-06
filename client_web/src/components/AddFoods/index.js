@@ -19,9 +19,13 @@ import {
 import useAddFoodReducer from "./useAddFoodReducer";
 
 export default function AddFoods() {
-  const { user } = useAuth();
+  const { user, isGuestUser } = useAuth();
   const [state, dispatch] = useAddFoodReducer();
   const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;
+
+  React.useEffect(() => {
+    if (isGuestUser) dispatch({ type: "CHANGE_TAB", payload: 2 });
+  }, [dispatch, isGuestUser]);
 
   const showEditBtnWhenAdmin = selectedFood?.isUserFood
     ? true
@@ -95,7 +99,7 @@ export default function AddFoods() {
             )}
           </TabPanel>
           <TabPanel>
-            <p>TODO</p>
+            <p className="py-6 text-center">Coming soon</p>
           </TabPanel>
           <TabPanel>
             {showFoodForm ? (

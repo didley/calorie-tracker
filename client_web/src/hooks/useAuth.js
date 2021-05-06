@@ -24,6 +24,8 @@ function useProvideAuth() {
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
   const [guest, setGuest, clearSession] = useSessionStorage("guest", false);
 
+  const isGuestUser = user?.role === "guest" ? true : false;
+
   const isUserLoggedIn = async () => {
     const data = await client.get("/user");
     const loggedInUser = data.user;
@@ -106,6 +108,7 @@ function useProvideAuth() {
     checkingLoggedIn,
     isUserLoggedIn,
     user,
+    isGuestUser,
     loginGuest,
     login,
     register,

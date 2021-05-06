@@ -15,8 +15,7 @@ import {
 } from "api/food";
 
 function useGetDBFoods(searchQuery) {
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
 
   return useInfiniteQuery(
     ["dbFoods", searchQuery],
@@ -32,8 +31,7 @@ function useGetDBFoods(searchQuery) {
 }
 
 function useGetUsersFoods(searchQuery) {
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
 
   // replicates react-query {useInfiniteQuery} API
   const useSessionQuery = () => {

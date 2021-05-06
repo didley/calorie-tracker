@@ -11,8 +11,7 @@ import {
 } from "api/diary";
 
 function useDiaryEntry(date) {
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
   // Local state used for react sortable as does not work with react-query state
   const [eatenList, setEatenList] = React.useState([]);
   const [toEatList, setToEatList] = React.useState([]);
@@ -62,8 +61,7 @@ function useDiaryEntry(date) {
 }
 
 function useAddFood(date) {
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
 
   const useSessionMutation = (date) => {
     const [sessionEntry, setSessionEntry] = useSessionStorage(`entry-${date}`, {
@@ -98,8 +96,7 @@ function useAddFood(date) {
 }
 
 function useUpdateEntry(date) {
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
 
   const queryClient = useQueryClient();
   const serverMutator = useMutation(updateDiaryEntry, {

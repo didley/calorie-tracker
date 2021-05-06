@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import FoodList from "./FoodList";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
 import { useGetDBFoods, useGetUsersFoods } from "hooks/useFood";
+import { useAuth } from "hooks/useAuth";
 
 export default function FoodTab({
   dispatch,
@@ -22,6 +23,14 @@ export default function FoodTab({
   const userScrollLoader = useInfiniteScroll(userFood.fetchNextPage, [
     asUserFood,
   ]);
+  const { isGuestUser } = useAuth();
+
+  if (isGuestUser && !asUserFood)
+    return (
+      <div>
+        <p className="py-6 text-center">Register to view database foods</p>
+      </div>
+    );
 
   return (
     <div>

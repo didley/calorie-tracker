@@ -25,8 +25,7 @@ export default function SelectedFood({
   const location = useLocation();
   const params = parseQuery(location.search);
   const addFoodMutation = useAddFood(params.date);
-  const { user } = useAuth();
-  const isGuestUser = user.role === "guest" ? true : false;
+  const { isGuestUser } = useAuth();
 
   useEffect(() => {
     setChosenServing({
