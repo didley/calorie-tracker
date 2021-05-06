@@ -1,12 +1,12 @@
 import React from "react";
-import PropTypes from "prop-types";
 
-const propTypes = {
-  onClick: PropTypes.func,
-  viewAsCal: PropTypes.bool.isRequired,
-};
+type ViewAsCalToggleProps = {
+  onClick:  React.MouseEventHandler<HTMLButtonElement>,
+  viewAsCal: Boolean,
+  className? : String
+}
 
-export default function ViewAsCalToggle({ onClick, viewAsCal, className }) {
+const ViewAsCalToggle = ({ onClick, viewAsCal, className }: ViewAsCalToggleProps)=> {
   return (
     <button
       onClick={onClick}
@@ -33,4 +33,4 @@ export default function ViewAsCalToggle({ onClick, viewAsCal, className }) {
   );
 }
 
-ViewAsCalToggle.propTypes = propTypes;
+export default ViewAsCalToggle
