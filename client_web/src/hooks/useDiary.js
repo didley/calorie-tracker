@@ -69,6 +69,7 @@ function useAddFood(date) {
       toEat: [],
       note: "",
     });
+    const [isSuccess, setIsSuccess] = React.useState(false);
 
     const mutate = (params) => {
       const { listName, items } = params;
@@ -76,8 +77,9 @@ function useAddFood(date) {
       sessionEntry[listName] = [...sessionEntry[listName], items];
 
       setSessionEntry({ ...sessionEntry });
+      setIsSuccess(true);
     };
-    return { mutate };
+    return { mutate, isSuccess };
   };
   const sessionMutator = useSessionMutation(date);
 
