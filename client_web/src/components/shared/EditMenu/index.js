@@ -28,7 +28,7 @@ export default function EditMenu({
   const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
   const addFoodsMutation = useAddFood(selectedEditDate);
-  const removeFoodsMutation = useRemoveFoods();
+  const removeFoodsMutation = useRemoveFoods(selectedDate);
 
   function handleMove() {
     if (state.showDatePicker) {

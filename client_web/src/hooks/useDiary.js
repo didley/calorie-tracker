@@ -2,6 +2,7 @@ import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useSessionStorage } from "hooks/useSessionStorage";
 import { useAuth } from "hooks/useAuth";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   getDiaryEntryByDate,
@@ -71,10 +72,10 @@ function useAddFood(date) {
     });
     const [isSuccess, setIsSuccess] = React.useState(false);
 
-    const mutate = (params) => {
-      const { listName, items } = params;
-      console.log({ params });
-      sessionEntry[listName] = [...sessionEntry[listName], items];
+    const mutate = ({ listName, items }) => {
+      const itemsWithIds = { ...items, _id: uuidv4() };
+
+      sessionEntry[listName] = [...sessionEntry[listName], itemsWithIds];
 
       setSessionEntry({ ...sessionEntry });
       setIsSuccess(true);
@@ -92,7 +93,8 @@ function useAddFood(date) {
   });
 
   let mutator;
-  isGuestUser ? (mutator = sessionMutator) : (mutator = serverMutator);
+  if (isGuestUser) mutator = sessionMutator;
+  else mutator = serverMutator;
 
   return mutator;
 }
@@ -145,17 +147,53 @@ function useUpdateEntry(date) {
   const sessionMutator = useSessionMutation();
 
   let mutator;
-  isGuestUser ? (mutator = sessionMutator) : (mutator = serverMutator);
+  if (isGuestUser) mutator = sessionMutator;
+  else mutator = serverMutator;
 
   return mutator;
 }
 
-function useRemoveFoods() {
+function useRemoveFoods(date) {
+  const { isGuestUser } = useAuth();
   const queryClient = useQueryClient();
-  return useMutation(removeFoodsByIds, {
+
+  const useSessionMutation = () => {
+    const [sessionEntry, setSessionEntry] = useSessionStorage(`entry-${date}`, {
+      eaten: [],
+      toEat: [],
+      note: "",
+    });
+
+    const mutate = ({ date, selectedIds }) => {
+      const eatenFiltered = sessionEntry.eaten.filter(
+        (item) => !selectedIds.includes(item._id)
+      );
+      const toEatFiltered = sessionEntry.toEat.filter(
+        (item) => !selectedIds.includes(item._id)
+      );
+
+      const newEntry = {
+        eaten: eatenFiltered,
+        toEat: toEatFiltered,
+        note: sessionEntry.note,
+      };
+
+      setSessionEntry(newEntry);
+    };
+    return { mutate };
+  };
+  const sessionMutator = useSessionMutation();
+
+  const serverMutator = useMutation(removeFoodsByIds, {
     onSuccess: (_response, variables) => {
       queryClient.invalidateQueries(["entry", variables.date]);
     },
   });
+
+  let mutator;
+  if (isGuestUser) mutator = sessionMutator;
+  else mutator = serverMutator;
+
+  return mutator;
 }
 export { useDiaryEntry, useAddFood, useUpdateEntry, useRemoveFoods };
