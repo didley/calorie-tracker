@@ -12,14 +12,14 @@ export const useSessionStorage = (key, defaultValue) => {
     if (sessionValue !== null) {
       setStateValue(JSON.parse(sessionValue));
     } else {
-      setStateValue(defaultValue);
       window.sessionStorage.setItem(key, JSON.stringify(defaultValue));
+      setStateValue(defaultValue);
     }
   }, [key, setStateValue]);
 
   const setSessionValue = (newValue) => {
-    setStateValue(newValue);
     window.sessionStorage.setItem(key, JSON.stringify(newValue));
+    setStateValue(newValue);
   };
 
   const sessionStorageClear = () => {

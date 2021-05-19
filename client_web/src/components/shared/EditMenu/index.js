@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import DatePicker from "react-datepicker";
 import dateOnly from "utils/dateOnly";
 
-import { useAddFood, useRemoveFoods } from "hooks/useDiary";
+import { useDiary } from "hooks/useDiary";
 
 const propTypes = {
   selectedItems: PropTypes.array.isRequired,
@@ -27,7 +27,8 @@ export default function EditMenu({
 
   const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
-  const addFoodsMutation = useAddFood(selectedEditDate);
+  const { useAddFood, useRemoveFoods } = useDiary(selectedEditDate);
+  const addFoodsMutation = useAddFood();
   const removeFoodsMutation = useRemoveFoods(selectedDate);
 
   function handleMove() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useDiaryEntry, useUpdateEntry } from "hooks/useDiary";
+import { useDiary } from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
 import { Link, useParams, useHistory } from "react-router-dom";
 
@@ -25,11 +25,18 @@ export default function Diary() {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
 
-  const updateMutation = useUpdateEntry(selectedDate);
+  const { useDiaryEntry, useUpdateEntry } = useDiary(selectedDate);
+  const updateMutation = useUpdateEntry();
   const [
     { data = {}, isLoading, isSuccess, error },
     { eatenList = [], setEatenList, toEatList = [], setToEatList },
-  ] = useDiaryEntry(selectedDate);
+  ] = useDiaryEntry();
+  const [reRenderList, setReRenderList] = useState([]);
+
+  useEffect(() => {
+    setReRenderList([eatenList, toEatList]);
+  }, [eatenList, toEatList]);
+
   const { totalEatenKJ = 0 } = data;
 
   const [note, setNote] = useState(null);

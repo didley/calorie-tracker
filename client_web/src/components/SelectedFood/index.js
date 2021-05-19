@@ -4,7 +4,7 @@ import { parseQuery } from "utils/parseQuery";
 import Table from "./Table";
 import AmountInput from "./AmountInput";
 import { Button } from "components/shared/styling";
-import { useAddFood } from "hooks/useDiary";
+import { useDiary } from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
 
 export default function SelectedFood({
@@ -24,7 +24,8 @@ export default function SelectedFood({
   const [chosenServing, setChosenServing] = useState({});
   const location = useLocation();
   const params = parseQuery(location.search);
-  const addFoodMutation = useAddFood(params.date);
+  const { useAddFood } = useDiary(params.date);
+  const addFoodMutation = useAddFood();
   const { isGuestUser } = useAuth();
 
   useEffect(() => {
