@@ -85,6 +85,7 @@ function useProvideAuth() {
     try {
       await client.post("/user/logout");
       setUser(null);
+      clearSession();
       clearAlerts();
     } catch (err) {
       setTimedAlert("error", err);
