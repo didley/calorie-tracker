@@ -16,7 +16,6 @@
     "scheduler": "NODE_ENV=development nodemon --experimental-specifier-resolution=node -r dotenv/config src/utils/scheduler/index.js"
   },
   "dependencies": {
-    "agenda": "^4.1.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
@@ -32,7 +31,6 @@
     "passport": "^0.4.1",
     "passport-local": "^1.0.0",
     "path": "^0.12.7",
-    "pm2": "^4.5.5",
     "validator": "^13.5.2"
   },
   "devDependencies": {

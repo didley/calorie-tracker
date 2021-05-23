@@ -1,6 +1,5 @@
 import express from "express";
 import cookieParser from "cookie-parser";
-import bodyParser from "body-parser";
 import session from "express-session";
 import connectMongo from "connect-mongo";
 import passport from "passport";
@@ -16,7 +15,7 @@ mongoose.set("debug", process.env.MONGOOSE_DEBUG === "true" || false);
 const app = express();
 const MongoStore = connectMongo(session);
 app.use(cookieParser());
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(morgan("dev"));
 app.use(helmet());
 
