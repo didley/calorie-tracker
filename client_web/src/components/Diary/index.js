@@ -31,11 +31,6 @@ export default function Diary() {
     { data = {}, isLoading, isSuccess, error },
     { eatenList = [], setEatenList, toEatList = [], setToEatList },
   ] = useDiaryEntry();
-  const [reRenderList, setReRenderList] = useState([]);
-
-  useEffect(() => {
-    setReRenderList([eatenList, toEatList]);
-  }, [eatenList, toEatList]);
 
   const { totalEatenKJ = 0 } = data;
 

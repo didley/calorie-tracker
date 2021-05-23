@@ -21,22 +21,15 @@ export const useDiary = (date) => {
     note: "",
   });
 
-  function useDiaryEntry() {
-    const [sessionEntry] = useSessionStorage(`entry-${date}`, {
-      eaten: [],
-      toEat: [],
-      note: "",
-    });
-    // Local state used for react sortable as does not work with react-query state
-    const [eatenList, setEatenList] = React.useState([]);
-    const [toEatList, setToEatList] = React.useState([]);
+  const setSessionEaten = (update) =>
+    setSessionEntry({ eaten: update, ...sessionEntry });
 
-    React.useEffect(() => {
-      if (isGuestUser) {
-        setEatenList(sessionEntry.eaten);
-        setToEatList(sessionEntry.toEat);
-      }
-    }, [sessionEntry.eaten, sessionEntry.toEat]);
+  const setSessionToEat = (update) =>
+    setSessionEntry({ toEat: update, ...sessionEntry });
+
+  function useDiaryEntry() {
+    const [localEatenListState, setLocalEatenListState] = React.useState([]);
+    const [localToEatListState, setLocalToEatListState] = React.useState([]);
 
     const useSessionQuery = () => {
       return {
@@ -53,17 +46,41 @@ export const useDiary = (date) => {
       {
         enabled: !isGuestUser,
         onSuccess: (response) => {
-          setEatenList(response.eaten);
-          setToEatList(response.toEat);
+          setLocalEatenListState(response.eaten);
+          setLocalToEatListState(response.toEat);
         },
       }
     );
 
     let query;
-    if (isGuestUser) query = sessionQuery;
-    else query = serverQuery;
+    let eatenList;
+    let toEatList;
+    let setEatenList;
+    let setToEatList;
 
-    return [query, { eatenList, setEatenList, toEatList, setToEatList }];
+    if (isGuestUser) {
+      query = sessionQuery;
+      eatenList = sessionEntry.eaten;
+      toEatList = sessionEntry.toEat;
+      setEatenList = setSessionEaten;
+      setToEatList = setSessionToEat;
+    } else {
+      query = serverQuery;
+      eatenList = localEatenListState;
+      toEatList = localToEatListState;
+      setEatenList = setLocalEatenListState;
+      setToEatList = setLocalToEatListState;
+    }
+
+    return [
+      query,
+      {
+        eatenList,
+        setEatenList,
+        toEatList,
+        setToEatList,
+      },
+    ];
   }
 
   function useAddFood() {
