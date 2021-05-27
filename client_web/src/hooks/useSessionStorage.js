@@ -24,13 +24,20 @@ export const useSessionStorage = (key, defaultValue = null) => {
   const [value, setValue] = useState(
     getValueFromSessionStorage(key, defaultValue)
   );
+
   console.log({ value });
 
   useEffect(() => {
-    saveValueToSessionStorage(key, value);
-  }, [key, value]);
+    setValue(getValueFromSessionStorage(key, defaultValue));
+  }, [key]);
+
+  const set = (valueToSet) => {
+    console.log({ valueToSet });
+    setValue(valueToSet);
+    saveValueToSessionStorage(key, valueToSet);
+  };
 
   const clearSessionStorage = () => sessionStorage.clear();
 
-  return [value, setValue, clearSessionStorage];
+  return [value, set, clearSessionStorage];
 };
