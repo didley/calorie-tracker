@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDiary } from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
-import { Link, useParams, useHistory } from "react-router-dom";
+import { Link, useParams, useHistory, useRouteMatch } from "react-router-dom";
 
 import DatePickerContainer from "./DatePickerContainer";
 import SummaryMenu from "./SummaryMenu";
@@ -25,7 +25,12 @@ export default function Diary() {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
 
-  const { useDiaryEntry, useUpdateEntry } = useDiary(selectedDate);
+  const {
+    useDiaryEntry,
+    useUpdateEntry,
+    useAddFood,
+    useRemoveFoods,
+  } = useDiary(selectedDate);
   const updateMutation = useUpdateEntry();
   const [
     { data = {}, isLoading, isSuccess, error },
@@ -122,6 +127,8 @@ export default function Diary() {
                 selectedItems={selectedFoods}
                 selectedDate={selectedDate}
                 setShowSelectBtn={setShowSelectBtn}
+                useAddFood={useAddFood}
+                useRemoveFoods={useRemoveFoods}
               />
             )}
             {showSelectBtn || (

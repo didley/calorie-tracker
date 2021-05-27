@@ -14,6 +14,8 @@ export default function EditMenu({
   selectedItems,
   selectedDate,
   setShowSelectBtn,
+  useAddFood,
+  useRemoveFoods,
 }) {
   const initialState = {
     showDatePicker: false,
@@ -27,7 +29,7 @@ export default function EditMenu({
 
   const [state, setState] = useState(initialState);
   const [selectedEditDate, setSelectedEditDate] = useState(selectedDate);
-  const { useAddFood, useRemoveFoods } = useDiary(selectedEditDate);
+  // const { useAddFood, useRemoveFoods } = useDiary(selectedEditDate);
   const addFoodsMutation = useAddFood();
   const removeFoodsMutation = useRemoveFoods(selectedDate);
 
@@ -92,14 +94,15 @@ export default function EditMenu({
     });
   }
 
-  function handleDelete() {
+  async function handleDelete() {
     if (state.showConfirmation) {
       const selectedIds = selectedItems.map((item) => item._id);
 
-      removeFoodsMutation.mutate({
+      await removeFoodsMutation.mutate({
         date: selectedDate,
         selectedIds,
       });
+
       setState(initialState);
       setShowSelectBtn(false);
       return;

@@ -1,33 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
-
-// export const useSessionStorage = (key, defaultValue) => {
-//   const [stateValue, setStateValue] = useState(() => {
-//     const sessionValue = window.sessionStorage.getItem(key);
-//     return sessionValue ? JSON.parse(sessionValue) : defaultValue;
-//   });
-
-//   useEffect(() => {
-//     const sessionValue = window.sessionStorage.getItem(key);
-
-//     if (sessionValue !== null) {
-//       setStateValue(JSON.parse(sessionValue));
-//     } else {
-//       window.sessionStorage.setItem(key, JSON.stringify(defaultValue));
-//       setStateValue(defaultValue);
-//     }
-//   }, [key, stateValue]);
-
-//   const setSessionValue = (newValue) => {
-//     window.sessionStorage.setItem(key, JSON.stringify(newValue));
-//     setStateValue(newValue);
-//   };
-
-//   const sessionStorageClear = () => {
-//     window.sessionStorage.clear();
-//   };
-
-//   return [stateValue, setSessionValue, sessionStorageClear];
-// };
+import { useState, useEffect } from "react";
 
 const getValueFromSessionStorage = (key, defaultValue) => {
   if (typeof sessionStorage === undefined) return defaultValue;
@@ -50,11 +21,16 @@ const saveValueToSessionStorage = (key, valueToSet) => {
 };
 
 export const useSessionStorage = (key, defaultValue = null) => {
-  const storedValue = getValueFromSessionStorage(key, defaultValue);
+  const [value, setValue] = useState(
+    getValueFromSessionStorage(key, defaultValue)
+  );
+  console.log({ value });
 
-  const set = (newValue) => saveValueToSessionStorage(key, newValue);
+  useEffect(() => {
+    saveValueToSessionStorage(key, value);
+  }, [key, value]);
 
   const clearSessionStorage = () => sessionStorage.clear();
 
-  return [storedValue, set, clearSessionStorage];
+  return [value, setValue, clearSessionStorage];
 };

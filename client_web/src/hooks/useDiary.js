@@ -174,6 +174,7 @@ export const useDiary = (date) => {
           note: sessionEntry.note,
         };
 
+        console.log({ newEntry });
         setSessionEntry(newEntry);
       };
       return { mutate };
