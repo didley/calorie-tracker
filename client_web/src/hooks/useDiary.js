@@ -1,6 +1,10 @@
 import React from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { useSessionStorage } from "hooks/useSessionStorage";
+import {
+  useSessionStorage,
+  saveValueToSessionStorage,
+  getValueFromSessionStorage,
+} from "hooks/useSessionStorage";
 import { useAuth } from "hooks/useAuth";
 import { v4 as uuidv4 } from "uuid";
 
@@ -87,12 +91,19 @@ export const useDiary = (date) => {
     const useSessionMutation = () => {
       const [isSuccess, setIsSuccess] = React.useState(false);
 
-      const mutate = ({ listName, items }) => {
-        const itemsWithIds = { ...items, _id: uuidv4() };
+      const mutate = ({ listName, items, date }) => {
+        const itemsWithIds = items.map((item) => ({ ...item, _id: uuidv4() }));
 
-        sessionEntry[listName] = [...sessionEntry[listName], itemsWithIds];
+        const entryToAddTo = getValueFromSessionStorage(`entry-${date}`, {
+          eaten: [],
+          toEat: [],
+          note: "",
+        });
 
-        setSessionEntry({ ...sessionEntry });
+        entryToAddTo[listName] = [...entryToAddTo[listName], ...itemsWithIds];
+
+        saveValueToSessionStorage(`entry-${date}`, entryToAddTo);
+
         setIsSuccess(true);
       };
       return { mutate, isSuccess };

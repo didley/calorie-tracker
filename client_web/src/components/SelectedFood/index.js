@@ -88,10 +88,11 @@ export default function SelectedFood({
       },
     };
 
+    console.log({ foodItem });
     addFoodMutation.mutate({
       date: params.date,
       listName: params.list,
-      items: foodItem,
+      items: [foodItem],
     });
     //TODO: error handling
   }
