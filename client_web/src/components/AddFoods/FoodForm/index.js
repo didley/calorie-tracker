@@ -25,6 +25,7 @@ export default function FoodForm({
   const viewAsEditForm = foodToEdit !== null;
 
   async function handleSubmit(values) {
+    console.log({ values }, "in handleSubmit");
     const valuesCopy = JSON.parse(JSON.stringify(values));
     valuesCopy.isLiquid = parseBoolString(valuesCopy.isLiquid, false);
     if (valuesCopy.isCal === "true") {
@@ -45,7 +46,7 @@ export default function FoodForm({
       dispatch({ type: "SET_SELECTED", payload: res.data });
       dispatch({ type: "CLEAR_FOOD_FORM" });
     } catch (err) {
-      return;
+      console.error(err);
     }
   }
 

@@ -8,17 +8,19 @@ import FoodForm from "./FoodForm";
 import FoodTab from "./FoodTab";
 import SelectedFood from "components/SelectedFood";
 
-import {
-  useAddDBFood,
-  useUpdateDBFood,
-  useDeleteDBFood,
-  useAddUserFood,
-  useUpdateUserFood,
-  useDeleteUserFood,
-} from "hooks/useFood";
+import { useFood } from "hooks/useFood";
 import useAddFoodReducer from "./useAddFoodReducer";
 
 export default function AddFoods() {
+  const {
+    useAddDBFood,
+    useUpdateDBFood,
+    useDeleteDBFood,
+    useAddUserFood,
+    useUpdateUserFood,
+    useDeleteUserFood,
+  } = useFood();
+
   const { user, isGuestUser } = useAuth();
   const [state, dispatch] = useAddFoodReducer();
   const { tabIndex, selectedFood, foodToEdit, showFoodForm } = state;

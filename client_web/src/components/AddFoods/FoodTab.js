@@ -4,7 +4,7 @@ import { useDebounce } from "hooks/useDebounce";
 import SearchBar from "./SearchBar";
 import FoodList from "./FoodList";
 import useInfiniteScroll from "hooks/useInfiniteScroll";
-import { useGetDBFoods, useGetUsersFoods } from "hooks/useFood";
+import { useFood } from "hooks/useFood";
 import { useAuth } from "hooks/useAuth";
 
 export default function FoodTab({
@@ -16,6 +16,7 @@ export default function FoodTab({
 
   const debouncedSearchValue = useDebounce(searchValue);
 
+  const { useGetDBFoods, useGetUsersFoods } = useFood();
   const dbFood = useGetDBFoods(debouncedSearchValue);
   const userFood = useGetUsersFoods(debouncedSearchValue);
 

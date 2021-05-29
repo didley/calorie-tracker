@@ -1,13 +1,18 @@
 import { useState, useEffect } from "react";
 
 export const getValueFromSessionStorage = (key, defaultValue) => {
-  if (typeof sessionStorage === undefined) return defaultValue;
+  const setToDefaultValue = () => {
+    sessionStorage.setItem(key, JSON.stringify(defaultValue));
+    return defaultValue;
+  };
 
-  const storedValue = sessionStorage.getItem(key) || defaultValue;
+  if (typeof sessionStorage === undefined) setToDefaultValue();
+  let storedValue = sessionStorage.getItem(key) || setToDefaultValue();
 
   try {
     return JSON.parse(storedValue);
   } catch (err) {
+    console.log("error in useSessionStorage JSON parse");
     console.error(err);
   }
 
