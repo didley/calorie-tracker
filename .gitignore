@@ -3,7 +3,7 @@
 # dependencies
 **/node_modules
 
-/src/tailwind.output.css
+tailwind.output.css
 
 /.pnp
 .pnp.js

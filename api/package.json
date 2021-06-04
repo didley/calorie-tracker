@@ -1,6 +1,6 @@
 {
   "type": "module",
-  "name": "calorie-tracker-api",
+  "name": "api",
   "author": "DoneDidley",
   "license": "MIT",
   "version": "1.0.0",
