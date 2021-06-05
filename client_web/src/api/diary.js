@@ -4,10 +4,10 @@ import {
   getValueFromSessionStorage,
   saveValueToSessionStorage,
 } from "utils/sessionStorage";
-import { isGuestUser } from "utils/isGuestUser";
+import { getIsGuestUser } from "utils/isGuestUser";
 
 function getDiaryEntryByDate(date) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     return getValueFromSessionStorage(`entry-${date}`, {
       eaten: [],
       toEat: [],
@@ -19,7 +19,7 @@ function getDiaryEntryByDate(date) {
 }
 
 function addFoodToEntryList({ date, listName, items }) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const diaryEntry = getValueFromSessionStorage(`entry-${date}`, {
       eaten: [],
       toEat: [],
@@ -38,7 +38,7 @@ function addFoodToEntryList({ date, listName, items }) {
 }
 
 function updateDiaryEntry({ date, updates }) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const diaryEntry = getValueFromSessionStorage(`entry-${date}`, {
       eaten: [],
       toEat: [],
@@ -55,7 +55,7 @@ function updateDiaryEntry({ date, updates }) {
 }
 
 function removeFoodsByIds({ date, selectedIds }) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const diaryEntry = getValueFromSessionStorage(`entry-${date}`, {
       eaten: [],
       toEat: [],

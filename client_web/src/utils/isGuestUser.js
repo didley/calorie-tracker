@@ -5,7 +5,8 @@ import {
 
 const GUEST_SESSION_KEY = "guest";
 
-export const isGuestUser = getValueFromSessionStorage(GUEST_SESSION_KEY, false);
+export const getIsGuestUser = () =>
+  getValueFromSessionStorage(GUEST_SESSION_KEY, false);
 
 export const setGuestUser = {
   true: () => saveValueToSessionStorage(GUEST_SESSION_KEY, true),

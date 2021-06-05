@@ -1,5 +1,5 @@
 import { useInfiniteQuery, useMutation, useQueryClient } from "react-query";
-import { isGuestUser } from "utils/isGuestUser";
+import { useAuth } from "hooks/useAuth";
 
 import {
   getDBFoods,
@@ -14,6 +14,7 @@ import {
 
 export const useFood = () => {
   const queryClient = useQueryClient();
+  const { isGuestUser } = useAuth();
 
   function useGetDBFoods(searchQuery) {
     return useInfiniteQuery(

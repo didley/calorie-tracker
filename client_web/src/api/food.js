@@ -7,7 +7,7 @@ import {
   saveValueToSessionStorage,
 } from "utils/sessionStorage";
 
-import { isGuestUser } from "utils/isGuestUser";
+import { getIsGuestUser } from "utils/isGuestUser";
 
 function getDBFoods(page = 1, searchQuery) {
   return client.get(
@@ -15,7 +15,7 @@ function getDBFoods(page = 1, searchQuery) {
   );
 }
 function getUsersFoods(page = 1, searchQuery) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const sessionUserFoods = getValueFromSessionStorage(
       "userFoods",
       defaultUserFood
@@ -32,7 +32,7 @@ function addDBFood(food) {
   return client.post("/foods", { body: food });
 }
 function addUserFood(food) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const foodId = uuidv4();
     const apiFoodDetails = {
       _id: foodId,
@@ -66,7 +66,7 @@ function updateDBFood({ id, food }) {
   return client.put(`/foods/${id}`, { body: food });
 }
 function updateUserFood({ id, food }) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const userFoodsList = getValueFromSessionStorage("userFoods", []);
     const foodIndex = userFoodsList.findIndex((el) => el._id === food._id);
     userFoodsList[foodIndex] = food;
@@ -81,7 +81,7 @@ function deleteDBFood(ids) {
   return client.delete(`/foods/${ids}`);
 }
 function deleteUserFood(ids) {
-  if (isGuestUser) {
+  if (getIsGuestUser()) {
     const sessionUserFoods = getValueFromSessionStorage(
       "userFoods",
       defaultUserFood

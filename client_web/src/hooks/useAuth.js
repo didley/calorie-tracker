@@ -2,7 +2,8 @@ import { useState, useContext, createContext } from "react";
 
 import { useAlert } from "hooks/useAlert";
 import { clearSessionStorage } from "utils/sessionStorage";
-import { isGuestUser, setGuestUser } from "utils/isGuestUser";
+import { getIsGuestUser, setGuestUser } from "utils/isGuestUser";
+import { useQueryClient } from "react-query";
 
 import { client } from "api/client";
 
@@ -23,6 +24,9 @@ function useProvideAuth() {
   const { setIsLoading, setTimedAlert, clearAlerts } = useAlert();
   const [user, setUser] = useState(null);
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
+  const queryClient = useQueryClient();
+
+  const isGuestUser = getIsGuestUser();
 
   const isUserLoggedIn = async () => {
     const data = await client.get("/user");
@@ -33,7 +37,7 @@ function useProvideAuth() {
       clearSessionStorage();
       setUser(loggedInUser);
       setCheckingLoggedIn(false);
-    } else if (isGuestUser) {
+    } else if (isGuestUser()) {
       setUser(defaultGuest);
       setCheckingLoggedIn(false);
     } else {
@@ -81,10 +85,11 @@ function useProvideAuth() {
 
   const logout = async () => {
     try {
-      await client.post("/user/logout");
+      queryClient.invalidateQueries();
       setUser(null);
       clearSessionStorage();
       clearAlerts();
+      await client.post("/user/logout");
     } catch (err) {
       setTimedAlert("error", err);
     }
