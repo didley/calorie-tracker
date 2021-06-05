@@ -35,7 +35,7 @@ export const defaultUserFood = [
     },
     country: "AUS",
     isDeleted: false,
-    isUserFood: false,
+    isUserFood: true,
     id: "605bfd678cf5520d0306d4b9",
   },
   {
@@ -55,13 +55,14 @@ export const defaultUserFood = [
     },
     servingOptions: [
       {
+        _id: "h67lka4j5h6l34khg4asdhjo89vh4a25ioln",
         servingName: "3 pack",
         servingSize: 3,
       },
     ],
     country: "AUS",
     isDeleted: false,
-    isUserFood: false,
+    isUserFood: true,
     id: "605bfd678cf5520d0306d4ba",
   },
   {
@@ -81,13 +82,14 @@ export const defaultUserFood = [
     },
     servingOptions: [
       {
+        _id: "h67lk4j5h6l34khg4oafsdh89vh425ioln",
         servingName: "6 pack",
         servingSize: 6,
       },
     ],
     country: "AUS",
     isDeleted: false,
-    isUserFood: false,
+    isUserFood: true,
     id: "605bfd678cf5520d0306d4bb",
   },
   {
@@ -108,13 +110,14 @@ export const defaultUserFood = [
     },
     servingOptions: [
       {
+        _id: "h67lk4j5h6l34khg4o89vh425ioln",
         servingName: "4 Pack",
         servingSize: 4,
       },
     ],
     country: "AUS",
     isDeleted: false,
-    isUserFood: false,
+    isUserFood: true,
     id: "605bfd678cf5520d0306d4bc",
   },
 ];
