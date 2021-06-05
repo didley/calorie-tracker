@@ -25,12 +25,8 @@ export default function Diary() {
   const [selectedFoods, setSelectedFoods] = useState([]);
   const [viewAsCal, setViewAsCal] = useState(!auth.user.preferences?.useKJ);
 
-  const {
-    useDiaryEntry,
-    useUpdateEntry,
-    useAddFood,
-    useRemoveFoods,
-  } = useDiary(selectedDate);
+  const { useDiaryEntry, useUpdateEntry, useAddFood, useRemoveFoods } =
+    useDiary(selectedDate);
   const updateMutation = useUpdateEntry();
   const [
     { data = {}, isLoading, isSuccess, error },
@@ -39,7 +35,7 @@ export default function Diary() {
 
   const { totalEatenKJ = 0 } = data;
 
-  const [note, setNote] = useState(null);
+  const [note, setNote] = useState("");
 
   // !clean mess
   useEffect(() => {
