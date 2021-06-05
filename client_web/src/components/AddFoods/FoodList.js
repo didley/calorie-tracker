@@ -16,13 +16,14 @@ export default function FoodList({
       {data &&
         data.pages.map((foods, index) => (
           <React.Fragment key={index}>
-            {foods.data.map((food) => (
-              <ListItem
-                key={food._id}
-                food={food}
-                onClick={() => onClickFn(food)}
-              />
-            ))}
+            {foods &&
+              foods.data.map((food) => (
+                <ListItem
+                  key={food._id}
+                  food={food}
+                  onClick={() => onClickFn(food)}
+                />
+              ))}
           </React.Fragment>
         ))}
       <div className="text-center" ref={scrollRef}>
