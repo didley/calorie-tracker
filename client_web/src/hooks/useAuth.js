@@ -1,11 +1,12 @@
-import React, { useState, useContext, createContext } from "react";
+import { useState, useContext, createContext } from "react";
 
 import { useAlert } from "hooks/useAlert";
-import { useSessionStorage } from "hooks/useSessionStorage";
+import { clearSessionStorage } from "utils/sessionStorage";
+import { isGuestUser, setGuestUser } from "utils/isGuestUser";
 
 import { client } from "api/client";
 
-import { defaultGuest } from "./defaultSessionData";
+import { defaultGuest } from "../utils/defaultSessionData";
 
 const authContext = createContext();
 
@@ -22,9 +23,6 @@ function useProvideAuth() {
   const { setIsLoading, setTimedAlert, clearAlerts } = useAlert();
   const [user, setUser] = useState(null);
   const [checkingLoggedIn, setCheckingLoggedIn] = useState(true);
-  const [guest, setGuest, clearSession] = useSessionStorage("guest", false);
-
-  const isGuestUser = user?.role === "guest" ? true : false;
 
   const isUserLoggedIn = async () => {
     const data = await client.get("/user");
@@ -32,15 +30,15 @@ function useProvideAuth() {
 
     setCheckingLoggedIn(true);
     if (loggedInUser !== null) {
-      clearSession();
+      clearSessionStorage();
       setUser(loggedInUser);
       setCheckingLoggedIn(false);
-    } else if (guest) {
+    } else if (isGuestUser) {
       setUser(defaultGuest);
       setCheckingLoggedIn(false);
     } else {
       setUser(null);
-      setGuest(false);
+      setGuestUser.false();
       setCheckingLoggedIn(false);
     }
   };
@@ -48,7 +46,7 @@ function useProvideAuth() {
   const loginGuest = async () => {
     setCheckingLoggedIn(true);
     try {
-      setGuest(true);
+      setGuestUser.true();
       setUser(defaultGuest);
       setTimedAlert("alert", "Welcome Guest");
       setCheckingLoggedIn(false);
@@ -85,7 +83,7 @@ function useProvideAuth() {
     try {
       await client.post("/user/logout");
       setUser(null);
-      clearSession();
+      clearSessionStorage();
       clearAlerts();
     } catch (err) {
       setTimedAlert("error", err);
