@@ -11,7 +11,7 @@ The frontend is using React with react-query for the server state management, th
 ```console
 $ cd calorie-tracker
 $ yarn install
-// replace remove .example form /api/.env.example $ /client_web/.env.example and fill in
+// Remove .example form /api/.env.example & /client_web/.env.example and fill in
 ```
 ## Running
 
