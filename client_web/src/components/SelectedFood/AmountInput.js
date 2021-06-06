@@ -34,17 +34,13 @@ export default function AmountInput({
               className="w-full py-2"
             >
               {servingOptions &&
-                servingOptions.map((option, index) => {
-                  console.log({ option });
-
-                  return (
-                    <option key={option._id} value={index}>
-                      {`${option.servingName} (${option.servingSize}${
-                        isLiquid ? "mL" : "g"
-                      })`}
-                    </option>
-                  );
-                })}
+                servingOptions.map((option, index) => (
+                  <option key={option._id} value={index}>
+                    {`${option.servingName} (${option.servingSize}${
+                      isLiquid ? "mL" : "g"
+                    })`}
+                  </option>
+                ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700"></div>
           </div>

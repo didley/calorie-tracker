@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
+import { useState } from "react";
+
 import { Page, Container, Button } from "components/shared/styling";
 
-import { useAlert } from "hooks/useAlert";
-import { useAuth } from "hooks/useAuth";
 import EmailRegisterForm from "./EmailRegisterForm";
 import LineWithText from "./LineWithText";
 import LoginGuestBtn from "components/shared/LoginGuestBtn";

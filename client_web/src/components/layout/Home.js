@@ -1,11 +1,8 @@
-import React from "react";
-import { Page, Container, Button } from "components/shared/styling";
-import { useHistory, Link } from "react-router-dom";
+import { Button } from "components/shared/styling";
+import { useHistory } from "react-router-dom";
 import "./Home.css";
 
 import heroImage from "assets/heroImage.jpeg";
-import diaryImg from "assets/diary.png";
-import addFoodImg from "assets/addFood.png";
 import LoginGuestBtn from "components/shared/LoginGuestBtn";
 
 export default function Home() {

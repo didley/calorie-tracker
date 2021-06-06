@@ -37,7 +37,7 @@ function useProvideAuth() {
       clearSessionStorage();
       setUser(loggedInUser);
       setCheckingLoggedIn(false);
-    } else if (isGuestUser()) {
+    } else if (isGuestUser) {
       setUser(defaultGuest);
       setCheckingLoggedIn(false);
     } else {

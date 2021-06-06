@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useDiary } from "hooks/useDiary";
 import { useAuth } from "hooks/useAuth";
-import { Link, useParams, useHistory, useRouteMatch } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 import DatePickerContainer from "./DatePickerContainer";
 import SummaryMenu from "./SummaryMenu";
@@ -29,7 +29,7 @@ export default function Diary() {
     useDiary(selectedDate);
   const updateMutation = useUpdateEntry();
   const [
-    { data = {}, isLoading, isSuccess, error },
+    { data = {}, isLoading, isSuccess },
     { eatenList = [], setEatenList, toEatList = [], setToEatList },
   ] = useDiaryEntry();
 

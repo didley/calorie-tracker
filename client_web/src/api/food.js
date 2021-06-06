@@ -87,9 +87,9 @@ function deleteUserFood(ids) {
       defaultUserFood
     );
 
-    const updatedSessionUserFoods = sessionUserFoods.filter((food) => {
-      if (!ids.includes(food._id)) return food;
-    });
+    const updatedSessionUserFoods = sessionUserFoods.filter(
+      (food) => !ids.includes(food._id)
+    );
 
     return saveValueToSessionStorage("userFoods", updatedSessionUserFoods);
   }

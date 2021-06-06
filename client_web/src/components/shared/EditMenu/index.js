@@ -36,7 +36,6 @@ export default function EditMenu({
         ({ _id, ...removedIdItem }) => removedIdItem
       );
 
-      console.log({ itemsNoIDs });
       addFoodsMutation.mutate({
         date: selectedEditDate,
         listName: "toEat",
@@ -66,8 +65,6 @@ export default function EditMenu({
 
   function handleCopy() {
     if (state.showDatePicker) {
-      console.log({ selectedEditDate });
-      console.log({ selectedItems });
       const itemsNoIDs = selectedItems.map(
         ({ _id, ...removedIdItem }) => removedIdItem
       );
