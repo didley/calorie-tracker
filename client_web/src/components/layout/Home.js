@@ -32,7 +32,7 @@ export default function Home() {
           <p className="text-blue-200 pt-6 mx-1">
             foodNRG is a calorie counting app made to help you track{" "}
             <br className="hidden md:block" />
-            what you eat so you can reach your weight goals
+            what you eat so you can reach your weight goals.
           </p>
 
           <div className="flex justify-center gap-5 md:gap-10 pt-10 pb-10 mb-2">
