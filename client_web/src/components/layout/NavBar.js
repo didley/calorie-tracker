@@ -21,11 +21,9 @@ export default function NavBar() {
         className="flex items-center flex-shrink-0 text-white ml-2 mr-6 "
       >
         <div className="leading-tight">
-          <div className="font-semibold text-xl md:text-2xl tracking-tight">
-            foodNRG.io
-          </div>
-          <div className="text-sm tracking-tight hidden md:block">
-            Calorie Tracker
+          <div className="font-semibold text-xl md:text-2xl">foodNRG</div>
+          <div className="text-xs tracking-tight hidden md:block">
+            Calorie Counter
           </div>
         </div>
       </Link>

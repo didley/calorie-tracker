@@ -30,7 +30,7 @@ export default function Home() {
           </h1>
 
           <p className="text-blue-200 pt-6 mx-1">
-            foodNRG.io is a calorie tracking app made to help you track{" "}
+            foodNRG is a calorie counting app made to help you track{" "}
             <br className="hidden md:block" />
             what you eat so you can reach your weight goals
           </p>
