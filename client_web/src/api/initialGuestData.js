@@ -1,4 +1,4 @@
-export const defaultGuest = {
+export const guestsInitialDetails = {
   measurements: {
     currentWeightKg: 60,
     heightCm: 80,
@@ -17,7 +17,7 @@ export const defaultGuest = {
   country: "AUS",
 };
 
-export const defaultUserFood = [
+export const guestsInitialFoods = [
   {
     _id: "605bfd678cf5520d0306d4b9",
     name: "Greek Yoghurt",

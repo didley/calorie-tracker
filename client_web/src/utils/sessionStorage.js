@@ -5,9 +5,11 @@ export const getValueFromSessionStorage = (key, defaultValue) => {
     return JSONDefaultValue;
   };
 
-  if (typeof sessionStorage === undefined && defaultValue) setToDefaultValue();
+  if (typeof sessionStorage === undefined) setToDefaultValue();
 
-  let storedValue = sessionStorage.getItem(key) || setToDefaultValue();
+  let storedValue = sessionStorage.getItem(key);
+  if (storedValue === null && !defaultValue) return null;
+  if (storedValue === null) storedValue = setToDefaultValue();
 
   try {
     return JSON.parse(storedValue);

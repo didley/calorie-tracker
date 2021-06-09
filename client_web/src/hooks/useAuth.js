@@ -1,13 +1,10 @@
 import { useState, useContext, createContext } from "react";
 
 import { useAlert } from "hooks/useAlert";
-import { clearSessionStorage } from "utils/sessionStorage";
-import { getIsGuestUser, setGuestUser } from "utils/isGuestUser";
+import { getIsGuestUser } from "utils/isGuestUser";
 import { useQueryClient } from "react-query";
 
-import { client } from "api/client";
-
-import { defaultGuest } from "../utils/defaultSessionData";
+import { auth } from "api/auth";
 
 const authContext = createContext();
 
@@ -29,20 +26,16 @@ function useProvideAuth() {
   const isGuestUser = getIsGuestUser();
 
   const isUserLoggedIn = async () => {
-    const data = await client.get("/user");
-    const loggedInUser = data.user;
-
     setCheckingLoggedIn(true);
+    const { user } = await auth.getUser();
+    const loggedInUser = user;
+    console.log({ loggedInUser });
+
     if (loggedInUser !== null) {
-      clearSessionStorage();
       setUser(loggedInUser);
-      setCheckingLoggedIn(false);
-    } else if (isGuestUser) {
-      setUser(defaultGuest);
       setCheckingLoggedIn(false);
     } else {
       setUser(null);
-      setGuestUser.false();
       setCheckingLoggedIn(false);
     }
   };
@@ -50,9 +43,9 @@ function useProvideAuth() {
   const loginGuest = async () => {
     setCheckingLoggedIn(true);
     try {
-      setGuestUser.true();
-      setUser(defaultGuest);
-      setTimedAlert("alert", "Welcome Guest");
+      const guestLoginRes = auth.loginGuest();
+      setUser(guestLoginRes.user);
+      setTimedAlert("alert", guestLoginRes.msg);
       setCheckingLoggedIn(false);
     } catch (err) {
       setCheckingLoggedIn(false);
@@ -63,9 +56,7 @@ function useProvideAuth() {
   const login = async (email, password) => {
     setIsLoading(true);
     try {
-      const data = await client.post("/user/login", {
-        body: { email, password },
-      });
+      const data = await auth.loginUser(email, password);
       setUser(data.user);
       setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
@@ -75,7 +66,7 @@ function useProvideAuth() {
 
   const register = async (body) => {
     try {
-      const data = await client.post("/user/register", { body });
+      const data = await auth.registerUser(body);
       setUser(data.user);
       setTimedAlert("alert", `${data.msg}`);
     } catch (err) {
@@ -87,9 +78,8 @@ function useProvideAuth() {
     try {
       queryClient.invalidateQueries();
       setUser(null);
-      clearSessionStorage();
       clearAlerts();
-      await client.post("/user/logout");
+      await auth.logoutUser();
     } catch (err) {
       setTimedAlert("error", err);
     }
@@ -97,10 +87,7 @@ function useProvideAuth() {
 
   const updateUser = async (changedUserDetails) => {
     try {
-      const updatedUser = await client.put("/user", {
-        body: changedUserDetails,
-      });
-
+      const updatedUser = await auth.updateUser(changedUserDetails);
       setUser(updatedUser.data);
       setTimedAlert("alert", "Account successfully updated");
     } catch (err) {
@@ -110,9 +97,9 @@ function useProvideAuth() {
 
   return {
     checkingLoggedIn,
-    isUserLoggedIn,
     user,
     isGuestUser,
+    isUserLoggedIn,
     loginGuest,
     login,
     register,

@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { defaultUserFood } from "utils/defaultSessionData";
+import { guestsInitialFoods } from "api/initialGuestData";
 import { v4 as uuidv4 } from "uuid";
 
 import {
@@ -7,7 +7,7 @@ import {
   saveValueToSessionStorage,
 } from "utils/sessionStorage";
 
-import { getIsGuestUser } from "utils/isGuestUser";
+import { guestUser } from "utils/isGuestUser";
 
 function getDBFoods(page = 1, searchQuery) {
   return client.get(
@@ -15,10 +15,10 @@ function getDBFoods(page = 1, searchQuery) {
   );
 }
 function getUsersFoods(page = 1, searchQuery) {
-  if (getIsGuestUser()) {
+  if (guestUser.get()) {
     const sessionUserFoods = getValueFromSessionStorage(
       "userFoods",
-      defaultUserFood
+      guestsInitialFoods
     );
 
     return { data: sessionUserFoods, hasNextPage: false, page: 1 };
@@ -32,7 +32,7 @@ function addDBFood(food) {
   return client.post("/foods", { body: food });
 }
 function addUserFood(food) {
-  if (getIsGuestUser()) {
+  if (guestUser.get()) {
     const foodId = uuidv4();
     const apiFoodDetails = {
       _id: foodId,
@@ -66,7 +66,7 @@ function updateDBFood({ id, food }) {
   return client.put(`/foods/${id}`, { body: food });
 }
 function updateUserFood({ id, food }) {
-  if (getIsGuestUser()) {
+  if (guestUser.get()) {
     const userFoodsList = getValueFromSessionStorage("userFoods", []);
     const foodIndex = userFoodsList.findIndex((el) => el._id === food._id);
     userFoodsList[foodIndex] = food;
@@ -81,10 +81,10 @@ function deleteDBFood(ids) {
   return client.delete(`/foods/${ids}`);
 }
 function deleteUserFood(ids) {
-  if (getIsGuestUser()) {
+  if (guestUser.get()) {
     const sessionUserFoods = getValueFromSessionStorage(
       "userFoods",
-      defaultUserFood
+      guestsInitialFoods
     );
 
     const updatedSessionUserFoods = sessionUserFoods.filter(
