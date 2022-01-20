@@ -1,6 +1,7 @@
 import chalk from "chalk";
 
 const environment = process.env.NODE_ENV;
+let dbURI = process.env.DB_DEV_URI;
 
 if (!environment) {
   throw new Error(
@@ -8,21 +9,13 @@ if (!environment) {
   );
 }
 
-let dbURI;
-
-if (environment === "development") {
-  dbURI = process.env.DB_DEV_URI;
+if (environment === "development")
   console.log(chalk.white.bgCyan.bold("  DEV ENVIRONMENT  "));
-}
 
-if (environment === "test") {
-  dbURI = process.env.DB_TEST_URI;
+if (environment === "test")
   console.log(chalk.white.bgYellow.bold("  TEST ENVIRONMENT  "));
-}
 
-if (environment === "production") {
-  dbURI = process.env.DB_PROD_URI;
+if (environment === "production")
   console.log(chalk.white.bgRed.bold("  PRODUCTION ENVIRONMENT!  "));
-}
 
 export { dbURI, environment };

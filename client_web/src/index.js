@@ -11,7 +11,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 
 if (
   process.env.NODE_ENV === "development" &&
-  process.env.REACT_APP_USE_LOCAL_DB !== "true"
+  process.env.REACT_APP_USE_MSW === "true"
 ) {
   const { worker } = require("./mocks/browser");
   worker.start();

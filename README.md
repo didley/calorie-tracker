@@ -1,7 +1,7 @@
 # calorie-tracker
-This is the first larger project I’ve created, I’d love any feedback or input. It started as what I thought would be a small weekend project and turned into something a bit bigger! 
-
-The frontend is using React with react-query for the server state management, the backend is built with node, express and mongoose with passportJS for authentication. It's still a work in progress and there's still some work to do before it can be deployed.
+The frontend is built with React with react-query for server state management, the backend is built with node, express 
+and mongoose with passportJS for authentication. It's still a work in progress, currently the API isn't enabled and it 
+can only be accessed as a guest where data is stored and managed in local storage.
 
 ## Demo
 ![Diary page demo](demo/diary.gif) &nbsp;&nbsp;&nbsp;&nbsp; ![Adding food demo](demo/addFood.gif)
@@ -11,7 +11,7 @@ The frontend is using React with react-query for the server state management, th
 ```console
 $ cd calorie-tracker
 $ yarn install
-// Remove .example form /api/.env.example & /client_web/.env.example and fill in
+// Remove .example and modify environment variables in /api/.env.example & /client_web/.env.example
 ```
 ## Running
 

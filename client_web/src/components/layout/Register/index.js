@@ -32,8 +32,14 @@ export default function Register() {
               <LoginGuestBtn className="bg-gradient-to-r from-teal-300 to-blue-600 hover:from-pink-400 hover:to-orange-400" />
 
               <LineWithText text="Or" width="70%" />
-
-              <Button onClick={() => setViewEmailForm(true)}>Email</Button>
+              <Button disabled noBottomBorder>
+                Email
+                <small className="text-gray-100 font-normal">
+                  {" "}
+                  (Currently disabled)
+                </small>
+              </Button>
+              {/* <Button onClick={() => setViewEmailForm(true)}>Email</Button> */}
               <Button disabled noBottomBorder>
                 Sign up with Gmail
                 <small className="text-gray-100 font-normal">
