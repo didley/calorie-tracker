@@ -1,4 +1,6 @@
 # calorie-tracker
+[visit the live app](https://track-cals.didley.dev/)
+
 The frontend is built with React with react-query for server state management, the backend is built with node, express 
 and mongoose with passportJS for authentication. It's still a work in progress, currently the API isn't enabled and it 
 can only be accessed as a guest where data is stored and managed in local storage.
